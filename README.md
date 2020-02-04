@@ -2,6 +2,9 @@
 
 A new Flutter project.
 
+# music_streaming_app
+
+The UI/UX Design of our proeject is in repository files
 ## Getting Started
 
 This project is a starting point for a Flutter application.
