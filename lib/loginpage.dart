@@ -28,6 +28,7 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
+    
     Widget _logoRow = Container(
       padding: EdgeInsets.only(left: 15, top: 30),
       child: Row(
