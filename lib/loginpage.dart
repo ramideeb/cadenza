@@ -49,41 +49,52 @@ class _LoginPageState extends State<LoginPage> {
 
     Widget _textRow = Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      // crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
         Padding(
-          padding: EdgeInsets.only(left: 10),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisSize: MainAxisSize.min,
+          padding: EdgeInsets.only(left: 10,bottom: 80),
+          child: Stack(
+          overflow: Overflow.visible,
             children: <Widget>[
-              Text(
-                "Dance to The",
-                style: TextStyle(
-                    fontSize: 36.0,
+              Positioned(
+                child: Text(
+                  "Dance to the",
+                  style: TextStyle(
+                      fontSize: 30.0,
+                      color: Color.fromARGB(255, 230, 57, 70),
+                      fontFamily: "OpenSans",
+                      fontWeight: FontWeight.bold),
+                ),
+              ),
+              Positioned(
+                top:20,
+                child: Text(
+                  "Rhythm",
+                  style: TextStyle(
+                      fontSize: 62.0,
+                      color: Color.fromARGB(255, 230, 57, 70),
+                      fontFamily: "OpenSans",
+                      fontWeight: FontWeight.bold),
+                ),
+              ),
+              Positioned(
+                top:87,
+                child: Text(
+                  "Of your heart",
+                  style: TextStyle(
+                    fontSize: 30.0,
                     color: Color.fromARGB(255, 230, 57, 70),
                     fontFamily: "OpenSans",
-                    fontWeight: FontWeight.bold),
-              ),
-              Text(
-                "Rythm",
-                style: TextStyle(
-                    fontSize: 70.0,
-                    color: Color.fromARGB(255, 230, 57, 70),
-                    fontFamily: "OpenSans",
-                    fontWeight: FontWeight.bold),
-              ),
-              Text(
-                "Of Your Heart",
-                style: TextStyle(
-                  fontSize: 36.0,
-                  color: Color.fromARGB(255, 230, 57, 70),
-                  fontFamily: "OpenSans",
+                  ),
                 ),
               ),
             ],
           ),
         ),
-        Image.asset("circle.png"),
+        FittedBox(
+          child: Image.asset("circle.png"),
+          fit: BoxFit.fill,
+        )
       ],
     );
 
@@ -92,7 +103,7 @@ class _LoginPageState extends State<LoginPage> {
       child: Column(
         children: <Widget>[
           Padding(
-            padding: EdgeInsets.only(bottom: 0),
+            padding: EdgeInsets.only(),
             child: TextField(
               controller: _usernameController,
               decoration: InputDecoration(
@@ -157,7 +168,6 @@ class _LoginPageState extends State<LoginPage> {
         Container(
           child: SingleChildScrollView(
             child: Column(
-              // crossAxisAlignment: CrossAxisAlignment.stretch,
               children: <Widget>[
                 _logoRow,
                 _textRow,
