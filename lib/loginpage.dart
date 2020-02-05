@@ -9,7 +9,7 @@ class _LoginPageState extends State<LoginPage> {
   TextEditingController _usernameController;
   TextEditingController _passwordController;
   bool typing = false;
-  
+
   @override
   void initState() {
     super.initState();
@@ -19,8 +19,8 @@ class _LoginPageState extends State<LoginPage> {
     // _passwordController.text = "Password";
   }
 
-@override
-void dispose() {
+  @override
+  void dispose() {
     _usernameController.dispose();
     _passwordController.dispose();
     super.dispose();
@@ -28,14 +28,13 @@ void dispose() {
 
   @override
   Widget build(BuildContext context) {
-
     Widget _logoRow = Container(
       padding: EdgeInsets.only(left: 15, top: 30),
       child: Row(
         children: <Widget>[
           Image.asset("logo.png"),
           Padding(
-            padding: EdgeInsets.only(left: 15,bottom:5),
+            padding: EdgeInsets.only(left: 15, bottom: 5),
             child: Text(
               "Cadenza",
               style: TextStyle(
@@ -48,15 +47,14 @@ void dispose() {
       ),
     );
 
-    Widget _textRow = Padding(
-      padding: EdgeInsets.only(),
-      child: Row(
-        children: <Widget>[
-          Padding(
-            padding: EdgeInsets.only( left: 10),
-            child: Column(
+    Widget _textRow = Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: <Widget>[
+        Padding(
+          padding: EdgeInsets.only(left: 10),
+          child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisSize: MainAxisSize.max,
+            mainAxisSize: MainAxisSize.min,
             children: <Widget>[
               Text(
                 "Dance to The",
@@ -70,7 +68,7 @@ void dispose() {
                 "Rythm",
                 style: TextStyle(
                     fontSize: 70.0,
-                    color: Color.fromRGBO(230, 57, 70, 1),
+                    color: Color.fromARGB(255, 230, 57, 70),
                     fontFamily: "OpenSans",
                     fontWeight: FontWeight.bold),
               ),
@@ -78,104 +76,31 @@ void dispose() {
                 "Of Your Heart",
                 style: TextStyle(
                   fontSize: 36.0,
-                  color: Color.fromRGBO(230, 57, 70, 1),
+                  color: Color.fromARGB(255, 230, 57, 70),
                   fontFamily: "OpenSans",
                 ),
               ),
             ],
           ),
-          ),
-          Expanded(
-            child: Image.asset("circle.png"),
-          )
-        ],
-      ),
+        ),
+        Image.asset("circle.png"),
+      ],
     );
 
     Widget _inputRow = Padding(
-      padding: EdgeInsets.only(top: 20, left: 50, right: 50),
+      padding: EdgeInsets.symmetric(horizontal: 50),
       child: Column(
-        mainAxisSize: MainAxisSize.max,
-        children: <Widget>[
-          Padding(
-            padding: EdgeInsets.only(bottom: 0),
-            child: Column(
-              children: <Widget>[
-                TextField(
-                  controller: _usernameController,
-                  decoration: null,
-                  // onTap: (){
-                  //   setState(() {
-                  //     typing = true;
-                  //     _usernameController.text = "";
-                  //   });
-                  // },
-                ),
-                Divider(
-                  color: Color.fromARGB(255, 230, 57, 70),
-                  height: 25,
-                  thickness: 2,
-                ),
-              ],
-            ),
-          ),
-          Padding(
-            padding: EdgeInsets.only(bottom: 20),
-            child: Column(
-              children: <Widget>[
-                TextField(
-                  controller: _passwordController,
-                  decoration: null,
-                ),
-                Divider(
-                  color: Color.fromARGB(255, 230, 57, 70),
-                  height: 25,
-                  thickness: 2,
-                ),
-              ],
-            ),
-          ),
-          RaisedButton(
-            onPressed: () {
-              print("Pressed");
-            },
-            child: Container(
-              width: 100,
-              height: 40,
-              child: Center(
-                  child: Text(
-                "Sing in",
-                style: TextStyle(color: Colors.white),
-              )),
-            ),
-            color: Color.fromARGB(255, 230, 57, 70),
-          ),
-          Padding(
-            padding: EdgeInsets.only(top: 10),
-            child: Text(
-              "Reset your password >".toUpperCase(),
-              style: TextStyle(
-                color: Color.fromARGB(255, 230, 57, 70),
-                fontFamily: "OpenSans",
-                fontSize: 10,
-              ),
-            ),
-          )
-        ],
-      ),
-    );
-
-    Widget _inputRow2 = Padding(
-      padding: EdgeInsets.only(top: 20, left: 50, right: 50),
-      child: Column(
-        mainAxisSize: MainAxisSize.max,
         children: <Widget>[
           Padding(
             padding: EdgeInsets.only(bottom: 0),
             child: TextField(
               controller: _usernameController,
               decoration: InputDecoration(
-                hintText: "Username"
+                hintText: "Username",
+                enabled: true,
+                enabledBorder: UnderlineInputBorder(
+                    borderSide:
+                        BorderSide(color: Color.fromRGBO(230, 57, 70, 1))),
               ),
             ),
           ),
@@ -185,29 +110,34 @@ void dispose() {
               obscureText: true,
               controller: _passwordController,
               decoration: InputDecoration(
-                hintText: "Password"
+                hintText: "Password",
+                enabled: true,
+                enabledBorder: UnderlineInputBorder(
+                    borderSide:
+                        BorderSide(color: Color.fromRGBO(230, 57, 70, 1))),
               ),
             ),
           ),
           RaisedButton(
-            onPressed: () {
-              print("Pressed");
-            },
+            onPressed: () {},
             child: Container(
-              width: 100,
-              height: 40,
+              width: 150,
+              height: 50,
               child: Center(
-                  child: Text(
-                "Sing in",
-                style: TextStyle(color: Colors.white),
-              )),
+                child: Text(
+                  "Sing in",
+                  style: TextStyle(color: Colors.white),
+                ),
+              ),
             ),
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(7)),
             color: Color.fromARGB(255, 230, 57, 70),
           ),
           Padding(
             padding: EdgeInsets.only(top: 10),
             child: Text(
-              "Reset your password >".toUpperCase(),
+              "RESET YOUR PASSWORD >",
               style: TextStyle(
                 color: Color.fromARGB(255, 230, 57, 70),
                 fontFamily: "OpenSans",
@@ -225,17 +155,17 @@ void dispose() {
       children: <Widget>[
         Image.asset("BG.jpg", repeat: ImageRepeat.repeat),
         Container(
-            // padding: EdgeInsets.symmetric(vertical: 50),
-            child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              _logoRow,
-              _textRow,
-              _inputRow2,
-            ],
+          child: SingleChildScrollView(
+            child: Column(
+              // crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: <Widget>[
+                _logoRow,
+                _textRow,
+                _inputRow,
+              ],
+            ),
           ),
-        ))
+        )
       ],
     );
   }
