@@ -28,7 +28,6 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    
     Widget _logoRow = Container(
       padding: EdgeInsets.only(left: 15, top: 30),
       child: Row(
@@ -100,7 +99,7 @@ class _LoginPageState extends State<LoginPage> {
     );
 
     Widget _inputRow = Padding(
-      padding: EdgeInsets.symmetric(horizontal: 50),
+      padding: EdgeInsets.symmetric(horizontal: 20),
       child: Column(
         children: <Widget>[
           Padding(
