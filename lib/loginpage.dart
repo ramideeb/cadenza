@@ -101,6 +101,7 @@ class _LoginPageState extends State<LoginPage> {
           ),
         ),
         FittedBox(
+          
           child: Image.asset("circle.png"),
           fit: BoxFit.fill,
         )

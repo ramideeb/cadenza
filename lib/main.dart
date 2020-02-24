@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'loginpage.dart';
+import 'opening.dart';
 
 void main() => runApp(MyApp());
 
@@ -15,7 +16,7 @@ class MyApp extends StatelessWidget {
         primaryColor:Color.fromRGBO(230, 57, 70, 1),
         primarySwatch: Colors.blue,
       ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
+      home: Opening(),
     );
   }
 }
