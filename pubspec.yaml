@@ -2,9 +2,10 @@ name: assets_audio_player_example
 description: Demonstrates how to use the assets_audio_player plugin.
 publish_to: 'none'
 
-environment:
-  sdk: ">=2.0.0-dev.68.0 <3.0.0"
+version: 1.0.0+1
 
+environment:
+  sdk: ">=2.1.0 <3.0.0"
 dependencies:
   flutter:
     sdk: flutter
@@ -19,3 +20,13 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  fonts:
+      - family: OpenSans
+        fonts:
+          - asset: assets/OpenSans-Bold.ttf
+  assets:
+    - logo.png
+    - background.png
+    - BG.jpg
+    - music_circle.png
+    - circle.png
