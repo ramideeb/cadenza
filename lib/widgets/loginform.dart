@@ -95,10 +95,16 @@ class LoginForm extends StatelessWidget {
                                 child: Padding(
                                   padding: const EdgeInsets.all(12.0),
                                   child: Text("Log in",
-                                      style: TextStyle(fontSize: 20)),
+                                      style: TextStyle(fontSize: 15)),
                                 )))
                       ])),
                   SizedBox(height: 10),
+                  new GestureDetector(
+                    onTap: () {
+                      Navigator.pushNamed(context, "/ForgetPass");
+                    },
+                    child: new Text("Forgot your Password ?" , )
+                  )
                 ],
               ),
             )));

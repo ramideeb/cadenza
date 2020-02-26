@@ -2,10 +2,15 @@ import 'package:assets_audio_player_example/login.dart';
 import 'package:assets_audio_player_example/widgets/onesideroundedbutton.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:flutter/services.dart' ;
+
 
 class Opening extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setPreferredOrientations([
+        DeviceOrientation.portraitUp,
+      ]);
     return Scaffold(
         body: Padding(
             padding: EdgeInsets.fromLTRB(
@@ -50,7 +55,7 @@ class Opening extends StatelessWidget {
                       semanticLabel: 'Text to announce in accessibility modes',
                     ),
                     text: Text('Continue using Facebook',
-                        style: TextStyle(fontSize: 20)),
+                        style: TextStyle(fontSize: 15)),
                     textcolor: Colors.white),
                 SizedBox(
                     height: MediaQuery.of(context).size.height *
@@ -64,23 +69,24 @@ class Opening extends StatelessWidget {
                     semanticLabel: 'Text to announce in accessibility modes',
                   ),
                   text: Text('Continue using Google',
-                      style: TextStyle(fontSize: 20)),
+                      style: TextStyle(fontSize: 15)),
                   textcolor: Color.fromRGBO(230, 57, 70, 1),
                 ),
                 Align(
                     alignment: Alignment.centerRight,
                     child: FlatButton(
+                      
                       onPressed: () {
                         Navigator.push(
                           context,
-                        
-                            PageRouteBuilder(
-                                pageBuilder: (context, animation1, animation2) => Login()),
+                          PageRouteBuilder(
+                              pageBuilder: (context, animation1, animation2) =>
+                                  Login()),
                         );
                       },
-                      child: Text(
-                        " Continue using email or signup using email",
-                      ),
+                      child: Text(" Continue using email or signup using email",
+                          style: TextStyle(fontSize: 12
+                        )),
                     ))
               ],
             )));
