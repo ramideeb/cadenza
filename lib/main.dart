@@ -6,14 +6,13 @@ import 'opening.dart';
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
-        primaryColor:Color.fromRGBO(230, 57, 70, 1),
+        primaryColor: Color.fromRGBO(230, 57, 70, 1),
         primarySwatch: Colors.blue,
       ),
       home: Opening(),
@@ -31,14 +30,10 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-
-
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       body: LoginPage(),
-
     );
   }
 }
