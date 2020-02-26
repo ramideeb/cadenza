@@ -1,21 +1,36 @@
 import 'package:flutter/material.dart';
 
+import 'forgetPass.dart';
 import 'loginpage.dart';
 import 'opening.dart';
 
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
+
+
+  ThemeData applicationtheme(BuildContext context) {
+  return Theme.of(context).copyWith(
+    textTheme: Theme.of(context).textTheme.apply(fontFamily: 'Poppins'),
+    primaryTextTheme: Theme.of(context).textTheme.apply(fontFamily: 'Poppins'),
+    accentTextTheme: Theme.of(context).textTheme.apply(fontFamily: 'Poppins'),
+        primaryColor: Color.fromRGBO(230, 57, 70, 1),
+  );
+}
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+
+      initialRoute: '/',
+      routes: {
+    '/': (context) => Opening(),
+    '/ForgetPass': (context) => Forgetpass(),
+  },
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
-      theme: ThemeData(
-        primaryColor: Color.fromRGBO(230, 57, 70, 1),
-        primarySwatch: Colors.blue,
-      ),
-      home: Opening(),
+      theme: applicationtheme(context)
+     
     );
   }
 }
