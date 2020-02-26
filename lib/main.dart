@@ -1,3 +1,4 @@
+import 'package:assets_audio_player_example/verificationPage.dart';
 import 'package:flutter/material.dart';
 
 import 'forgetPass.dart';
@@ -7,31 +8,28 @@ import 'opening.dart';
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
-
-
   ThemeData applicationtheme(BuildContext context) {
-  return Theme.of(context).copyWith(
-    textTheme: Theme.of(context).textTheme.apply(fontFamily: 'Poppins'),
-    primaryTextTheme: Theme.of(context).textTheme.apply(fontFamily: 'Poppins'),
-    accentTextTheme: Theme.of(context).textTheme.apply(fontFamily: 'Poppins'),
-        primaryColor: Color.fromRGBO(230, 57, 70, 1),
-  );
-}
+    return Theme.of(context).copyWith(
+      textTheme: Theme.of(context).textTheme.apply(fontFamily: 'Poppins'),
+      primaryTextTheme:
+          Theme.of(context).textTheme.apply(fontFamily: 'Poppins'),
+      accentTextTheme: Theme.of(context).textTheme.apply(fontFamily: 'Poppins'),
+      primaryColor: Color.fromRGBO(230, 57, 70, 1),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-
-      initialRoute: '/',
-      routes: {
-    '/': (context) => Opening(),
-    '/ForgetPass': (context) => Forgetpass(),
-  },
-      debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
-      theme: applicationtheme(context)
-     
-    );
+        initialRoute: '/',
+        routes: {
+          '/': (context) => Opening(),
+          '/ForgetPass': (context) => Forgetpass(),
+          '/VerificationPage': (context) => VerificationPage(),
+        },
+        debugShowCheckedModeBanner: false,
+        title: 'Flutter Demo',
+        theme: applicationtheme(context));
   }
 }
 
