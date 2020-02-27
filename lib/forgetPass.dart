@@ -6,7 +6,6 @@ import 'widgets/ForgotPassheader.dart';
 class Forgetpass extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final curScaleFactor = MediaQuery.of(context).textScaleFactor;
 
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,

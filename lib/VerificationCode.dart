@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:pin_code_fields/pin_code_fields.dart';
 import 'widgets/ForgotPassheader.dart';
 
 class VerificationCode extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final curScaleFactor = MediaQuery.of(context).textScaleFactor;
 
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
