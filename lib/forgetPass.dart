@@ -94,9 +94,8 @@ class Forgetpass extends StatelessWidget {
                 minWidth: MediaQuery.of(context).size.width * 0.9,
                 child: RaisedButton(
                     onPressed: () {
-                         Navigator.pushNamed(context, "/VerificationCode");
-                      },
-                    
+                      Navigator.pushNamed(context, "/VerificationPage");
+                    },
                     shape: RoundedRectangleBorder(
                         borderRadius: new BorderRadius.circular(15.0),
                         side: BorderSide(color: Colors.red)),

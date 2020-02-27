@@ -1,4 +1,3 @@
-import 'package:assets_audio_player_example/resetpass.dart';
 import 'package:flutter/material.dart';
 
 import 'VerificationCode.dart';
@@ -19,9 +18,6 @@ class MyApp extends StatelessWidget {
     );
   }
 
-
-
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -29,10 +25,7 @@ class MyApp extends StatelessWidget {
         routes: {
           '/': (context) => Opening(),
           '/ForgetPass': (context) => Forgetpass(),
-          '/VerificationCode': (context) => VerificationCode(),
-          '/ResetPass': (context) => ResetPass(),
-
-           
+          '/VerificationPage': (context) => VerificationPage(),
         },
         debugShowCheckedModeBanner: false,
         title: 'Flutter Demo',
