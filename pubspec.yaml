@@ -14,6 +14,8 @@ dependencies:
   http: ^0.12.0+4
   audioplayer: ^0.5.2
   font_awesome_flutter: "any"
+  pin_code_fields: ^2.3.0+3
+
   
 dev_dependencies:
   flutter_test:
@@ -57,3 +59,7 @@ flutter:
     - slogan.png
     - qshape.png
     - FP1.png
+    - assets/drawable-xxxhdpi/rp2.png
+    - assets/drawable-xxxhdpi/rp3.png
+
+    
