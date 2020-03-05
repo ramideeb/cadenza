@@ -5,7 +5,6 @@ import 'widgets/ForgotPassheader.dart';
 class ResetPass extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final curScaleFactor = MediaQuery.of(context).textScaleFactor;
     final _focusNode = FocusNode();
 
     SystemChrome.setPreferredOrientations([
