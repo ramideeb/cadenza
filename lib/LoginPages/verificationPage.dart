@@ -51,7 +51,7 @@ class _VerificationPageState extends State<VerificationPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Image.asset(
-                  'assets/FP1.png',
+                  'assets/drawable-xxxhdpi/rp2.png',
                   fit: BoxFit.contain,
                   width: MediaQuery.of(context).size.width * 0.4,
                 ),
@@ -105,17 +105,18 @@ class _VerificationPageState extends State<VerificationPage> {
                     spaceBetween: 10,
                     onSubmit: (String pin) => {},
                   ),
-
                 ],
               )),
             ),
             SizedBox(
               height: MediaQuery.of(context).size.height * 0.02,
             ),
-            ButtonTheme(
+          ButtonTheme(
                 minWidth: MediaQuery.of(context).size.width * 0.9,
                 child: RaisedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.pushNamed(context, "/ResetPass");
+                    },
                     shape: RoundedRectangleBorder(
                         borderRadius: new BorderRadius.circular(15.0),
                         side: BorderSide(color: Colors.red)),
@@ -123,8 +124,19 @@ class _VerificationPageState extends State<VerificationPage> {
                     color: Color.fromRGBO(230, 57, 70, 1),
                     child: Padding(
                       padding: const EdgeInsets.all(12.0),
-                      child: Text("Next", style: TextStyle(fontSize: 15)),
-                    )))
+                      child: Text("Done", style: TextStyle(fontSize: 15)),
+                    ))),
+
+    SizedBox(
+              height: MediaQuery.of(context).size.height * 0.02,
+            ),
+            new GestureDetector(
+                onTap: () {
+                  
+                },
+                child: new Text(
+                  "Send a new code",
+                ))
           ]),
         ),
       ),

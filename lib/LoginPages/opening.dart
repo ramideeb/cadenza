@@ -1,5 +1,5 @@
-import 'package:assets_audio_player_example/login.dart';
-import 'package:assets_audio_player_example/widgets/onesideroundedbutton.dart';
+import 'login.dart';
+import 'widgets/onesideroundedbutton.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter/services.dart' ;

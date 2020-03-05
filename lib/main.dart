@@ -1,10 +1,11 @@
-import 'package:assets_audio_player_example/verificationPage.dart';
+import 'package:assets_audio_player_example/LoginPages/resetpass.dart';
+import 'package:assets_audio_player_example/LoginPages/verificationPage.dart';
 import 'package:flutter/material.dart';
+import 'AppPages/MainWidget.dart';
+import 'LoginPages/forgetPass.dart';
+import 'LoginPages/loginpage.dart';
+import 'LoginPages/opening.dart';
 
-import 'VerificationCode.dart';
-import 'forgetPass.dart';
-import 'loginpage.dart';
-import 'opening.dart';
 
 void main() => runApp(MyApp());
 
@@ -24,9 +25,10 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
         initialRoute: '/',
         routes: {
-          '/': (context) => Opening(),
+          '/': (context) => HomePage(),
           '/ForgetPass': (context) => Forgetpass(),
           '/VerificationPage': (context) => VerificationPage(),
+          '/ResetPass': (context) => ResetPass(),
         },
         debugShowCheckedModeBanner: false,
         title: 'Flutter Demo',
