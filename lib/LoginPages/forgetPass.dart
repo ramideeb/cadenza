@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+
 import 'widgets/ForgotPassheader.dart';
 
-class ResetPass extends StatelessWidget {
+class Forgetpass extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final curScaleFactor = MediaQuery.of(context).textScaleFactor;
-    final _focusNode = FocusNode();
 
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
@@ -25,16 +24,15 @@ class ResetPass extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Image.asset(
-                  'assets/drawable-xxxhdpi/rp3.png',
+                  'assets/FP1.png',
                   fit: BoxFit.contain,
-                  width: MediaQuery.of(context).size.width * 0.35,
+                  width: MediaQuery.of(context).size.width * 0.4,
                 ),
               ],
             ),
             SizedBox(
               height: MediaQuery.of(context).size.width * 0.1,
             ),
-           
             Container(
               width: MediaQuery.of(context).size.width * 0.9,
               child: Row(
@@ -42,7 +40,7 @@ class ResetPass extends StatelessWidget {
                   Flexible(
                       child: FittedBox(
                     fit: BoxFit.contain,
-                    child: Text("Enter your new password.",
+                    child: Text("Please enter your registered email ID.",
                         style: TextStyle(
                             fontWeight: FontWeight.bold,
                             color: Color.fromRGBO(230, 57, 70, 1),
@@ -51,50 +49,43 @@ class ResetPass extends StatelessWidget {
                 ],
               ),
             ),
-Container(
-  height: MediaQuery.of(context).size.height*0.02,
-),
-             Container(width: MediaQuery.of(context).size.width*0.9,
-               child: Form(
+            Container(
+              width: MediaQuery.of(context).size.width * 0.9,
+              child: Row(
+                children: <Widget>[
+                  Flexible(
+                    child: Container(
+                      width: MediaQuery.of(context).size.width * 0.75,
+                      child: Text(
+                          "We will send a verification code to your regesteresd email ID.",
+                          style: TextStyle(fontSize: 12)),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(
+              height: MediaQuery.of(context).size.height * 0.02,
+            ),
+            Container(
+              width: MediaQuery.of(context).size.width * 0.9,
+              child: Form(
                   child: Column(
                 children: <Widget>[
                   TextFormField(
-                    onFieldSubmitted: (_) {
-                      FocusScope.of(context).requestFocus(_focusNode);
-                    },
-                    obscureText: true,
+//                controller: _usernameController,
                     textInputAction: TextInputAction.next,
 
-//                controller: _passwordController,
                     decoration: InputDecoration(
-                      hintText: "Password",
-                      labelText: "Password",
+                      hintText: "Email",
+                      labelText: "Email",
                       border: OutlineInputBorder(),
-                      prefixIcon: Icon(Icons.fingerprint),
-                      enabled: true,
-                    ),
-                  ),
-                  Container(
-  height: MediaQuery.of(context).size.height*0.02,
-),
-                  TextFormField(
-                    focusNode: _focusNode,
-                    obscureText: true,
-                    textInputAction: TextInputAction.done,
-//                controller: _passwordController,
-                    decoration: InputDecoration(
-                      hintText: "Confirm Password",
-                      labelText: "Confirm Password",
-                      border: OutlineInputBorder(),
-                      prefixIcon: Icon(Icons.fingerprint),
+                      prefixIcon: Icon(Icons.account_circle),
                       enabled: true,
                     ),
                   ),
                 ],
-            )),
-             ),
-            SizedBox(
-              height: MediaQuery.of(context).size.height * 0.02,
+              )),
             ),
             SizedBox(
               height: MediaQuery.of(context).size.height * 0.02,
@@ -102,7 +93,9 @@ Container(
             ButtonTheme(
                 minWidth: MediaQuery.of(context).size.width * 0.9,
                 child: RaisedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.pushNamed(context, "/VerificationPage");
+                    },
                     shape: RoundedRectangleBorder(
                         borderRadius: new BorderRadius.circular(15.0),
                         side: BorderSide(color: Colors.red)),
@@ -110,9 +103,8 @@ Container(
                     color: Color.fromRGBO(230, 57, 70, 1),
                     child: Padding(
                       padding: const EdgeInsets.all(12.0),
-                      child: Text("Done", style: TextStyle(fontSize: 15)),
+                      child: Text("Next", style: TextStyle(fontSize: 15)),
                     )))
-                    ,
           ]),
         ),
       ),
