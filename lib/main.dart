@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'AppPages/MainWidget.dart';
 import 'LoginPages/forgetPass.dart';
 import 'LoginPages/loginpage.dart';
-import 'LoginPages/opening.dart';
 
 
 void main() => runApp(MyApp());

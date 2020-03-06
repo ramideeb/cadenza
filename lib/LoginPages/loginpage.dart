@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'SizeConfig.dart';
+import '../SizeConfig.dart';
 
 class LoginPage extends StatefulWidget {
   @override
