@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'Profile/Profile.dart';
+
 class HomePage extends StatefulWidget {
   HomePage({Key key}) : super(key: key);
 
@@ -11,7 +13,7 @@ class _HomePageState extends State<HomePage> {
   int _selectedIndex = 0;
   static const TextStyle optionStyle =
       TextStyle(fontSize: 30, fontWeight: FontWeight.bold,);
-  static const List<Widget> _widgetOptions = <Widget>[
+  static  List<Widget> _widgetOptions = <Widget>[
     Text(
       'Index 0: Home',
       style: optionStyle,
@@ -24,10 +26,7 @@ class _HomePageState extends State<HomePage> {
       'Index 2: Business',
       style: optionStyle,
     ),
-    Text(
-      'Index 3: School',
-      style: optionStyle,
-    ),
+      ProfilePage()
   ];
 
   void _onItemTapped(int index) {
@@ -39,10 +38,12 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
+      body: Container(
+        height: MediaQuery.of(context).size.height,
         child: _widgetOptions.elementAt(_selectedIndex),
       ),
       bottomNavigationBar: BottomNavigationBar(
+        
         items:  <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.music_note),
