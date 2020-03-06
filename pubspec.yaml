@@ -50,6 +50,7 @@ flutter:
 
           
   assets:
+    - assets/AlbumImages/
     - logo.png
     - background.png
     - BG.jpg
