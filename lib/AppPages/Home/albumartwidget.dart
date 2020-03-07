@@ -17,8 +17,8 @@ class AlbumArtWidget extends StatelessWidget {
         Padding(
           padding:EdgeInsets.symmetric(horizontal: SizeConfig.blockSizeHorizontal ),
           child: SizedBox(
-            height: SizeConfig.blockSizeHorizontal*25,
-            width: SizeConfig.blockSizeHorizontal*25,
+            height: SizeConfig.blockSizeHorizontal*30,
+            width: SizeConfig.blockSizeHorizontal*30,
             child: ClipRRect(
               borderRadius: BorderRadius.circular(14),
               child: Image.asset("${this.artImageURL}"),

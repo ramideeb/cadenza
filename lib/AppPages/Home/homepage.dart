@@ -1,6 +1,8 @@
+import 'package:assets_audio_player_example/AppPages/PublicWidgets/circularArtistView.dart';
 import 'package:assets_audio_player_example/SizeConfig.dart';
 import 'package:flutter/material.dart';
 import 'albumartwidget.dart';
+import 'genreswidget.dart';
 
 class HomePageWidget extends StatefulWidget {
   @override
@@ -13,9 +15,25 @@ class _HomePageWidgetState extends State<HomePageWidget> {
   Widget build(BuildContext context) {
     _sizeConfig.init(context);
 
+    Widget _exploreText = Padding(
+      padding: EdgeInsets.only(
+        top: SizeConfig.blockSizeHorizontal * 2.5,
+        left: SizeConfig.blockSizeHorizontal * 2,
+        bottom: SizeConfig.blockSizeHorizontal * 1.5,
+      ),
+      child: Text(
+        "Explore",
+        style: TextStyle(
+          fontWeight: FontWeight.bold,
+          fontSize: SizeConfig.blockSizeHorizontal * 10,
+        ),
+      ),
+    );
+
     Widget _musicRow = SingleChildScrollView(
-        scrollDirection: Axis.horizontal,
-        child: Row(children: <Widget>[
+      scrollDirection: Axis.horizontal,
+      child: Row(
+        children: <Widget>[
           AlbumArtWidget(
             albumName: "Album",
             artImageURL: "assets/AlbumImages/art2.jpg",
@@ -36,7 +54,9 @@ class _HomePageWidgetState extends State<HomePageWidget> {
             artImageURL: "assets/AlbumImages/art5.jpg",
             artistName: "Shosmo",
           ),
-        ]));
+        ],
+      ),
+    );
 
     Widget _recentlyPlayedColumn = Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -86,90 +106,286 @@ class _HomePageWidgetState extends State<HomePageWidget> {
       ],
     );
 
-    Widget _top50Widget = Padding(
-      padding: EdgeInsets.symmetric(vertical: 20, horizontal: 40),
-      child: Stack(
+    Widget _topWidget = Padding(
+      padding: EdgeInsets.only(top: 20),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          Opacity(
-            opacity: 0.85,
-              child: GridView.count(
-              shrinkWrap: true,
-              crossAxisCount: 2,
+          Column(
+            // mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              SizedBox(
+                width: 175,
+                height: 175,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.only(topLeft: Radius.circular(14)),
+                  child: Image.asset("assets/AlbumImages/art6.jpg"),
+                ),
+              ),
+              SizedBox(
+                width: 175,
+                height: 175,
+                child: Stack(
+                  children: <Widget>[
+                    ClipRRect(
+                      borderRadius:
+                          BorderRadius.only(bottomLeft: Radius.circular(14)),
+                      child: Image.asset("assets/AlbumImages/art8.jpg"),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 120, left: 15),
+                      child: Text(
+                        "Top 50",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 25,
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+          Column(
+            // mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              SizedBox(
+                width: 175,
+                height: 175,
+                child: ClipRRect(
+                  borderRadius:
+                      BorderRadius.only(topRight: Radius.circular(14)),
+                  child: Image.asset("assets/AlbumImages/art7.png"),
+                ),
+              ),
+              SizedBox(
+                width: 175,
+                height: 175,
+                child: ClipRRect(
+                  borderRadius:
+                      BorderRadius.only(bottomRight: Radius.circular(14)),
+                  child: Image.asset("assets/AlbumImages/art11.jpg"),
+                ),
+              ),
+            ],
+          )
+        ],
+      ),
+    );
+
+    Widget _top50Widget = SliverPadding(
+      padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+      sliver: SliverGrid.count(
+        crossAxisCount: 2,
+        children: <Widget>[
+          SizedBox(
+            width: 100,
+            height: 100,
+            child: ClipRRect(
+              borderRadius: BorderRadius.only(topLeft: Radius.circular(5)),
+              child: Image.asset("assets/AlbumImages/art6.jpg"),
+            ),
+          ),
+          SizedBox(
+            width: 100,
+            height: 100,
+            child: ClipRRect(
+              borderRadius: BorderRadius.only(topLeft: Radius.circular(5)),
+              child: Image.asset("assets/AlbumImages/art6.jpg"),
+            ),
+          ),
+          SizedBox(
+            width: 100,
+            height: 100,
+            child: Stack(
               children: <Widget>[
-                SizedBox(
-                  width: 200,
-                  height: 200,
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.only(topLeft: Radius.circular(5)),
-                    child: Image.asset("assets/AlbumImages/art6.jpg"),
-                  ),
+                ClipRRect(
+                  borderRadius:
+                      BorderRadius.only(bottomLeft: Radius.circular(5)),
+                  child: Image.asset("assets/AlbumImages/art8.jpg"),
                 ),
-                SizedBox(
-                  width: 200,
-                  height: 200,
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.only(topRight: Radius.circular(5)),
-                    child: Image.asset("assets/AlbumImages/art7.png"),
-                  ),
-                ),
-                SizedBox(
-                  width: 200,
-                  height: 200,
-                  child: ClipRRect(
-                    borderRadius:
-                        BorderRadius.only(bottomLeft: Radius.circular(5)),
-                    child: Image.asset("assets/AlbumImages/art8.jpg"),
-                  ),
-                ),
-                SizedBox(
-                  width: 50,
-                  height: 200,
-                  child: ClipRRect(
-                    borderRadius:
-                        BorderRadius.only(bottomLeft: Radius.circular(5)),
-                    child: Image.asset("assets/AlbumImages/art11.jpg"),
+                Padding(
+                  padding: const EdgeInsets.only(top: 120, left: 15),
+                  child: Text(
+                    "Top 50",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 25,
+                      fontWeight: FontWeight.w400,
+                    ),
                   ),
                 ),
               ],
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.only(top: 240, left: 15),
-            child: Text(
-              "Top 50",
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 25,
-                fontWeight: FontWeight.w400,
-              ),
+          SizedBox(
+            width: 100,
+            height: 100,
+            child: ClipRRect(
+              borderRadius: BorderRadius.only(topLeft: Radius.circular(5)),
+              child: Image.asset("assets/AlbumImages/art6.jpg"),
             ),
           ),
         ],
       ),
     );
 
-    return Container(
-      child: ListView(
+    Widget _artistRow = SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      child: Row(
         children: <Widget>[
-          Padding(
-            padding: EdgeInsets.only(
-              top: SizeConfig.blockSizeHorizontal * 2.5,
-              left: SizeConfig.blockSizeHorizontal * 2,
-              bottom: SizeConfig.blockSizeHorizontal * 1.5,
-            ),
-            child: Text(
-              "Explore",
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: SizeConfig.blockSizeHorizontal * 10,
-              ),
-            ),
-          ),
-          _recentlyPlayedColumn,
-          _recommendedForYouColumn,
-          _top50Widget,
+          circularArtistView(),
+          circularArtistView(),
+          circularArtistView(),
+          circularArtistView(),
+          circularArtistView(),
         ],
       ),
     );
+
+    Widget _popularArtists = Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Padding(
+          padding: EdgeInsets.only(
+            top: SizeConfig.blockSizeHorizontal * 2.5,
+            left: SizeConfig.blockSizeHorizontal * 2,
+            bottom: SizeConfig.blockSizeHorizontal * 1.5,
+          ),
+          child: Text(
+            "Popular Artists",
+            style: TextStyle(
+              fontWeight: FontWeight.w700,
+              fontSize: SizeConfig.blockSizeHorizontal * 5,
+            ),
+          ),
+        ),
+        Padding(
+          padding: EdgeInsets.only(left: SizeConfig.blockSizeHorizontal),
+          child: _artistRow,
+        ),
+      ],
+    );
+
+    Widget _genreRow = SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      child: Row(
+        children: <Widget>[
+          GenreWidget(
+            genreName: "Jazz",
+            genreImageURL: "assets/GenresImages/jazz.jpg",
+          ),
+          GenreWidget(
+            genreName: "Pop",
+            genreImageURL: "assets/GenresImages/pop.jpg",
+          ),
+          GenreWidget(
+            genreName: "Rap",
+            genreImageURL: "assets/GenresImages/rap.jpg",
+          ),
+          GenreWidget(
+            genreName: "Rock and Roll",
+            genreImageURL: "assets/GenresImages/rocknroll.jpg",
+          ),
+        ],
+      ),
+    );
+
+     Widget _genresAndMoods = Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Padding(
+          padding: EdgeInsets.only(
+            top: SizeConfig.blockSizeHorizontal * 2.5,
+            left: SizeConfig.blockSizeHorizontal * 2,
+            bottom: SizeConfig.blockSizeHorizontal * 1.5,
+          ),
+          child: Text(
+            "Genres and Moods",
+            style: TextStyle(
+              fontWeight: FontWeight.w700,
+              fontSize: SizeConfig.blockSizeHorizontal * 5,
+            ),
+          ),
+        ),
+        Padding(
+          padding: EdgeInsets.only(left: SizeConfig.blockSizeHorizontal),
+          child: _genreRow,
+        ),
+      ],
+    );
+
+    return ListView(
+      children: <Widget>[
+        _exploreText,
+        _recentlyPlayedColumn,
+        _recommendedForYouColumn,
+        _topWidget,
+        _popularArtists,
+        _genresAndMoods,
+      ],
+    );
   }
 }
+
+Widget _top50Widget2 = Padding(
+  padding: EdgeInsets.symmetric(vertical: 20, horizontal: 40),
+  child: Stack(
+    children: <Widget>[
+      Opacity(
+        opacity: 0.85,
+        child: GridView.count(
+          shrinkWrap: true,
+          crossAxisCount: 2,
+          children: <Widget>[
+            SizedBox(
+              width: 50,
+              height: 50,
+              child: ClipRRect(
+                borderRadius: BorderRadius.only(topLeft: Radius.circular(5)),
+                child: Image.asset("assets/AlbumImages/art6.jpg"),
+              ),
+            ),
+            SizedBox(
+              width: 50,
+              height: 50,
+              child: ClipRRect(
+                borderRadius: BorderRadius.only(topRight: Radius.circular(5)),
+                child: Image.asset("assets/AlbumImages/art7.png"),
+              ),
+            ),
+            SizedBox(
+              width: 50,
+              height: 50,
+              child: ClipRRect(
+                borderRadius: BorderRadius.only(bottomLeft: Radius.circular(5)),
+                child: Image.asset("assets/AlbumImages/art8.jpg"),
+              ),
+            ),
+            SizedBox(
+              width: 50,
+              height: 50,
+              child: ClipRRect(
+                borderRadius: BorderRadius.only(bottomLeft: Radius.circular(5)),
+                child: Image.asset("assets/AlbumImages/art11.jpg"),
+              ),
+            ),
+          ],
+        ),
+      ),
+      Padding(
+        padding: const EdgeInsets.only(top: 240, left: 15),
+        child: Text(
+          "Top 50",
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 25,
+            fontWeight: FontWeight.w400,
+          ),
+        ),
+      ),
+    ],
+  ),
+);
