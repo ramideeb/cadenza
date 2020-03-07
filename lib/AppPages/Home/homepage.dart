@@ -1,3 +1,4 @@
+import 'package:assets_audio_player_example/AppPages/Home/musicrow.dart';
 import 'package:assets_audio_player_example/AppPages/PublicWidgets/circularArtistView.dart';
 import 'package:assets_audio_player_example/SizeConfig.dart';
 import 'package:assets_audio_player_example/modules/Album.dart';
@@ -5,28 +6,27 @@ import 'package:flutter/material.dart';
 import 'albumartwidget.dart';
 import 'genreswidget.dart';
 
-final List<Album>albumExamples = [
+final List<Album> albumExamples = [
   Album(
-            albumName: "Album",
-            albumArtImageUrl: "assets/AlbumImages/art2.jpg",
-            artistName: "Shosmo",
-          ),
-          Album(
-            albumName: "Album",
-            albumArtImageUrl: "assets/AlbumImages/art3.jpg",
-            artistName: "Shosmo",
-          ),
-          Album(
-            albumName: "Album",
-            albumArtImageUrl: "assets/AlbumImages/art6.jpg",
-            artistName: "Shosmo",
-          ),
-          Album(
-            albumName: "Album",
-            albumArtImageUrl: "assets/AlbumImages/art5.jpg",
-            artistName: "Shosmo",
-          ),
-
+    albumName: "Album",
+    albumArtImageUrl: "assets/AlbumImages/art2.jpg",
+    artistName: "Shosmo",
+  ),
+  Album(
+    albumName: "Album",
+    albumArtImageUrl: "assets/AlbumImages/art3.jpg",
+    artistName: "Shosmo",
+  ),
+  Album(
+    albumName: "Album",
+    albumArtImageUrl: "assets/AlbumImages/art6.jpg",
+    artistName: "Shosmo",
+  ),
+  Album(
+    albumName: "Album",
+    albumArtImageUrl: "assets/AlbumImages/art5.jpg",
+    artistName: "Shosmo",
+  ),
 ];
 
 class HomePageWidget extends StatefulWidget {
@@ -55,81 +55,85 @@ class _HomePageWidgetState extends State<HomePageWidget> {
       ),
     );
 
-    Widget _musicRow = SingleChildScrollView(
-      scrollDirection: Axis.horizontal,
-      child: Row(
-        children: <Widget>[
-          AlbumArtWidget(
-            albumName: "Album",
-            artImageURL: "assets/AlbumImages/art2.jpg",
-            artistName: "Shosmo",
-          ),
-          AlbumArtWidget(
-            albumName: "Album",
-            artImageURL: "assets/AlbumImages/art3.jpg",
-            artistName: "Shosmo",
-          ),
-          AlbumArtWidget(
-            albumName: "Album",
-            artImageURL: "assets/AlbumImages/art6.jpg",
-            artistName: "Shosmo",
-          ),
-          AlbumArtWidget(
-            albumName: "Album",
-            artImageURL: "assets/AlbumImages/art5.jpg",
-            artistName: "Shosmo",
-          ),
-        ],
-      ),
-    );
+    // Widget _musicRow = SingleChildScrollView(
+    //   scrollDirection: Axis.horizontal,
+    //   child: Row(
+    //     children: <Widget>[
+    //       AlbumArtWidget(
+    //         albumName: "Album",
+    //         artImageURL: "assets/AlbumImages/art2.jpg",
+    //         artistName: "Shosmo",
+    //       ),
+    //       AlbumArtWidget(
+    //         albumName: "Album",
+    //         artImageURL: "assets/AlbumImages/art3.jpg",
+    //         artistName: "Shosmo",
+    //       ),
+    //       AlbumArtWidget(
+    //         albumName: "Album",
+    //         artImageURL: "assets/AlbumImages/art6.jpg",
+    //         artistName: "Shosmo",
+    //       ),
+    //       AlbumArtWidget(
+    //         albumName: "Album",
+    //         artImageURL: "assets/AlbumImages/art5.jpg",
+    //         artistName: "Shosmo",
+    //       ),
+    //     ],
+    //   ),
+    // );
 
-    Widget _recentlyPlayedColumn = Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        Padding(
-          padding: EdgeInsets.only(
-            top: SizeConfig.blockSizeHorizontal * 2.5,
-            left: SizeConfig.blockSizeHorizontal * 2,
-            bottom: SizeConfig.blockSizeHorizontal * 1.5,
-          ),
-          child: Text(
-            "Recently Played",
-            style: TextStyle(
-              fontWeight: FontWeight.w700,
-              fontSize: SizeConfig.blockSizeHorizontal * 5,
-            ),
-          ),
-        ),
-        Padding(
-          padding: EdgeInsets.only(left: SizeConfig.blockSizeHorizontal),
-          child: _musicRow,
-        ),
-      ],
-    );
+    // Widget _recentlyPlayedColumn = Column(
+    //   crossAxisAlignment: CrossAxisAlignment.start,
+    //   children: <Widget>[
+    //     Padding(
+    //       padding: EdgeInsets.only(
+    //         top: SizeConfig.blockSizeHorizontal * 2.5,
+    //         left: SizeConfig.blockSizeHorizontal * 2,
+    //         bottom: SizeConfig.blockSizeHorizontal * 1.5,
+    //       ),
+    //       child: Text(
+    //         "Recently Played",
+    //         style: TextStyle(
+    //           fontWeight: FontWeight.w700,
+    //           fontSize: SizeConfig.blockSizeHorizontal * 5,
+    //         ),
+    //       ),
+    //     ),
+    //     Padding(
+    //       padding: EdgeInsets.only(left: SizeConfig.blockSizeHorizontal),
+    //       child: _musicRow,
+    //     ),
+    //   ],
+    // );
 
-    Widget _recommendedForYouColumn = Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        Padding(
-          padding: EdgeInsets.only(
-            top: SizeConfig.blockSizeHorizontal * 2.5,
-            left: SizeConfig.blockSizeHorizontal * 2,
-            bottom: SizeConfig.blockSizeHorizontal * 1.5,
-          ),
-          child: Text(
-            "Recommended For You",
-            style: TextStyle(
-              fontWeight: FontWeight.w700,
-              fontSize: SizeConfig.blockSizeHorizontal * 5,
-            ),
-          ),
-        ),
-        Padding(
-          padding: EdgeInsets.only(left: SizeConfig.blockSizeHorizontal),
-          child: _musicRow,
-        ),
-      ],
-    );
+    // Widget _recommendedForYouColumn = Column(
+    //   crossAxisAlignment: CrossAxisAlignment.start,
+    //   children: <Widget>[
+    //     Padding(
+    //       padding: EdgeInsets.only(
+    //         top: SizeConfig.blockSizeHorizontal * 2.5,
+    //         left: SizeConfig.blockSizeHorizontal * 2,
+    //         bottom: SizeConfig.blockSizeHorizontal * 1.5,
+    //       ),
+    //       child: Text(
+    //         "Recommended For You",
+    //         style: TextStyle(
+    //           fontWeight: FontWeight.w700,
+    //           fontSize: SizeConfig.blockSizeHorizontal * 5,
+    //         ),
+    //       ),
+    //     ),
+    //     Padding(
+    //       padding: EdgeInsets.only(left: SizeConfig.blockSizeHorizontal),
+    //       child: _musicRow,
+    //     ),
+    //   ],
+    // );
+
+    DefaultMusicRow _recentlyPlayed = DefaultMusicRow(title: "Recently Played",musicElements: albumExamples,);
+
+    DefaultMusicRow _recommendedForYou = DefaultMusicRow(title: "Recommended For You",musicElements: albumExamples,);
 
     Widget _topWidget = Padding(
       padding: EdgeInsets.only(top: 20),
@@ -345,8 +349,8 @@ class _HomePageWidgetState extends State<HomePageWidget> {
         SliverList(
           delegate: SliverChildListDelegate([
             _exploreText,
-            _recentlyPlayedColumn,
-            _recommendedForYouColumn,
+            _recentlyPlayed,
+            _recommendedForYou,
           ]),
         ),
         _top50Widget,

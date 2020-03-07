@@ -6,17 +6,25 @@ import 'albumartwidget.dart';
 
 class DefaultMusicRow extends StatelessWidget {
   final List<Album> musicElements;
-
-  const DefaultMusicRow({Key key, this.musicElements}) : super(key: key);
+  final String title;
+  List<Widget> elements= [];
+  DefaultMusicRow({Key key, this.musicElements, this.title}) : super(key: key) {
+    for (var i = 0; i < musicElements.length; i++) {
+      elements.add(
+        AlbumArtWidget(
+          albumName: musicElements[i].albumName,
+          artImageURL: musicElements[i].albumArtImageUrl,
+          artistName: musicElements[i].artistName,
+        ),
+      );
+    }
+  }
   @override
   Widget build(BuildContext context) {
-    Widget _musicRow = ListView.builder(
-      itemCount: musicElements.length,
+    Widget _musicRow = SingleChildScrollView(
       scrollDirection: Axis.horizontal,
-      itemBuilder: (context, i) => AlbumArtWidget(
-        albumName: musicElements[i].albumName,
-        artImageURL: musicElements[i].albumArtImageUrl,
-        artistName: musicElements[i].artistName,
+      child: Row(
+        children: elements,
       ),
     );
 
@@ -30,7 +38,7 @@ class DefaultMusicRow extends StatelessWidget {
             bottom: SizeConfig.blockSizeHorizontal * 1.5,
           ),
           child: Text(
-            "Recently Played",
+            "${this.title}",
             style: TextStyle(
               fontWeight: FontWeight.w700,
               fontSize: SizeConfig.blockSizeHorizontal * 5,
@@ -45,3 +53,11 @@ class DefaultMusicRow extends StatelessWidget {
     );
   }
 }
+// ListView.builder(
+//         itemCount: musicElements.length,
+//         itemBuilder: (con,i)=> AlbumArtWidget(
+//           albumName: musicElements[i].albumName,
+//           artImageURL: musicElements[i].albumArtImageUrl,
+//           artistName: musicElements[i].artistName,
+//         ),
+//       ),
