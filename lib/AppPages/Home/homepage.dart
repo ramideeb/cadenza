@@ -1,8 +1,33 @@
 import 'package:assets_audio_player_example/AppPages/PublicWidgets/circularArtistView.dart';
 import 'package:assets_audio_player_example/SizeConfig.dart';
+import 'package:assets_audio_player_example/modules/Album.dart';
 import 'package:flutter/material.dart';
 import 'albumartwidget.dart';
 import 'genreswidget.dart';
+
+final List<Album>albumExamples = [
+  Album(
+            albumName: "Album",
+            albumArtImageUrl: "assets/AlbumImages/art2.jpg",
+            artistName: "Shosmo",
+          ),
+          Album(
+            albumName: "Album",
+            albumArtImageUrl: "assets/AlbumImages/art3.jpg",
+            artistName: "Shosmo",
+          ),
+          Album(
+            albumName: "Album",
+            albumArtImageUrl: "assets/AlbumImages/art6.jpg",
+            artistName: "Shosmo",
+          ),
+          Album(
+            albumName: "Album",
+            albumArtImageUrl: "assets/AlbumImages/art5.jpg",
+            artistName: "Shosmo",
+          ),
+
+];
 
 class HomePageWidget extends StatefulWidget {
   @override
@@ -176,56 +201,54 @@ class _HomePageWidgetState extends State<HomePageWidget> {
     );
 
     Widget _top50Widget = SliverPadding(
-      padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+      padding: EdgeInsets.symmetric(vertical: 20, horizontal: 10),
       sliver: SliverGrid.count(
+        childAspectRatio: 1.2,
         crossAxisCount: 2,
         children: <Widget>[
-          SizedBox(
-            width: 100,
-            height: 100,
-            child: ClipRRect(
-              borderRadius: BorderRadius.only(topLeft: Radius.circular(5)),
-              child: Image.asset("assets/AlbumImages/art6.jpg"),
+          ClipRRect(
+            borderRadius: BorderRadius.only(topLeft: Radius.circular(14)),
+            child: Image.asset(
+              "assets/AlbumImages/art12.jpg",
+              fit: BoxFit.fill,
             ),
           ),
-          SizedBox(
-            width: 100,
-            height: 100,
-            child: ClipRRect(
-              borderRadius: BorderRadius.only(topLeft: Radius.circular(5)),
-              child: Image.asset("assets/AlbumImages/art6.jpg"),
+          ClipRRect(
+            borderRadius: BorderRadius.only(topRight: Radius.circular(14)),
+            child: Image.asset(
+              "assets/AlbumImages/art7.png",
+              fit: BoxFit.fill,
             ),
           ),
-          SizedBox(
-            width: 100,
-            height: 100,
-            child: Stack(
-              children: <Widget>[
-                ClipRRect(
-                  borderRadius:
-                      BorderRadius.only(bottomLeft: Radius.circular(5)),
-                  child: Image.asset("assets/AlbumImages/art8.jpg"),
+          Stack(
+            fit: StackFit.expand,
+            children: <Widget>[
+              ClipRRect(
+                borderRadius:
+                    BorderRadius.only(bottomLeft: Radius.circular(14)),
+                child: Image.asset(
+                  "assets/AlbumImages/art8.jpg",
+                  fit: BoxFit.fill,
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 120, left: 15),
-                  child: Text(
-                    "Top 50",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 25,
-                      fontWeight: FontWeight.w400,
-                    ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 100, left: 15),
+                child: Text(
+                  "Top 50",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 25,
+                    fontWeight: FontWeight.w400,
                   ),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
-          SizedBox(
-            width: 100,
-            height: 100,
-            child: ClipRRect(
-              borderRadius: BorderRadius.only(topLeft: Radius.circular(5)),
-              child: Image.asset("assets/AlbumImages/art6.jpg"),
+          ClipRRect(
+            borderRadius: BorderRadius.only(bottomRight: Radius.circular(5)),
+            child: Image.asset(
+              "assets/AlbumImages/art11.jpg",
+              fit: BoxFit.fill,
             ),
           ),
         ],
@@ -293,7 +316,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
       ),
     );
 
-     Widget _genresAndMoods = Column(
+    Widget _genresAndMoods = Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Padding(
@@ -317,14 +340,22 @@ class _HomePageWidgetState extends State<HomePageWidget> {
       ],
     );
 
-    return ListView(
-      children: <Widget>[
-        _exploreText,
-        _recentlyPlayedColumn,
-        _recommendedForYouColumn,
-        _topWidget,
-        _popularArtists,
-        _genresAndMoods,
+    return CustomScrollView(
+      slivers: <Widget>[
+        SliverList(
+          delegate: SliverChildListDelegate([
+            _exploreText,
+            _recentlyPlayedColumn,
+            _recommendedForYouColumn,
+          ]),
+        ),
+        _top50Widget,
+        SliverList(
+          delegate: SliverChildListDelegate([
+            _popularArtists,
+            _genresAndMoods,
+          ]),
+        )
       ],
     );
   }

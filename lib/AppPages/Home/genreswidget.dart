@@ -16,22 +16,26 @@ class GenreWidget extends StatelessWidget {
     return Column(
       children: <Widget>[
         Padding(
-          padding:
-              EdgeInsets.symmetric(horizontal: SizeConfig.blockSizeHorizontal),
+          padding: EdgeInsets.symmetric(
+            horizontal: SizeConfig.blockSizeHorizontal,
+          ),
           child: SizedBox(
             height: SizeConfig.blockSizeHorizontal * 30,
             width: SizeConfig.blockSizeHorizontal * 30,
             child: ClipRRect(
               borderRadius: BorderRadius.circular(14),
-              child: Image.asset("${this.genreImageURL}",fit: BoxFit.fill,),
+              child: Image.asset(
+                "${this.genreImageURL}",
+                fit: BoxFit.fill,
+              ),
             ),
           ),
         ),
-        Padding(
-          padding: const EdgeInsets.only(top: 5),
+        Center(
           child: Text(
             this.genreName,
             style: TextStyle(
+              
               fontSize: SizeConfig.blockSizeHorizontal * 5.5,
             ),
           ),
