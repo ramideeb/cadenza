@@ -1,30 +1,27 @@
-import 'package:assets_audio_player_example/modules/Album.dart';
+import 'package:assets_audio_player_example/modules/genre.dart';
 import 'package:flutter/material.dart';
 
 import '../../SizeConfig.dart';
-import 'albumartwidget.dart';
+import 'genreswidget.dart';
 
-class DefaultMusicRow extends StatelessWidget {
-  final List<Album> musicElements;
+class GenresRow extends StatelessWidget {
+  final List<Genre> genreElements;
   final String title;
-  
-  DefaultMusicRow({Key key, this.musicElements, this.title}) : super(key: key) ;
-  
+
+  const GenresRow({Key key, this.genreElements, this.title}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    
-    Widget _musicRow = SizedBox(
-      height: SizeConfig.blockSizeHorizontal * 49,
+    Widget _genreRow = SizedBox(
+      height: SizeConfig.blockSizeHorizontal*40,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
-        itemCount: musicElements.length,
-        itemBuilder: (con, i) => AlbumArtWidget(
-          albumName: musicElements[i].albumName,
-          artImageURL: musicElements[i].albumArtImageUrl,
-          artistName: musicElements[i].artistName,
+        itemCount: genreElements.length,
+        itemBuilder: (con, i) => GenreWidget(
+          genreImageURL: genreElements[i].genreImageUrl,
+          genreName: genreElements[i].genreName,
         ),
       ),
-    );
+      );
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -36,16 +33,16 @@ class DefaultMusicRow extends StatelessWidget {
             bottom: SizeConfig.blockSizeHorizontal * 1.5,
           ),
           child: Text(
-            "${this.title}",
+            "$title",
             style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: SizeConfig.blockSizeHorizontal * 6,
+              fontWeight: FontWeight.w700,
+              fontSize: SizeConfig.blockSizeHorizontal * 5,
             ),
           ),
         ),
         Padding(
           padding: EdgeInsets.only(left: SizeConfig.blockSizeHorizontal),
-          child: _musicRow,
+          child: _genreRow,
         ),
       ],
     );

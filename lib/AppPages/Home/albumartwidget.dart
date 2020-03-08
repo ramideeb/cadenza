@@ -17,6 +17,7 @@ class AlbumArtWidget extends StatelessWidget {
         horizontal: SizeConfig.blockSizeHorizontal,
       ),
       child: Column(
+        mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           SizedBox(
@@ -32,7 +33,7 @@ class AlbumArtWidget extends StatelessWidget {
             child: Text(
               this.albumName,
               style: TextStyle(
-                fontWeight: FontWeight.w600,
+                fontWeight: FontWeight.w800,
                 fontSize: SizeConfig.blockSizeHorizontal * 5,
               ),
             ),

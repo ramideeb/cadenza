@@ -35,7 +35,7 @@ class GenreWidget extends StatelessWidget {
           child: Text(
             this.genreName,
             style: TextStyle(
-              
+              fontWeight: FontWeight.w600,
               fontSize: SizeConfig.blockSizeHorizontal * 5.5,
             ),
           ),
