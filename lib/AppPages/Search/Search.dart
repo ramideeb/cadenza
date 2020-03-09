@@ -4,23 +4,38 @@ import 'package:flutter/material.dart';
 import 'DiscoveryWidget.dart';
 
 class Search extends StatefulWidget {
+  TextEditingController _controller;
+  TextEditingController _controllerSearchBar;
+
+   TextEditingController get controller => _controller;
+
+  set controller(TextEditingController value) {
+    _controller = value;
+  }
+
   @override
   _SearchState createState() => _SearchState();
+
+  TextEditingController get controllerSearchBar => _controllerSearchBar;
+
+  set controllerSearchBar(TextEditingController value) {
+    _controllerSearchBar = value;
+  }
 }
 
 class _SearchState extends State<Search> {
-  static TextEditingController _controller;
-  static TextEditingController _controllerSearchBar;
   static bool _searching = false;
 
   void initState() {
     super.initState();
-    _controller = TextEditingController();
-    _controllerSearchBar = TextEditingController();
+    widget.controllerSearchBar = TextEditingController();
+    widget.controller = TextEditingController();
   }
 
   void dispose() {
-//    _controller.dispose();
+    widget.controllerSearchBar.dispose();
+    widget.controller.dispose();
+
     super.dispose();
   }
 
@@ -34,7 +49,7 @@ class _SearchState extends State<Search> {
     });
   }
 
-  //TODO: no need for it can delete it 
+  //TODO: no need for it can delete it
   TextField searchBar = TextField(
     enabled: false,
 //    controller: _controller,
@@ -79,7 +94,7 @@ class _SearchState extends State<Search> {
         ? SearchResult(
             searchBar: SearchBar(
               autoFocus: true,
-              controller: _controllerSearchBar,
+              controller: widget.controllerSearchBar,
               onChangeValue: (String value) => changeState(value),
             ),
           )
@@ -128,7 +143,7 @@ class _SearchState extends State<Search> {
                       right: MediaQuery.of(context).size.width * 0.025,
                     ),
                     child: SearchBar(
-                      controller: _controller,
+                      controller: widget.controller,
                       onChangeValue: (String value) => changeState(value),
                       onTap: () {
                         setState(() {
@@ -176,7 +191,9 @@ class _SearchState extends State<Search> {
                         scrollDirection: Axis.horizontal,
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: <Widget>[],
+                          children: <Widget>[
+                            //TODO: from HomePageForRealz branch
+                          ],
                         ),
                       ),
                       Padding(
