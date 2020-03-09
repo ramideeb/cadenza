@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'Profile/Profile.dart';
+import 'Search/Search.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key key}) : super(key: key);
@@ -18,10 +19,7 @@ class _HomePageState extends State<HomePage> {
       'Index 0: Home',
       style: optionStyle,
     ),
-    Text(
-      'Index 1: Home',
-      style: optionStyle,
-    ),
+    Search(),
     Text(
       'Index 2: Business',
       style: optionStyle,
