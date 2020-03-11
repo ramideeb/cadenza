@@ -1,4 +1,4 @@
-import 'package:assets_audio_player_example/AppPages/Album/Album.dart';
+import 'package:assets_audio_player_example/AppPages/MusicPlayer/MusicPlayer.dart';
 import 'package:flutter/material.dart';
 
 import 'Profile/Profile.dart';
@@ -23,7 +23,7 @@ class _HomePageState extends State<HomePage> {
       style: optionStyle,
     ),
     Search(),
-    Album(),
+    MusicPlayer(),
     ProfilePage()
   ];
 
@@ -40,28 +40,30 @@ class _HomePageState extends State<HomePage> {
         height: MediaQuery.of(context).size.height,
         child: _widgetOptions.elementAt(_selectedIndex),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.music_note),
-            title: Text('EXPLORE'),
-          ),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.search), title: Text('SEARCH')),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.library_music),
-            title: Text('LIBRARIES'),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.account_circle),
-            title: Text('PROFILE'),
-          ),
-        ],
-        currentIndex: _selectedIndex,
-        selectedItemColor: Color.fromRGBO(230, 57, 70, 1),
-        onTap: _onItemTapped,
-        unselectedItemColor: Color.fromRGBO(130, 130, 130, 1),
-        showUnselectedLabels: true,
+      bottomNavigationBar: Builder(
+        builder: (context2) => BottomNavigationBar(
+          items: <BottomNavigationBarItem>[
+            BottomNavigationBarItem(
+              icon: Icon(Icons.music_note),
+              title: Text('EXPLORE'),
+            ),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.search), title: Text('SEARCH')),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.library_music),
+              title: Text('LIBRARIES'),
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.account_circle),
+              title: Text('PROFILE'),
+            ),
+          ],
+          currentIndex: _selectedIndex,
+          selectedItemColor: Color.fromRGBO(230, 57, 70, 1),
+          onTap: _onItemTapped,
+          unselectedItemColor: Color.fromRGBO(130, 130, 130, 1),
+          showUnselectedLabels: true,
+        ),
       ),
     );
   }
