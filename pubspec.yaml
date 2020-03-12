@@ -15,6 +15,7 @@ dependencies:
   audioplayer: ^0.5.2
   font_awesome_flutter: "any"
   pinput: ^0.1.10
+  carousel_slider: ^1.4.1
   
 dev_dependencies:
   flutter_test:
@@ -26,6 +27,11 @@ flutter:
       - family: OpenSans
         fonts:
           - asset: assets/OpenSans-Bold.ttf
+
+      - family: CutsomIcons
+        fonts:
+          - asset: assets/fonts/CutsomIcons.ttf
+          
       
       - family: Poppins
         fonts:
@@ -47,7 +53,7 @@ flutter:
             weight: 800
           - asset: assets/fonts/Poppins-ExtraBold.ttf
             weight: 900       
-
+      
           
   assets:
     - assets/GenresImages/

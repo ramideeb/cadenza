@@ -1,4 +1,5 @@
 import 'package:assets_audio_player_example/AppPages/Home/homepage.dart';
+import 'package:assets_audio_player_example/AppPages/LibrariesPage/libraypage.dart';
 import 'package:flutter/material.dart';
 
 import 'Profile/Profile.dart';
@@ -20,11 +21,8 @@ class _HomePageState extends State<HomePage> {
       'Index 1: Home',
       style: optionStyle,
     ),
-    Text(
-      'Index 2: Business',
-      style: optionStyle,
-    ),
-      ProfilePage()
+    LibraryPage(),
+    ProfilePage()
   ];
 
   void _onItemTapped(int index) {
