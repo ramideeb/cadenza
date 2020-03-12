@@ -56,7 +56,7 @@ class MuiscGrid extends StatelessWidget {
                 ),
               ),
               Positioned(
-                top: SizeConfig.blockSizeVertical * 17,
+                bottom: SizeConfig.blockSizeVertical*1.5,
                 left: SizeConfig.blockSizeHorizontal * 2,
                 child: Text(
                   "$title",
