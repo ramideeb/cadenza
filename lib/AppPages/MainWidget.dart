@@ -38,7 +38,7 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       body: Container(
         height: MediaQuery.of(context).size.height,
-        child: _widgetOptions.elementAt(_selectedIndex),
+        child: SafeArea(child: _widgetOptions.elementAt(_selectedIndex)),
       ),
       bottomNavigationBar: BottomNavigationBar(
         

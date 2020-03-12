@@ -12,7 +12,7 @@ class GenresRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Widget _genreRow = SizedBox(
-      height: SizeConfig.blockSizeHorizontal*40,
+      height: SizeConfig.blockSizeVertical*28,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
         itemCount: genreElements.length,
@@ -28,15 +28,15 @@ class GenresRow extends StatelessWidget {
       children: <Widget>[
         Padding(
           padding: EdgeInsets.only(
-            top: SizeConfig.blockSizeHorizontal * 2.5,
+            top: SizeConfig.blockSizeVertical * 1.5,
             left: SizeConfig.blockSizeHorizontal * 2,
-            bottom: SizeConfig.blockSizeHorizontal * 1.5,
+            bottom: SizeConfig.blockSizeVertical,
           ),
           child: Text(
             "$title",
             style: TextStyle(
               fontWeight: FontWeight.w700,
-              fontSize: SizeConfig.blockSizeHorizontal * 5,
+              fontSize: 21,
             ),
           ),
         ),
