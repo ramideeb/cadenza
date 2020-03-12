@@ -86,15 +86,15 @@ class _HomePageWidgetState extends State<HomePageWidget> {
 
     Widget _exploreText = Padding(
       padding: EdgeInsets.only(
-        top: SizeConfig.blockSizeHorizontal * 6,
+        top: SizeConfig.blockSizeVertical,
         left: SizeConfig.blockSizeHorizontal * 2,
-        bottom: SizeConfig.blockSizeHorizontal * 4,
+        bottom: SizeConfig.blockSizeVertical * 2.5,
       ),
       child: Text(
         "Explore",
         style: TextStyle(
           fontWeight: FontWeight.w700,
-          fontSize: SizeConfig.blockSizeHorizontal * 10,
+          fontSize: 37,
         ),
       ),
     );
@@ -132,15 +132,15 @@ class _HomePageWidgetState extends State<HomePageWidget> {
       children: <Widget>[
         Padding(
           padding: EdgeInsets.only(
-            top: SizeConfig.blockSizeHorizontal * 2.5,
+            top: SizeConfig.blockSizeVertical*1.5,
             left: SizeConfig.blockSizeHorizontal * 2,
-            bottom: SizeConfig.blockSizeHorizontal * 1.5,
+            bottom: SizeConfig.blockSizeVertical,
           ),
           child: Text(
             "Popular Artists",
             style: TextStyle(
               fontWeight: FontWeight.w700,
-              fontSize: SizeConfig.blockSizeHorizontal * 5,
+              fontSize: 21,
             ),
           ),
         ),

@@ -14,7 +14,7 @@ class DefaultMusicRow extends StatelessWidget {
   Widget build(BuildContext context) {
     
     Widget _musicRow = SizedBox(
-      height: SizeConfig.blockSizeHorizontal * 49,
+      height: SizeConfig.blockSizeVertical*30,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
         itemCount: musicElements.length,
@@ -31,15 +31,15 @@ class DefaultMusicRow extends StatelessWidget {
       children: <Widget>[
         Padding(
           padding: EdgeInsets.only(
-            top: SizeConfig.blockSizeHorizontal * 2.5,
+            top: SizeConfig.blockSizeVertical*1.5,
             left: SizeConfig.blockSizeHorizontal * 2,
-            bottom: SizeConfig.blockSizeHorizontal * 1.5,
+            bottom: SizeConfig.blockSizeVertical,
           ),
           child: Text(
             "${this.title}",
             style: TextStyle(
               fontWeight: FontWeight.bold,
-              fontSize: SizeConfig.blockSizeHorizontal * 6,
+              fontSize: 21,
             ),
           ),
         ),

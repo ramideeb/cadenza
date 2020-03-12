@@ -13,9 +13,9 @@ class MuiscGrid extends StatelessWidget {
     return SliverPadding(
       padding: EdgeInsets.fromLTRB(
         0,
-        SizeConfig.blockSizeHorizontal * 5,
+        SizeConfig.blockSizeVertical * 2.5,
         SizeConfig.blockSizeHorizontal * 2.5,
-        SizeConfig.blockSizeHorizontal * 5,
+        SizeConfig.blockSizeVertical * 3,
       ),
       sliver: SliverGrid.count(
         childAspectRatio: 1.1,
@@ -55,15 +55,14 @@ class MuiscGrid extends StatelessWidget {
                   ),
                 ),
               ),
-              Padding(
-                padding: EdgeInsets.only(
-                    top: SizeConfig.blockSizeHorizontal * 30,
-                    left: SizeConfig.blockSizeHorizontal * 2),
+              Positioned(
+                bottom: SizeConfig.blockSizeVertical*1.5,
+                left: SizeConfig.blockSizeHorizontal * 2,
                 child: Text(
                   "$title",
                   style: TextStyle(
                     color: Colors.white,
-                    fontSize: SizeConfig.blockSizeHorizontal * 7,
+                    fontSize: 25,
                     fontWeight: FontWeight.w400,
                   ),
                 ),
