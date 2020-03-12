@@ -49,13 +49,17 @@ class Album extends StatelessWidget {
                     borderRadius: BorderRadius.vertical(
                       bottom: Radius.circular(30),
                     ),
-                    child: Image(
-                      width: MediaQuery.of(context).size.width,
-                      height: MediaQuery.of(context).size.width,
-                      image: NetworkImage(
-                        "https://images-na.ssl-images-amazon.com/images/I/91zZQ3p3HEL._SL1500_.jpg",
+                    child: Hero(
+                      tag: "album",
+                      transitionOnUserGestures: true,
+                      child: Image(
+                        width: MediaQuery.of(context).size.width,
+                        height: MediaQuery.of(context).size.width,
+                        image: NetworkImage(
+                          "https://images-na.ssl-images-amazon.com/images/I/91zZQ3p3HEL._SL1500_.jpg",
+                        ),
+                        fit: BoxFit.cover,
                       ),
-                      fit: BoxFit.cover,
                     ),
                   ),
                 ),
@@ -67,7 +71,9 @@ class Album extends StatelessWidget {
                       IconButton(
                         color: Colors.white,
                         icon: Icon(Icons.arrow_back),
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
                       ),
                       IconButton(
                         icon: Icon(Icons.star),

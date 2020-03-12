@@ -1,3 +1,4 @@
+import 'package:assets_audio_player_example/AppPages/Album/Album.dart';
 import 'package:assets_audio_player_example/AppPages/MusicPlayer/MusicPlayer.dart';
 import 'package:flutter/material.dart';
 
@@ -36,9 +37,119 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        height: MediaQuery.of(context).size.height,
-        child: _widgetOptions.elementAt(_selectedIndex),
+      body: Stack(
+        alignment: AlignmentDirectional.bottomCenter,
+        children: [
+          Container(
+            height: MediaQuery.of(context).size.height,
+            child: _widgetOptions.elementAt(_selectedIndex),
+          ),
+          GestureDetector(
+//            onHorizontalDragStart: (DragStartDetails dragState) async {
+//                            print(dragState);
+//              Navigator.push(
+//                context,
+//                MaterialPageRoute(
+//                  builder: (context) => MaterialApp(
+//                    home: Scaffold(body: Album()),
+//                  ),
+//                ),
+//              );
+//            },
+            child: Container(
+              decoration: BoxDecoration(
+                color: Color(0XFF1D3557),
+                borderRadius: BorderRadius.all(Radius.circular(10)),
+              ),
+              height: 65,
+              width: MediaQuery.of(context).size.width,
+              margin: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+              padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Row(
+                    children: <Widget>[
+                      ClipOval(
+                        child: InkWell(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (_) =>Scaffold(body: Album(),
+                                ),
+                              ),
+                            );
+                          },
+                          child: Hero(
+                            tag: "album",
+                            transitionOnUserGestures: true,
+                            child: Image(
+                              image: NetworkImage(
+                                  "https://miro.medium.com/max/1200/0*zaNztEcTW01oqBBF.jpg"),
+                              fit: BoxFit.cover,
+                              height: 50,
+                            ),
+                          ),
+                        ),
+                      ),
+                      SizedBox(width: 10),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Expanded(
+                            child: Text(
+                              "Better",
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 20,
+//                              height: 1,
+                                fontWeight: FontWeight.w600,
+                                letterSpacing: 0.6,
+                              ),
+                            ),
+                          ),
+                          Expanded(
+                            child: Text(
+                              "Free Spirit",
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 15,
+//                              height: 1,
+                                fontWeight: FontWeight.w400,
+                                letterSpacing: 0.4,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  ),
+                  ClipOval(
+                    child: Material(
+                      color: Colors.transparent,
+                      child: InkWell(
+                        child: SizedBox(
+                          width: 50,
+                          height: 50,
+                          child: Icon(
+                            Icons.pause,
+                            color: Colors.white,
+                            size: 30,
+                          ),
+                        ),
+                        onTap: () {},
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            ),
+          ),
+        ],
       ),
       bottomNavigationBar: Builder(
         builder: (context2) => BottomNavigationBar(
