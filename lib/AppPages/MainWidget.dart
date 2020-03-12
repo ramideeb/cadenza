@@ -1,4 +1,3 @@
-import 'package:assets_audio_player_example/AppPages/Album/Album.dart';
 import 'package:assets_audio_player_example/AppPages/MusicPlayer/MusicPlayer.dart';
 import 'package:flutter/material.dart';
 
@@ -76,13 +75,13 @@ class _HomePageState extends State<HomePage> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (_) =>Scaffold(body: Album(),
+                                builder: (_) =>Scaffold(body: MusicPlayer(),
                                 ),
                               ),
                             );
                           },
                           child: Hero(
-                            tag: "album",
+                            tag: "Music player",
                             transitionOnUserGestures: true,
                             child: Image(
                               image: NetworkImage(

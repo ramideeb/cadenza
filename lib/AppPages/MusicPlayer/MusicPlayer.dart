@@ -28,7 +28,7 @@ class _MusicPlayerState extends State<MusicPlayer> {
               children: <Widget>[
                 IconButton(
                   icon: Icon(Icons.keyboard_arrow_down),
-                  onPressed: () {},
+                  onPressed: () => Navigator.pop(context),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 10),
@@ -79,13 +79,16 @@ class _MusicPlayerState extends State<MusicPlayer> {
                       ]),
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(10),
-                    child: Image(
-                      width: MediaQuery.of(context).size.width,
-                      height: MediaQuery.of(context).size.width,
-                      image: NetworkImage(
-                        "https://images-na.ssl-images-amazon.com/images/I/91zZQ3p3HEL._SL1500_.jpg",
+                    child: Hero(
+                      tag: "Music player",
+                      child: Image(
+                        width: MediaQuery.of(context).size.width,
+                        height: MediaQuery.of(context).size.width,
+                        image: NetworkImage(
+                          "https://images-na.ssl-images-amazon.com/images/I/91zZQ3p3HEL._SL1500_.jpg",
+                        ),
+                        fit: BoxFit.cover,
                       ),
-                      fit: BoxFit.cover,
                     ),
                   ),
                 ),
