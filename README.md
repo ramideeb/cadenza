@@ -1,4 +1,4 @@
-![UI](/i.png)
+![UI](/i.PNG)
 Format: ![Alt Text](url)
 # music_streaming_app
 
