@@ -1,4 +1,5 @@
 import 'package:assets_audio_player_example/AppPages/MusicPlayer/MusicPlayer.dart';
+import 'package:assets_audio_player_example/AppPages/Home/homepage.dart';
 import 'package:flutter/material.dart';
 
 import 'Profile/Profile.dart';
@@ -18,12 +19,12 @@ class _HomePageState extends State<HomePage> {
     fontWeight: FontWeight.bold,
   );
   static List<Widget> _widgetOptions = <Widget>[
+    HomePageWidget(),
+    Search(),
     Text(
-      'Index 0: Home',
+      'Index 2: Business',
       style: optionStyle,
     ),
-    Search(),
-    MusicPlayer(),
     ProfilePage()
   ];
 
