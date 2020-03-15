@@ -1,14 +1,14 @@
+import 'package:assets_audio_player_example/modules/genre.dart';
 import 'package:flutter/material.dart';
 
 import '../../SizeConfig.dart';
 
 class GenreWidget extends StatelessWidget {
-  final String genreImageURL;
-  final String genreName;
+  final Genre genre;
 
-  GenreWidget({Key key, this.genreImageURL, this.genreName}) : super(key: key);
+  final SizeConfig _sizeConfig = SizeConfig();
 
-  SizeConfig _sizeConfig = SizeConfig();
+  GenreWidget({Key key, this.genre}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +25,7 @@ class GenreWidget extends StatelessWidget {
             child: ClipRRect(
               borderRadius: BorderRadius.circular(14),
               child: Image.asset(
-                "${this.genreImageURL}",
+                "${genre.genreImageUrl}",
                 fit: BoxFit.fill,
               ),
             ),
@@ -33,7 +33,7 @@ class GenreWidget extends StatelessWidget {
         ),
         Center(
           child: Text(
-            this.genreName,
+            genre.genreName,
             style: TextStyle(
               fontWeight: FontWeight.w600,
               fontSize: 20,

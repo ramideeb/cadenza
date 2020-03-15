@@ -1,7 +1,7 @@
 import 'package:assets_audio_player_example/AppPages/MusicPlayer/MusicPlayer.dart';
 import 'package:assets_audio_player_example/AppPages/Home/homepage.dart';
+import 'package:assets_audio_player_example/AppPages/LibrariesPage/library.dart';
 import 'package:flutter/material.dart';
-
 import 'Profile/Profile.dart';
 import 'Search/Search.dart';
 
@@ -21,10 +21,7 @@ class _HomePageState extends State<HomePage> {
   static List<Widget> _widgetOptions = <Widget>[
     HomePageWidget(),
     Search(),
-    Text(
-      'Index 2: Business',
-      style: optionStyle,
-    ),
+    Library(),
     ProfilePage()
   ];
 
