@@ -4,6 +4,9 @@ import 'package:flutter/material.dart';
 import '../../SizeConfig.dart';
 
 class TopRow extends StatelessWidget {
+  final Function goBack;
+
+  const TopRow({Key key, this.goBack}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -18,7 +21,9 @@ class TopRow extends StatelessWidget {
               size: 32,
               color: Colors.black,
             ),
-            onPressed: null,
+            onPressed: () {
+              goBack();
+            },
           ),
           Container(
             width: SizeConfig.blockSizeHorizontal * 48,

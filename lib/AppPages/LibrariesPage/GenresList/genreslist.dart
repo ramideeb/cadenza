@@ -23,11 +23,11 @@ final List<Genre> genreExamples = [
     genreName: "Rock and Roll",
     genreImageUrl: "assets/GenresImages/rock.jpg",
   ),
-   Genre(
+  Genre(
     genreName: "Alt",
     genreImageUrl: "assets/GenresImages/alt.jpg",
   ),
-   Genre(
+  Genre(
     genreName: "Country",
     genreImageUrl: "assets/GenresImages/country.jpg",
   ),
@@ -35,7 +35,7 @@ final List<Genre> genreExamples = [
     genreName: "Blues",
     genreImageUrl: "assets/GenresImages/blues.jpg",
   ),
-   Genre(
+  Genre(
     genreName: "Jazz",
     genreImageUrl: "assets/GenresImages/jazz.png",
   ),
@@ -51,11 +51,11 @@ final List<Genre> genreExamples = [
     genreName: "Rock and Roll",
     genreImageUrl: "assets/GenresImages/rock.jpg",
   ),
-   Genre(
+  Genre(
     genreName: "Alt",
     genreImageUrl: "assets/GenresImages/alt.jpg",
   ),
-   Genre(
+  Genre(
     genreName: "Country",
     genreImageUrl: "assets/GenresImages/country.jpg",
   ),
@@ -66,6 +66,9 @@ final List<Genre> genreExamples = [
 ];
 
 class GenresList extends StatefulWidget {
+  final Function changePage;
+
+  const GenresList({Key key, this.changePage}) : super(key: key);
   @override
   _GenresListState createState() => _GenresListState();
 }
@@ -80,11 +83,17 @@ class _GenresListState extends State<GenresList> {
         initialScrollOffset: SizeConfig.blockSizeVertical * 12);
   }
 
+  goBack() {
+    widget.changePage("main");
+  }
+
   @override
   Widget build(BuildContext context) {
     SearchBar _searchBar = SearchBar();
 
-    TopRow _topRow = TopRow();
+    TopRow _topRow = TopRow(
+      goBack: goBack,
+    );
 
     GenresGrid _grid = GenresGrid(
       items: genreExamples,

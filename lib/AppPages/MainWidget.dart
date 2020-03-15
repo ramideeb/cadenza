@@ -1,11 +1,6 @@
 import 'package:assets_audio_player_example/AppPages/Home/homepage.dart';
-import 'package:assets_audio_player_example/AppPages/LibrariesPage/AlbumsList/albumslist.dart';
-import 'package:assets_audio_player_example/AppPages/LibrariesPage/ArtistsList/artistslist.dart';
-import 'package:assets_audio_player_example/AppPages/LibrariesPage/GenresList/genreslist.dart';
-// import 'package:assets_audio_player_example/AppPages/LibrariesPage/songslist.dart';
+import 'package:assets_audio_player_example/AppPages/LibrariesPage/library.dart';
 import 'package:flutter/material.dart';
-import 'LibrariesPage/MainList/libraypage.dart';
-import 'LibrariesPage/SongsList/songslist.dart';
 import 'Profile/Profile.dart';
 
 class HomePage extends StatefulWidget {
@@ -25,11 +20,7 @@ class _HomePageState extends State<HomePage> {
       'Index 1: Home',
       style: optionStyle,
     ),
-    // ArtistsList(),
-    // AlbumsList(),
-    // LibraryPage(),
-    // SongsList(),
-    GenresList(),
+    Library(),
     ProfilePage()
   ];
 

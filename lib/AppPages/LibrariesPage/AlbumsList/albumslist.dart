@@ -30,6 +30,9 @@ final List<Album> albumExamples = [
 ];
 
 class AlbumsList extends StatefulWidget {
+  final Function changePage;
+
+  const AlbumsList({Key key, this.changePage}) : super(key: key);
   @override
   _AlbumsListState createState() => _AlbumsListState();
 }
@@ -44,13 +47,19 @@ class _AlbumsListState extends State<AlbumsList> {
         initialScrollOffset: SizeConfig.blockSizeVertical * 12);
   }
 
+  goBack() {
+    widget.changePage("main");
+  }
+
   @override
   Widget build(BuildContext context) {
     SearchBar _searchBar = SearchBar();
 
-    TopRow _topRow = TopRow();
+    TopRow _topRow = TopRow(
+      goBack: goBack,
+    );
 
-    AlbumsGrid _grid = AlbumsGrid(items:albumExamples+albumExamples);
+    AlbumsGrid _grid = AlbumsGrid(items: albumExamples + albumExamples);
 
     return CustomScrollView(
       controller: _scrollController,
@@ -58,7 +67,6 @@ class _AlbumsListState extends State<AlbumsList> {
         _searchBar,
         SliverToBoxAdapter(child: _topRow),
         _grid,
-       
       ],
     );
   }

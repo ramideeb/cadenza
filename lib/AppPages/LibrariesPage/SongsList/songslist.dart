@@ -6,6 +6,9 @@ import 'package:assets_audio_player_example/modules/song.dart';
 import 'package:flutter/material.dart';
 
 class SongsList extends StatefulWidget {
+  final Function(String) changePage;
+
+  const SongsList({Key key, this.changePage}) : super(key: key);
   @override
   _SongsListState createState() => _SongsListState();
 }
@@ -20,10 +23,15 @@ class _SongsListState extends State<SongsList> {
         initialScrollOffset: SizeConfig.blockSizeVertical * 12);
   }
 
+  goBack() {
+    widget.changePage("main");
+  }
+
   @override
   Widget build(BuildContext context) {
-
-    TopRow _topRow = TopRow();
+    TopRow _topRow = TopRow(
+      goBack: goBack,
+    );
 
     SongsGrid _list = SongsGrid(
       items: [
@@ -48,7 +56,6 @@ class _SongsListState extends State<SongsList> {
         Song(name: "We'll meet again", artistName: "Vera Lynn"),
         Song(name: "We'll meet again", artistName: "Vera Lynn"),
         Song(name: "We'll meet again", artistName: "Vera Lynn"),
-
       ],
     );
 

@@ -7,6 +7,9 @@ import '../searchbar.dart';
 import '../toprow.dart';
 
 class ArtistsList extends StatefulWidget {
+  final Function changePage;
+
+  const ArtistsList({Key key, this.changePage}) : super(key: key);
   @override
   _ArtistsListState createState() => _ArtistsListState();
 }
@@ -20,12 +23,15 @@ class _ArtistsListState extends State<ArtistsList> {
     _scrollController = ScrollController(
         initialScrollOffset: SizeConfig.blockSizeVertical * 12);
   }
+   goBack(){
+    widget.changePage("main");
+  }
 
   @override
   Widget build(BuildContext context) {
     SearchBar _searchBar = SearchBar();
 
-    TopRow _topRow = TopRow();
+    TopRow _topRow = TopRow(goBack: goBack);
 
     ArtistGrid _artistGrid = ArtistGrid(
       items: [

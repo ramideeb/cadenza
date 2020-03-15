@@ -1,9 +1,14 @@
+import 'package:assets_audio_player_example/AppPages/LibrariesPage/AlbumsList/albumslist.dart';
+import 'package:assets_audio_player_example/AppPages/LibrariesPage/ArtistsList/artistslist.dart';
+import 'package:assets_audio_player_example/AppPages/LibrariesPage/GenresList/genreslist.dart';
 import 'package:assets_audio_player_example/AppPages/LibrariesPage/MainList/playlistsgrid.dart';
+import 'package:assets_audio_player_example/AppPages/LibrariesPage/SongsList/songslist.dart';
 import 'package:assets_audio_player_example/SizeConfig.dart';
 import 'package:assets_audio_player_example/modules/playlist.dart';
 import 'package:assets_audio_player_example/presentation/cutsom_icons_icons.dart';
 import 'package:flutter/material.dart';
 
+import '../library.dart';
 import 'playlistcarousel.dart';
 
 List<Playlist> playlistsExample = [
@@ -34,6 +39,10 @@ List<Playlist> playlistsExample = [
 ];
 
 class LibraryPage extends StatefulWidget {
+  final Function(String) changePage;
+
+  const LibraryPage({Key key, this.changePage}) : super(key: key);
+
   @override
   _LibraryPageState createState() => _LibraryPageState();
 }
@@ -77,8 +86,11 @@ class _LibraryPageState extends State<LibraryPage> {
       ),
     );
 
-    Widget _songsText = Padding(
+    Widget _songsText = FlatButton(
       padding: EdgeInsets.only(left: SizeConfig.blockSizeHorizontal * 4),
+      onPressed: () {
+        widget.changePage("songs");
+      },
       child: Row(
         children: <Widget>[
           Icon(
@@ -100,10 +112,13 @@ class _LibraryPageState extends State<LibraryPage> {
       ),
     );
 
-    Widget _albumsText = Padding(
+    Widget _albumsText = FlatButton(
+      onPressed: () {
+        widget.changePage("albums");
+      },
       padding: EdgeInsets.only(
-          left: SizeConfig.blockSizeHorizontal * 4,
-          top: SizeConfig.blockSizeVertical * 3),
+        left: SizeConfig.blockSizeHorizontal * 4,
+      ),
       child: Row(
         children: <Widget>[
           Icon(
@@ -125,10 +140,14 @@ class _LibraryPageState extends State<LibraryPage> {
       ),
     );
 
-    Widget _genresText = Padding(
+    Widget _genresText = FlatButton(
+      onPressed: () {
+        widget.changePage("genres");
+      },
       padding: EdgeInsets.only(
-          left: SizeConfig.blockSizeHorizontal * 4,
-          top: SizeConfig.blockSizeVertical * 3),
+        left: SizeConfig.blockSizeHorizontal * 4,
+        // top: SizeConfig.blockSizeVertical * 2,
+      ),
       child: Row(
         children: <Widget>[
           Icon(
@@ -150,11 +169,13 @@ class _LibraryPageState extends State<LibraryPage> {
       ),
     );
 
-    Widget _artistsText = Padding(
+    Widget _artistsText = FlatButton(
+      onPressed: () {
+        widget.changePage("artists");
+      },
       padding: EdgeInsets.only(
-          left: SizeConfig.blockSizeHorizontal * 4,
-          top: SizeConfig.blockSizeVertical * 3,
-          bottom: SizeConfig.blockSizeVertical * 2),
+        left: SizeConfig.blockSizeHorizontal * 4,
+      ),
       child: Row(
         children: <Widget>[
           Icon(
@@ -180,7 +201,7 @@ class _LibraryPageState extends State<LibraryPage> {
       items: playlistsExample,
     );
 
-    PlaylistsGrid _playlistsGrid = PlaylistsGrid(items:playlistsExample);
+    PlaylistsGrid _playlistsGrid = PlaylistsGrid(items: playlistsExample);
 
     // Widget _playlistsNormalGrid = Padding(
     //   padding: EdgeInsets.only(
@@ -279,3 +300,5 @@ class _LibraryPageState extends State<LibraryPage> {
     // );
   }
 }
+
+class _LibraryState {}
