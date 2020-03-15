@@ -49,6 +49,6 @@ class ArtistListItem extends StatelessWidget {
         ],
       ),
     );
-    ;
+    
   }
 }

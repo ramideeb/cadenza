@@ -1,4 +1,3 @@
-import 'package:assets_audio_player_example/AppPages/Home/albumartwidget.dart';
 import 'package:assets_audio_player_example/AppPages/LibrariesPage/AlbumsList/albumsgrid.dart';
 import 'package:assets_audio_player_example/AppPages/LibrariesPage/searchbar.dart';
 import 'package:assets_audio_player_example/AppPages/LibrariesPage/toprow.dart';
