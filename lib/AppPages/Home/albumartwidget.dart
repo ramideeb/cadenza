@@ -12,6 +12,7 @@ class AlbumArtWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     _sizeConfig.init(context);
+
     return Padding(
       padding: EdgeInsets.symmetric(
         horizontal: SizeConfig.blockSizeHorizontal,
@@ -21,20 +22,20 @@ class AlbumArtWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           SizedBox(
-              height: SizeConfig.blockSizeHorizontal * 35,
-              width: SizeConfig.blockSizeHorizontal * 35,
+              height: SizeConfig.blockSizeVertical * 20,
+              width: SizeConfig.blockSizeVertical * 20,
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(14),
                 child: Image.asset("${album.albumArtImageUrl}"),
               ),
             ),   
           Padding(
-            padding: EdgeInsets.only(top: SizeConfig.blockSizeHorizontal*1.5),
+            padding: EdgeInsets.only(top: SizeConfig.blockSizeVertical),
             child: Text(
               album.albumName,
               style: TextStyle(
                 fontWeight: FontWeight.w800,
-                fontSize: SizeConfig.blockSizeHorizontal * 5,
+                fontSize: 18,
               ),
             ),
           ),
@@ -42,7 +43,7 @@ class AlbumArtWidget extends StatelessWidget {
             album.artistName,
             style: TextStyle(
               color: Colors.grey,
-              fontSize: SizeConfig.blockSizeHorizontal * 3,
+              fontSize: 11,
             ),
           ),
         ],

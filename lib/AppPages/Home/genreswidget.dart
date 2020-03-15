@@ -20,8 +20,8 @@ class GenreWidget extends StatelessWidget {
             horizontal: SizeConfig.blockSizeHorizontal,
           ),
           child: SizedBox(
-            height: SizeConfig.blockSizeHorizontal * 30,
-            width: SizeConfig.blockSizeHorizontal * 30,
+            height: SizeConfig.blockSizeVertical * 20,
+            width: SizeConfig.blockSizeVertical * 20,
             child: ClipRRect(
               borderRadius: BorderRadius.circular(14),
               child: Image.asset(
@@ -36,7 +36,7 @@ class GenreWidget extends StatelessWidget {
             genre.genreName,
             style: TextStyle(
               fontWeight: FontWeight.w600,
-              fontSize: SizeConfig.blockSizeHorizontal * 5.5,
+              fontSize: 20,
             ),
           ),
         ),
