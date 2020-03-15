@@ -28,6 +28,7 @@ class CutsomIcons {
   static const IconData genre = IconData(0xe801, fontFamily: _kFontFam);
   static const IconData microphone = IconData(0xe802, fontFamily: _kFontFam);
   static const IconData songs = IconData(0xe803, fontFamily: _kFontFam);
+  static const IconData random = IconData(0xe805, fontFamily: _kFontFam);
   static const IconData chevron_up = IconData(0xe873, fontFamily: _kFontFam);
   static const IconData chevron_down = IconData(0xe874, fontFamily: _kFontFam);
 }

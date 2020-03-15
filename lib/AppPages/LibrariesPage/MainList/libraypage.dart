@@ -1,10 +1,10 @@
-import 'package:assets_audio_player_example/AppPages/LibrariesPage/playlistitem.dart';
-import 'package:assets_audio_player_example/AppPages/LibrariesPage/playlistitemminimized.dart';
+import 'package:assets_audio_player_example/AppPages/LibrariesPage/MainList/playlistsgrid.dart';
 import 'package:assets_audio_player_example/SizeConfig.dart';
 import 'package:assets_audio_player_example/modules/playlist.dart';
 import 'package:assets_audio_player_example/presentation/cutsom_icons_icons.dart';
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+
+import 'playlistcarousel.dart';
 
 List<Playlist> playlistsExample = [
   Playlist(
@@ -40,8 +40,10 @@ class LibraryPage extends StatefulWidget {
 
 class _LibraryPageState extends State<LibraryPage> {
   SizeConfig _sizeConfig = SizeConfig();
-
+  bool _firstBuild = true;
+  Widget _playlist;
   bool _playlistMinimized = true;
+
   @override
   Widget build(BuildContext context) {
     _sizeConfig.init(context);
@@ -174,36 +176,30 @@ class _LibraryPageState extends State<LibraryPage> {
       ),
     );
 
-    Widget _playlistsCarousel = CarouselSlider(
-      items: [
-        PlayListItem(playlist: playlistsExample[0]),
-        PlayListItem(playlist: playlistsExample[1]),
-        PlayListItem(playlist: playlistsExample[2]),
-        PlayListItem(playlist: playlistsExample[3]),
-      ],
-      autoPlay: true,
-      autoPlayAnimationDuration: Duration(milliseconds: 2000),
-      viewportFraction: 1.0,
-      height: SizeConfig.blockSizeVertical * 30,
+    PlaylistsCarousel _playlistsCarousel = PlaylistsCarousel(
+      items: playlistsExample,
     );
-   
-    Widget _playlistsGrid = SliverPadding(
-      padding: EdgeInsets.only(
-          left: SizeConfig.blockSizeHorizontal * 3,
-          right: SizeConfig.blockSizeHorizontal * 3,
-          bottom: SizeConfig.blockSizeVertical * 3),
-      sliver: SliverGrid.count(
-        crossAxisSpacing: SizeConfig.blockSizeHorizontal * 8,
-        mainAxisSpacing: SizeConfig.blockSizeVertical * 3,
-        crossAxisCount: 2,
-        children: <Widget>[
-          PlaylistItemMinimized(playlist: playlistsExample[0]),
-          PlaylistItemMinimized(playlist: playlistsExample[1]),
-          PlaylistItemMinimized(playlist: playlistsExample[2]),
-          PlaylistItemMinimized(playlist: playlistsExample[3]),
-        ],
-      ),
-    );
+
+    PlaylistsGrid _playlistsGrid = PlaylistsGrid(items:playlistsExample);
+
+    // Widget _playlistsNormalGrid = Padding(
+    //   padding: EdgeInsets.only(
+    //       left: SizeConfig.blockSizeHorizontal * 3,
+    //       right: SizeConfig.blockSizeHorizontal * 3,
+    //       bottom: SizeConfig.blockSizeVertical * 3),
+    //   child: GridView.count(
+    //     shrinkWrap: true,
+    //     crossAxisSpacing: SizeConfig.blockSizeHorizontal * 8,
+    //     mainAxisSpacing: SizeConfig.blockSizeVertical * 3,
+    //     crossAxisCount: 2,
+    //     children: <Widget>[
+    //       PlaylistItemMinimized(playlist: playlistsExample[0]),
+    //       PlaylistItemMinimized(playlist: playlistsExample[1]),
+    //       PlaylistItemMinimized(playlist: playlistsExample[2]),
+    //       PlaylistItemMinimized(playlist: playlistsExample[3]),
+    //     ],
+    //   ),
+    // );
 
     Widget _playlistArrow = IconButton(
       icon: Icon(
@@ -214,9 +210,18 @@ class _LibraryPageState extends State<LibraryPage> {
       onPressed: () {
         setState(() {
           _playlistMinimized = !(_playlistMinimized);
+          // if (!_playlistMinimized)
+          //   _playlist = _playlistsNormalGrid;
+          // else
+          //   _playlist = _playlistsCarousel;
         });
       },
     );
+
+    // if (_firstBuild) {
+    //   _playlist = _playlistsCarousel;
+    //   _firstBuild = false;
+    // }
 
     return CustomScrollView(
       slivers: <Widget>[
@@ -242,5 +247,35 @@ class _LibraryPageState extends State<LibraryPage> {
         ),
       ],
     );
+
+    // return CustomScrollView(
+    //   slivers: <Widget>[
+    //     SliverList(
+    //       delegate: SliverChildListDelegate(
+    //         [
+    //           _libraryText,
+    //           _playlistText,
+    //         ],
+    //       ),
+    //     ),
+    //     SliverToBoxAdapter(
+    //       child: AnimatedSwitcher(
+    //         transitionBuilder: (Widget child,Animation<double> animation)=>ScaleTransition(scale: animation,child:child),
+    //         duration: Duration(microseconds: 500),
+    //         // switchInCurve: Curves.easeInExpo,
+    //         child: _playlist,
+    //       ),
+    //     ),
+    //     SliverList(
+    //       delegate: SliverChildListDelegate([
+    //         _playlistArrow,
+    //         _songsText,
+    //         _albumsText,
+    //         _genresText,
+    //         _artistsText,
+    //       ]),
+    //     ),
+    //   ],
+    // );
   }
 }

@@ -19,9 +19,7 @@ class DefaultMusicRow extends StatelessWidget {
         scrollDirection: Axis.horizontal,
         itemCount: musicElements.length,
         itemBuilder: (con, i) => AlbumArtWidget(
-          albumName: musicElements[i].albumName,
-          artImageURL: musicElements[i].albumArtImageUrl,
-          artistName: musicElements[i].artistName,
+          album: musicElements[i],
         ),
       ),
     );

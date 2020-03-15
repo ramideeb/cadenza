@@ -1,7 +1,7 @@
 import 'package:assets_audio_player_example/modules/playlist.dart';
 import 'package:flutter/material.dart';
 
-import '../../SizeConfig.dart';
+import '../../../SizeConfig.dart';
 
 class PlaylistItemMinimized extends StatelessWidget {
   final Playlist playlist;
