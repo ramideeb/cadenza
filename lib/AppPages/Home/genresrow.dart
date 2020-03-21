@@ -17,8 +17,7 @@ class GenresRow extends StatelessWidget {
         scrollDirection: Axis.horizontal,
         itemCount: genreElements.length,
         itemBuilder: (con, i) => GenreWidget(
-          genreImageURL: genreElements[i].genreImageUrl,
-          genreName: genreElements[i].genreName,
+          genre: genreElements[i],
         ),
       ),
       );

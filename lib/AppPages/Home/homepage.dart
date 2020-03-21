@@ -6,7 +6,7 @@ import 'package:assets_audio_player_example/SizeConfig.dart';
 import 'package:assets_audio_player_example/modules/Album.dart';
 import 'package:assets_audio_player_example/modules/genre.dart';
 import 'package:flutter/material.dart';
-import 'genreswidget.dart';
+// import 'genreswidget.dart';
 
 final List<Album> albumExamples = [
   Album(
