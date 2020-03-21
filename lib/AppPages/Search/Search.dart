@@ -1,4 +1,6 @@
+import 'package:assets_audio_player_example/AppPages/Home/musicrow.dart';
 import 'package:assets_audio_player_example/AppPages/PublicWidgets/FullWidthViewSong.dart';
+import 'package:assets_audio_player_example/modules/Album.dart';
 import 'package:flutter/material.dart';
 import 'DiscoveryWidget.dart';
 
@@ -42,6 +44,28 @@ class _SearchState extends State<Search> {
     "Alive",
     "Heaven",
     "Saturda y Nights",
+  ];
+  final List<Album> albumExamples = [
+    Album(
+      albumName: "Album",
+      albumArtImageUrl: "assets/AlbumImages/art2.jpg",
+      artistName: "Shosmo",
+    ),
+    Album(
+      albumName: "Album",
+      albumArtImageUrl: "assets/AlbumImages/art3.jpg",
+      artistName: "Shosmo",
+    ),
+    Album(
+      albumName: "Album",
+      albumArtImageUrl: "assets/AlbumImages/art6.jpg",
+      artistName: "Shosmo",
+    ),
+    Album(
+      albumName: "Album",
+      albumArtImageUrl: "assets/AlbumImages/art5.jpg",
+      artistName: "Shosmo",
+    ),
   ];
 
   void initState() {
@@ -231,15 +255,19 @@ class _SearchState extends State<Search> {
                           TextStyle(fontWeight: FontWeight.bold, fontSize: 19),
                     ),
                   ),
-                  SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        //TODO: from HomePageForRealz branch
-                      ],
-                    ),
+                  DefaultMusicRow(
+                    title: "Recently Played",
+                    musicElements: albumExamples,
                   ),
+//                  SingleChildScrollView(
+//                    scrollDirection: Axis.horizontal,
+//                    child: Row(
+//                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//                      children: <Widget>[
+//                        //TODO: from HomePageForRealz branch
+//                      ],
+//                    ),
+//                  ),
                   Padding(
                     padding: const EdgeInsets.all(10.0),
                     child: Text(
