@@ -1,9 +1,51 @@
 import 'package:assets_audio_player_example/AppPages/MusicPlayer/MusicPlayer.dart';
 import 'package:assets_audio_player_example/AppPages/Home/homepage.dart';
 import 'package:assets_audio_player_example/AppPages/LibrariesPage/library.dart';
+import 'package:assets_audio_player_example/modules/Album.dart';
+import 'package:assets_audio_player_example/modules/queue.dart';
+import 'package:assets_audio_player_example/modules/song.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'Profile/Profile.dart';
 import 'Search/Search.dart';
+
+final List<Album> exampleAlbums = [
+  Album(
+      albumName: "ABBA",
+      albumArtImageUrl: "assets/AlbumImages/art1.jpg",
+      artistName: "ABBA"),
+  Album(
+      albumName: "Piano Man Album",
+      albumArtImageUrl: "assets/AlbumImages/art19.jpg",
+      artistName: "Billy Joel"),
+  Album(
+      albumName: "Sies",
+      albumArtImageUrl: "assets/AlbumImages/art20.jpg",
+      artistName: "Donna"),
+];
+
+final List<Song> songExamples = [
+  Song(
+    album: exampleAlbums[1],
+    artistName: "Billy Joel",
+    name: "Piano Man",
+    url:
+        "https://file-examples.com/wp-content/uploads/2017/11/file_example_MP3_5MG.mp3",
+  ),
+  Song(
+      album: exampleAlbums[2],
+      artistName: "Donna",
+      name: "Mala Fama",
+      url:
+          "https://file-examples.com/wp-content/uploads/2017/11/file_example_MP3_5MG.mp3"),
+  Song(
+    album: exampleAlbums[0],
+    artistName: "ABBA",
+    name: "Super Trooper",
+    url:
+        "https://file-examples.com/wp-content/uploads/2017/11/file_example_MP3_5MG.mp3",
+  ),
+];
 
 class HomePage extends StatefulWidget {
   HomePage({Key key}) : super(key: key);
@@ -31,121 +73,127 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
+  bool firstBuild = true;
+  bool queueEmpty;
+  @override
   @override
   Widget build(BuildContext context) {
+    if (firstBuild) {
+      Provider.of<Queue>(context, listen: false).testBuild(songExamples);
+      firstBuild = false;
+    }
+    queueEmpty = Provider.of<Queue>(context, listen: false).queue.isEmpty;
     return Scaffold(
       body: Stack(
         alignment: AlignmentDirectional.bottomCenter,
         children: [
           Container(
             height: MediaQuery.of(context).size.height,
-            child: _widgetOptions.elementAt(_selectedIndex),
-          ),
-          GestureDetector(
-//            onHorizontalDragStart: (DragStartDetails dragState) async {
-//                            print(dragState);
-//              Navigator.push(
-//                context,
-//                MaterialPageRoute(
-//                  builder: (context) => MaterialApp(
-//                    home: Scaffold(body: Album()),
-//                  ),
-//                ),
-//              );
-//            },
-            child: Container(
-              decoration: BoxDecoration(
-                color: Color(0XFF1D3557),
-                borderRadius: BorderRadius.all(Radius.circular(10)),
-              ),
-              height: 65,
-              width: MediaQuery.of(context).size.width,
-              margin: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-              padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Row(
-                    children: <Widget>[
-                      ClipOval(
-                        child: InkWell(
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (_) =>Scaffold(body: MusicPlayer(),
-                                ),
-                              ),
-                            );
-                          },
-                          child: Hero(
-                            tag: "Music player",
-                            transitionOnUserGestures: true,
-                            child: Image(
-                              image: NetworkImage(
-                                  "https://miro.medium.com/max/1200/0*zaNztEcTW01oqBBF.jpg"),
-                              fit: BoxFit.cover,
-                              height: 50,
-                            ),
-                          ),
-                        ),
-                      ),
-                      SizedBox(width: 10),
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Expanded(
-                            child: Text(
-                              "Better",
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 20,
-//                              height: 1,
-                                fontWeight: FontWeight.w600,
-                                letterSpacing: 0.6,
-                              ),
-                            ),
-                          ),
-                          Expanded(
-                            child: Text(
-                              "Free Spirit",
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 15,
-//                              height: 1,
-                                fontWeight: FontWeight.w400,
-                                letterSpacing: 0.4,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  ),
-                  ClipOval(
-                    child: Material(
-                      color: Colors.transparent,
-                      child: InkWell(
-                        child: SizedBox(
-                          width: 50,
-                          height: 50,
-                          child: Icon(
-                            Icons.pause,
-                            color: Colors.white,
-                            size: 30,
-                          ),
-                        ),
-                        onTap: () {},
-                      ),
-                    ),
-                  )
-                ],
-              ),
+            child: SafeArea(
+              child: _widgetOptions.elementAt(_selectedIndex),
             ),
           ),
+          queueEmpty
+              ? Center()
+              : GestureDetector(
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Color(0XFF1D3557),
+                      borderRadius: BorderRadius.all(Radius.circular(10)),
+                    ),
+                    height: 65,
+                    width: MediaQuery.of(context).size.width,
+                    margin: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                    padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                    child: Consumer<Queue>(
+                      builder: (context, queue, child) => Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          Row(
+                            children: <Widget>[
+                              ClipOval(
+                                child: InkWell(
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (_) => Scaffold(
+                                          body: MusicPlayer(),
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                  child: Hero(
+                                    tag: "Music player",
+                                    transitionOnUserGestures: true,
+                                    child: Image.asset(
+                                      queue.currentSong.album.albumArtImageUrl,
+                                      fit: BoxFit.cover,
+                                      height: 50,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              SizedBox(width: 10),
+                              Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: <Widget>[
+                                  Expanded(
+                                    child: Text(
+                                      queue.currentSong.name,
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w600,
+                                        letterSpacing: 0.6,
+                                      ),
+                                    ),
+                                  ),
+                                  Expanded(
+                                    child: Text(
+                                      queue.currentSong.album.albumName,
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w400,
+                                        letterSpacing: 0.4,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          ),
+                          ClipOval(
+                            child: Material(
+                              color: Colors.transparent,
+                              child: InkWell(
+                                child: Icon(
+                                  queue.state == PlayerState.PAUSED
+                                      ? Icons.play_arrow
+                                      : Icons.pause,
+                                  color: Colors.white,
+                                  size: 30,
+                                ),
+                                onTap: () {
+                                  print(queue.state);
+                                  if (queue.state == PlayerState.PLAYING)
+                                    queue.pauseCurrentSong();
+                                  else if (queue.state == PlayerState.PAUSED)
+                                    queue.playCurrentSong();
+                                },
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
         ],
       ),
       bottomNavigationBar: Builder(
@@ -176,3 +224,15 @@ class _HomePageState extends State<HomePage> {
     );
   }
 }
+
+//            onHorizontalDragStart: (DragStartDetails dragState) async {
+//                            print(dragState);
+//              Navigator.push(
+//                context,
+//                MaterialPageRoute(
+//                  builder: (context) => MaterialApp(
+//                    home: Scaffold(body: Album()),
+//                  ),
+//                ),
+//              );
+//            },

@@ -1,8 +1,11 @@
+import 'package:assets_audio_player_example/modules/Album.dart';
+
 class Song{
   final String name;
   final String artistName;
-
-  Song({this.name, this.artistName});
+  final Album album;
+  final String url;
+  Song({this.name, this.artistName,this.album,this.url});
 
 
 }
