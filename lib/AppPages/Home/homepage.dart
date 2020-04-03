@@ -94,7 +94,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
         "Explore",
         style: TextStyle(
           fontWeight: FontWeight.w700,
-          fontSize: 37,
+          fontSize: 34,
         ),
       ),
     );
