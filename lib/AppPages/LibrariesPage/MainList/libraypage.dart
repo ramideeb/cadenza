@@ -13,6 +13,7 @@ import 'playlistcarousel.dart';
 
 List<Playlist> playlistsExample = [
   Playlist(
+    
     imageUrl: "assets/AlbumImages/art15.jpg",
     name: "Beyond",
     description:
@@ -59,7 +60,7 @@ class _LibraryPageState extends State<LibraryPage> {
 
     Widget _libraryText = Padding(
       padding: EdgeInsets.only(
-        top: SizeConfig.blockSizeVertical * 4,
+        top: SizeConfig.blockSizeVertical ,
         left: SizeConfig.blockSizeHorizontal * 4,
         bottom: SizeConfig.blockSizeVertical * 3.5,
       ),
