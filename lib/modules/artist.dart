@@ -1,6 +1,6 @@
-import 'package:assets_audio_player_example/modules/Album.dart';
-import 'package:assets_audio_player_example/modules/song.dart';
-import 'package:assets_audio_player_example/modules/user.dart';
+import 'package:cadenza/modules/Album.dart';
+import 'package:cadenza/modules/song.dart';
+import 'package:cadenza/modules/user.dart';
 
 class Artist extends User{
   //TODO: change count to function when connected to database;

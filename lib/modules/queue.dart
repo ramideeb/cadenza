@@ -1,9 +1,9 @@
 import 'dart:async';
-import 'package:assets_audio_player_example/modules/Album.dart';
-import 'package:assets_audio_player_example/modules/artist.dart';
-import 'package:assets_audio_player_example/modules/library.dart';
-import 'package:assets_audio_player_example/modules/playlist.dart';
-import 'package:assets_audio_player_example/modules/song.dart';
+import 'package:cadenza/modules/Album.dart';
+import 'package:cadenza/modules/artist.dart';
+import 'package:cadenza/modules/library.dart';
+import 'package:cadenza/modules/playlist.dart';
+import 'package:cadenza/modules/song.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/cupertino.dart';
 

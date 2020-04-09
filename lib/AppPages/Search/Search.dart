@@ -1,4 +1,4 @@
-import 'package:assets_audio_player_example/AppPages/PublicWidgets/FullWidthViewSong.dart';
+import 'package:cadenza/AppPages/PublicWidgets/FullWidthViewSong.dart';
 import 'package:flutter/material.dart';
 import 'DiscoveryWidget.dart';
 

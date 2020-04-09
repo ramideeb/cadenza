@@ -1,8 +1,8 @@
-import 'package:assets_audio_player_example/AppPages/LibrariesPage/SongsList/songgrid.dart';
-import 'package:assets_audio_player_example/AppPages/LibrariesPage/searchbar.dart';
-import 'package:assets_audio_player_example/AppPages/LibrariesPage/toprow.dart';
-import 'package:assets_audio_player_example/SizeConfig.dart';
-import 'package:assets_audio_player_example/modules/song.dart';
+import 'package:cadenza/AppPages/LibrariesPage/SongsList/songgrid.dart';
+import 'package:cadenza/AppPages/LibrariesPage/searchbar.dart';
+import 'package:cadenza/AppPages/LibrariesPage/toprow.dart';
+import 'package:cadenza/SizeConfig.dart';
+import 'package:cadenza/modules/song.dart';
 import 'package:flutter/material.dart';
 
 class SongsList extends StatefulWidget {

@@ -1,5 +1,5 @@
-import 'package:assets_audio_player_example/AppPages/LibrariesPage/GenresList/genreitem.dart';
-import 'package:assets_audio_player_example/modules/genre.dart';
+import 'package:cadenza/AppPages/LibrariesPage/GenresList/genreitem.dart';
+import 'package:cadenza/modules/genre.dart';
 import 'package:flutter/material.dart';
 
 import '../../../SizeConfig.dart';

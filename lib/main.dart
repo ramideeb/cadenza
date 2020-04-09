@@ -1,8 +1,8 @@
-import 'package:assets_audio_player_example/LoginPages/resetpass.dart';
-import 'package:assets_audio_player_example/LoginPages/verificationPage.dart';
-import 'package:assets_audio_player_example/modules/library.dart';
-import 'package:assets_audio_player_example/modules/queue.dart';
-import 'package:assets_audio_player_example/modules/user.dart';
+import 'package:cadenza/LoginPages/resetpass.dart';
+import 'package:cadenza/LoginPages/verificationPage.dart';
+import 'package:cadenza/modules/library.dart';
+import 'package:cadenza/modules/queue.dart';
+import 'package:cadenza/modules/user.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'AppPages/MainWidget.dart';

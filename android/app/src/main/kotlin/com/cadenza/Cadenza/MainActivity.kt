@@ -1,4 +1,4 @@
-package com.example.cadenza
+package com.cadenza.Cadenza
 
 import androidx.annotation.NonNull;
 import io.flutter.embedding.android.FlutterActivity

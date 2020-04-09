@@ -1,10 +1,10 @@
-import 'package:assets_audio_player_example/AppPages/Home/genresrow.dart';
-import 'package:assets_audio_player_example/AppPages/Home/musicgrid.dart';
-import 'package:assets_audio_player_example/AppPages/Home/musicrow.dart';
-import 'package:assets_audio_player_example/AppPages/PublicWidgets/circularArtistView.dart';
-import 'package:assets_audio_player_example/SizeConfig.dart';
-import 'package:assets_audio_player_example/modules/Album.dart';
-import 'package:assets_audio_player_example/modules/genre.dart';
+import 'package:cadenza/AppPages/Home/genresrow.dart';
+import 'package:cadenza/AppPages/Home/musicgrid.dart';
+import 'package:cadenza/AppPages/Home/musicrow.dart';
+import 'package:cadenza/AppPages/PublicWidgets/circularArtistView.dart';
+import 'package:cadenza/SizeConfig.dart';
+import 'package:cadenza/modules/Album.dart';
+import 'package:cadenza/modules/genre.dart';
 import 'package:flutter/material.dart';
 // import 'genreswidget.dart';
 

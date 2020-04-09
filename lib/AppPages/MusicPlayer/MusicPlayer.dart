@@ -1,6 +1,6 @@
 import 'dart:ui';
 
-import 'package:assets_audio_player_example/modules/queue.dart';
+import 'package:cadenza/modules/queue.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
