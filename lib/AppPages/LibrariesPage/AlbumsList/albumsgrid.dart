@@ -1,5 +1,5 @@
-import 'package:assets_audio_player_example/AppPages/Home/albumartwidget.dart';
-import 'package:assets_audio_player_example/modules/Album.dart';
+import 'package:cadenza/AppPages/Home/albumartwidget.dart';
+import 'package:cadenza/modules/Album.dart';
 import 'package:flutter/material.dart';
 
 import '../../../SizeConfig.dart';

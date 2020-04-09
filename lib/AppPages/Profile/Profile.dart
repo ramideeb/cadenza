@@ -1,5 +1,5 @@
-import 'package:assets_audio_player_example/AppPages/PublicWidgets/FullWidthViewSong.dart';
-import 'package:assets_audio_player_example/AppPages/PublicWidgets/circularArtistView.dart';
+import 'package:cadenza/AppPages/PublicWidgets/FullWidthViewSong.dart';
+import 'package:cadenza/AppPages/PublicWidgets/circularArtistView.dart';
 import 'package:flutter/material.dart';
 
 class ProfilePage extends StatelessWidget {

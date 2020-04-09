@@ -1,5 +1,5 @@
-import 'package:assets_audio_player_example/AppPages/LibrariesPage/SongsList/songitem.dart';
-import 'package:assets_audio_player_example/modules/song.dart';
+import 'package:cadenza/AppPages/LibrariesPage/SongsList/songitem.dart';
+import 'package:cadenza/modules/song.dart';
 import 'package:flutter/material.dart';
 
 class SongsGrid extends StatelessWidget {

@@ -1,4 +1,4 @@
-import 'package:assets_audio_player_example/presentation/cutsom_icons_icons.dart';
+import 'package:cadenza/presentation/cutsom_icons_icons.dart';
 import 'package:flutter/material.dart';
 
 import '../../SizeConfig.dart';

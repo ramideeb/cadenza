@@ -1,4 +1,4 @@
-import 'package:assets_audio_player_example/modules/artist.dart';
+import 'package:cadenza/modules/artist.dart';
 import 'package:flutter/material.dart';
 
 import '../../../SizeConfig.dart';

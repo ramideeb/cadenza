@@ -1,9 +1,9 @@
-import 'package:assets_audio_player_example/AppPages/MusicPlayer/MusicPlayer.dart';
-import 'package:assets_audio_player_example/AppPages/Home/homepage.dart';
-import 'package:assets_audio_player_example/AppPages/LibrariesPage/library.dart';
-import 'package:assets_audio_player_example/modules/Album.dart';
-import 'package:assets_audio_player_example/modules/queue.dart';
-import 'package:assets_audio_player_example/modules/song.dart';
+import 'package:cadenza/AppPages/MusicPlayer/MusicPlayer.dart';
+import 'package:cadenza/AppPages/Home/homepage.dart';
+import 'package:cadenza/AppPages/LibrariesPage/library.dart';
+import 'package:cadenza/modules/Album.dart';
+import 'package:cadenza/modules/queue.dart';
+import 'package:cadenza/modules/song.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'Profile/Profile.dart';
