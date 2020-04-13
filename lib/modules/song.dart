@@ -1,5 +1,4 @@
 import 'dart:typed_data';
-
 import 'package:cadenza/modules/Album.dart';
 import 'package:flutter/services.dart';
 
@@ -7,26 +6,57 @@ import 'artist.dart';
 import 'genre.dart';
 
 class Song {
-
-  final String name;
-  final Album album;
-  int playtime;
-  final String artistName;
-  final String url;
-
-  Song({this.name, this.album, this.artistName, this.url});
-}
-
-class OfflineSong extends Song {
   final String songID;
   final Genre genre;
   final Artist artist;
+  final String name;
+  final Album album;
+  int playtime;
 
+  //TODO: temp remove it
+   String url;
+
+  Song({this.songID, this.genre, this.artist, this.name, this.album});
+}
+
+class OnlineSong extends Song {
+  final String url;
+
+  OnlineSong(
+      {String songID,
+      String name,
+      Genre genre,
+      Artist artist,
+      Album album,
+      this.url})
+      : super(
+          songID: songID,
+          name: name,
+          album: album,
+          artist: artist,
+          genre: genre,
+        );
+}
+
+class OfflineSong extends Song {
   final String decryptionKey;
   final ByteBuffer encryptedSong;
 
-  OfflineSong({String name,Album album,this.songID, this.genre, this.artist, this.decryptionKey, this.encryptedSong}) :super(name: name,album:album,artistName:artist.username);
-
+  OfflineSong(
+      {String name,
+      Album album,
+      String songID,
+      Genre genre,
+      Artist artist,
+      this.decryptionKey,
+      this.encryptedSong})
+      : super(
+          songID: songID,
+          name: name,
+          genre: genre,
+          artist: artist,
+          album: album,
+        );
 
   Map<String, dynamic> toMap() {
     return {
@@ -34,7 +64,7 @@ class OfflineSong extends Song {
       "songName": name,
       "songAlbum": album.albumID,
       "songGenre": genre.genreID,
-      "artiest": artist.username,
+      "artist": artist.uid,
       "decryptionKey": decryptionKey,
       "encryptedSong": storeEncryptedSong(),
     };

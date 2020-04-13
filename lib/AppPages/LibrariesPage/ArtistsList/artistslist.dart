@@ -35,15 +35,15 @@ class _ArtistsListState extends State<ArtistsList> {
 
     ArtistGrid _artistGrid = ArtistGrid(
       items: [
-        Artist(username: "B-Doge", songsCount: 53),
-        Artist(username: "B-Doge", songsCount: 53),
-        Artist(username: "B-Doge", songsCount: 53),
-        Artist(username: "B-Doge", songsCount: 53),
-        Artist(username: "B-Doge", songsCount: 53),
-        Artist(username: "B-Doge", songsCount: 53),
-        Artist(username: "B-Doge", songsCount: 53),
-        Artist(username: "B-Doge", songsCount: 53),
-        Artist(username: "B-Doge", songsCount: 53),
+        Artist(uid: "B-Doge", songsCount: 53),
+        Artist(uid: "B-Doge", songsCount: 53),
+        Artist(uid: "B-Doge", songsCount: 53),
+        Artist(uid: "B-Doge", songsCount: 53),
+        Artist(uid: "B-Doge", songsCount: 53),
+        Artist(uid: "B-Doge", songsCount: 53),
+        Artist(uid: "B-Doge", songsCount: 53),
+        Artist(uid: "B-Doge", songsCount: 53),
+        Artist(uid: "B-Doge", songsCount: 53),
 
       ],
     );

@@ -1,10 +1,22 @@
+import 'package:cadenza/modules/genre.dart';
+import 'package:cadenza/modules/artist.dart';
+import 'package:cadenza/modules/Album.dart';
 import 'package:cadenza/AppPages/PublicWidgets/FullWidthViewSong.dart';
 import 'package:cadenza/AppPages/PublicWidgets/circularArtistView.dart';
+import 'package:cadenza/LoginPages/f_services/auth.dart';
+import 'package:cadenza/modules/DatabaseController.dart';
+import 'package:cadenza/modules/song.dart';
 import 'package:flutter/material.dart';
+import 'package:sqflite/sqflite.dart';
 
 class ProfilePage extends StatelessWidget {
+//  final Future<Database> database = DatabaseController.database;
+//  bool toggle = true;
+//  int count = 0;
+
   @override
   Widget build(BuildContext context) {
+    final Auth _auth = Auth();
     return Container(
       child: SingleChildScrollView(
         child: Column(
@@ -53,7 +65,21 @@ class ProfilePage extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 FlatButton(
-                  onPressed: null,
+                  onPressed: () async {
+//                    if (toggle) {
+//                      DatabaseController.insertSong(OfflineSong(
+//                          songID: "$count",
+//                          name: "name:$count",
+//                          decryptionKey: "$count",
+//                          artist: Artist(uid: "2222"),
+//                          genre: Genre(genreID: "ffff",genreImageUrl: "fff",genreName: "dffff"),
+//                          album: Album(albumArtImageUrl: "fff",albumID: "1222",albumName: "ddd",artist: Artist(uid: "2222"))));
+//                      count++;
+//                    } else {
+//                      print(DatabaseController.getOfflineSong());
+//                    }
+//                    toggle = !toggle;
+                  },
                   child: Text("Edit Profile"),
                   shape: RoundedRectangleBorder(
                       borderRadius: new BorderRadius.circular(18.0),
@@ -63,8 +89,10 @@ class ProfilePage extends StatelessWidget {
                 ),
                 SizedBox(width: 10),
                 FlatButton(
-                  onPressed: null,
-                  child: Text("Share Profile"),
+                  onPressed: () async {
+                    await _auth.signOut();
+                  },
+                  child: Text("Sign Out"),
                   shape: RoundedRectangleBorder(
                       borderRadius: new BorderRadius.circular(18.0),
                       side: BorderSide(

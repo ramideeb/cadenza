@@ -8,7 +8,7 @@ class Artist extends User{
   List<Album> albumsList;
   List<Song> songsList;
 
-  Artist({String username,this.songsCount}) : super(username);
+  Artist({String uid,this.songsCount}) : super(uid:uid);
   
 
 }

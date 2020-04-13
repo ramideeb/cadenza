@@ -1,3 +1,4 @@
+import 'package:cadenza/LoginPages/resetpass.dart';
 import 'package:flutter/material.dart';
 import 'package:pinput/pin_put/pin_put.dart';
 
@@ -115,7 +116,10 @@ class _VerificationPageState extends State<VerificationPage> {
                 minWidth: MediaQuery.of(context).size.width * 0.9,
                 child: RaisedButton(
                     onPressed: () {
-                      Navigator.pushNamed(context, "/ResetPass");
+                     Navigator.push(
+    context,
+    MaterialPageRoute(builder: (context) => ResetPass()),
+  );
                     },
                     shape: RoundedRectangleBorder(
                         borderRadius: new BorderRadius.circular(15.0),

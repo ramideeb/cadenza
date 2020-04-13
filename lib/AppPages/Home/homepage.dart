@@ -1,3 +1,4 @@
+import 'package:cadenza/modules/artist.dart';
 import 'package:cadenza/AppPages/Home/genresrow.dart';
 import 'package:cadenza/AppPages/Home/musicgrid.dart';
 import 'package:cadenza/AppPages/Home/musicrow.dart';
@@ -10,48 +11,96 @@ import 'package:flutter/material.dart';
 
 final List<Album> albumExamples = [
   Album(
-    albumName: "Album",
-    albumArtImageUrl: "assets/AlbumImages/art2.jpg",
-    artistName: "Shosmo",
+    artist: Artist(
+      uid: "ddd",
+    ),
+    albumName: "fff",
+    albumID: "12222",
+    albumArtImageUrl: "assets/AlbumImages/art1.jpg",
   ),
   Album(
-    albumName: "Album",
-    albumArtImageUrl: "assets/AlbumImages/art3.jpg",
-    artistName: "Shosmo",
+    artist: Artist(
+      uid: "ddd",
+    ),
+    albumName: "fff",
+    albumID: "12222",
+    albumArtImageUrl: "assets/AlbumImages/art1.jpg",
   ),
-  Album(
-    albumName: "Album",
-    albumArtImageUrl: "assets/AlbumImages/art6.jpg",
-    artistName: "Shosmo",
-  ),
-  Album(
-    albumName: "Album",
-    albumArtImageUrl: "assets/AlbumImages/art5.jpg",
-    artistName: "Shosmo",
-  ),
+//  Album(
+//    albumName: "Album",
+//    albumArtImageUrl: "assets/AlbumImages/art2.jpg",
+//    artistName: "Shosmo",
+//  ),
+//  Album(
+//    albumName: "Album",
+//    albumArtImageUrl: "assets/AlbumImages/art3.jpg",
+//    artistName: "Shosmo",
+//  ),
+//  Album(
+//    albumName: "Album",
+//    albumArtImageUrl: "assets/AlbumImages/art6.jpg",
+//    artistName: "Shosmo",
+//  ),
+//  Album(
+//    albumName: "Album",
+//    albumArtImageUrl: "assets/AlbumImages/art5.jpg",
+//    artistName: "Shosmo",
+//  ),
 ];
 
 final List<Album> gridAlbumExamples = [
   Album(
-    albumName: "Album",
-    albumArtImageUrl: "assets/AlbumImages/art12.jpg",
-    artistName: "Shosmo",
+    artist: Artist(
+      uid: "ddd",
+    ),
+    albumName: "fff",
+    albumID: "12222",
+    albumArtImageUrl: "assets/AlbumImages/art1.jpg",
   ),
   Album(
-    albumName: "Album",
-    albumArtImageUrl: "assets/AlbumImages/art7.png",
-    artistName: "Shosmo",
+    artist: Artist(
+      uid: "ddd",
+    ),
+    albumName: "fff",
+    albumID: "12222",
+    albumArtImageUrl: "assets/AlbumImages/art1.jpg",
   ),
   Album(
-    albumName: "Album",
-    albumArtImageUrl: "assets/AlbumImages/art8.jpg",
-    artistName: "Shosmo",
+    artist: Artist(
+      uid: "ddd",
+    ),
+    albumName: "fff",
+    albumID: "12222",
+    albumArtImageUrl: "assets/AlbumImages/art1.jpg",
   ),
   Album(
-    albumName: "Album",
-    albumArtImageUrl: "assets/AlbumImages/art11.jpg",
-    artistName: "Shosmo",
-  ),
+    artist: Artist(
+      uid: "ddd",
+    ),
+    albumName: "fff",
+    albumID: "12222",
+    albumArtImageUrl: "assets/AlbumImages/art1.jpg",
+  )
+//  Album(
+//    albumName: "Album",
+//    albumArtImageUrl: "assets/AlbumImages/art12.jpg",
+//    artistName: "Shosmo",
+//  ),
+//  Album(
+//    albumName: "Album",
+//    albumArtImageUrl: "assets/AlbumImages/art7.png",
+//    artistName: "Shosmo",
+//  ),
+//  Album(
+//    albumName: "Album",
+//    albumArtImageUrl: "assets/AlbumImages/art8.jpg",
+//    artistName: "Shosmo",
+//  ),
+//  Album(
+//    albumName: "Album",
+//    albumArtImageUrl: "assets/AlbumImages/art11.jpg",
+//    artistName: "Shosmo",
+//  ),
 ];
 
 final List<Genre> genreExamples = [
@@ -80,6 +129,7 @@ class HomePageWidget extends StatefulWidget {
 
 class _HomePageWidgetState extends State<HomePageWidget> {
   SizeConfig _sizeConfig = SizeConfig();
+
   @override
   Widget build(BuildContext context) {
     _sizeConfig.init(context);
@@ -132,7 +182,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
       children: <Widget>[
         Padding(
           padding: EdgeInsets.only(
-            top: SizeConfig.blockSizeVertical*1.5,
+            top: SizeConfig.blockSizeVertical * 1.5,
             left: SizeConfig.blockSizeHorizontal * 2,
             bottom: SizeConfig.blockSizeVertical,
           ),
@@ -157,29 +207,27 @@ class _HomePageWidgetState extends State<HomePageWidget> {
     );
 
     return Padding(
-      padding: EdgeInsets.only(left: SizeConfig.blockSizeHorizontal*2),
-      child: 
-        CustomScrollView(
-          slivers: <Widget>[
-            SliverList(
-              delegate: SliverChildListDelegate(
-                [
-                  _exploreText,
-                  _recentlyPlayed,
-                  _recommendedForYou,
-                ],
-              ),
+      padding: EdgeInsets.only(left: SizeConfig.blockSizeHorizontal * 2),
+      child: CustomScrollView(
+        slivers: <Widget>[
+          SliverList(
+            delegate: SliverChildListDelegate(
+              [
+                _exploreText,
+                _recentlyPlayed,
+                _recommendedForYou,
+              ],
             ),
-            _top50Widget,
-            SliverList(
-              delegate: SliverChildListDelegate([
-                _popularArtists,
-                _genresAndMoods,
-              ]),
-            )
-          ],
-        ),
-      
+          ),
+          _top50Widget,
+          SliverList(
+            delegate: SliverChildListDelegate([
+              _popularArtists,
+              _genresAndMoods,
+            ]),
+          )
+        ],
+      ),
     );
   }
 }

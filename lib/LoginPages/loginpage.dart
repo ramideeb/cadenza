@@ -113,12 +113,15 @@ class _LoginPageState extends State<LoginPage> {
           EdgeInsets.symmetric(horizontal: SizeConfig.blockSizeHorizontal * 4),
       child: Column(
         children: <Widget>[
+
+
+          
           Padding(
             padding: EdgeInsets.only(),
             child: TextField(
               controller: _usernameController,
               decoration: InputDecoration(
-                hintText: "Username",
+                hintText: "Username1",
                 enabled: true,
                 enabledBorder: UnderlineInputBorder(
                     borderSide:

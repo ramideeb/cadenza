@@ -30,7 +30,7 @@ class ArtistListItem extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Text(
-                  "${artist.username}",
+                  "${artist.uid}",
                   style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.w600,
