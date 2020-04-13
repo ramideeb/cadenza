@@ -1,6 +1,6 @@
 class User{
   //TODO:to be implemented
-  final String username;
-
-  User(this.username);
+  final String uid;
+  
+  User(this.uid);
 }

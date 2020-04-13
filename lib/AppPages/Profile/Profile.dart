@@ -1,10 +1,12 @@
 import 'package:cadenza/AppPages/PublicWidgets/FullWidthViewSong.dart';
 import 'package:cadenza/AppPages/PublicWidgets/circularArtistView.dart';
+import 'package:cadenza/LoginPages/f_services/auth.dart';
 import 'package:flutter/material.dart';
 
 class ProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final Auth _auth=Auth();
     return Container(
       child: SingleChildScrollView(
         child: Column(
@@ -63,8 +65,11 @@ class ProfilePage extends StatelessWidget {
                 ),
                 SizedBox(width: 10),
                 FlatButton(
-                  onPressed: null,
-                  child: Text("Share Profile"),
+                  onPressed: () async{
+                    await _auth.signOut();
+                    
+                  },
+                  child: Text("Sign Out"),
                   shape: RoundedRectangleBorder(
                       borderRadius: new BorderRadius.circular(18.0),
                       side: BorderSide(

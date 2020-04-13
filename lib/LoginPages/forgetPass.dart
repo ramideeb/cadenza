@@ -1,3 +1,4 @@
+import 'package:cadenza/LoginPages/verificationPage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -94,7 +95,10 @@ class Forgetpass extends StatelessWidget {
                 minWidth: MediaQuery.of(context).size.width * 0.9,
                 child: RaisedButton(
                     onPressed: () {
-                      Navigator.pushNamed(context, "/VerificationPage");
+                      Navigator.push(
+    context,
+    MaterialPageRoute(builder: (context) => VerificationPage()),
+  );
                     },
                     shape: RoundedRectangleBorder(
                         borderRadius: new BorderRadius.circular(15.0),
