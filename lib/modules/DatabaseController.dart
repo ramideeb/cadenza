@@ -1,4 +1,5 @@
 
+
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -23,10 +24,10 @@ class DatabaseController {
       version: 1,
       onCreate: (db, version) {
         return db.execute('''
-        CREATE TABLE OfflineSong(songID TEXT PRIMARY KEY, songName TEXT, songAlbum TEXT, songGenre TEXT, artist TEXT , decryptionKey TEXT , encryptedSong TEXT ),
-        CREATE TABLE Album(albumID TEXT PRIMARY KEY, songID TEXT, albumName TEXT, artist TEXT, albumArtImageUrl TEXT),
-        CREATE TABLE Genre(genreID TEXT PRIMARY KEY, genreName TEXT, genreImageUrl TEXT),
-        CREATE TABLE Playlist(playlistId TEXT PRIMARY KEY, songID TEXT, PlaylistName TEXT, description TEXT, imageUrl TEXT)
+        CREATE TABLE OfflineSong(songID TEXT PRIMARY KEY, songName TEXT, songAlbum TEXT, songGenre TEXT, artist TEXT , decryptionKey TEXT , encryptedSong TEXT );
+        CREATE TABLE Album(albumID TEXT PRIMARY KEY, songID TEXT, albumName TEXT, artist TEXT, albumArtImageUrl TEXT);
+        CREATE TABLE Genre(genreID TEXT PRIMARY KEY, genreName TEXT, genreImageUrl TEXT);
+        CREATE TABLE Playlist(playlistId TEXT PRIMARY KEY, songID TEXT, PlaylistName TEXT, description TEXT, imageUrl TEXT);
         ''',
         );
       },
@@ -64,15 +65,17 @@ class DatabaseController {
 
     // Convert the List<Map<String, dynamic> into a List<Dog>.
     return List.generate(maps.length, (i) {
-      return OfflineSong(
+      OfflineSong offlineSong = OfflineSong(
         songID: maps[i]['songID'],
         name: maps[i]['songName'],
 //        album: maps[i]['songAlbum'],
 //        name: maps[i]['songGenre'],
 //        name: maps[i]['artist'],
         decryptionKey: maps[i]['decryptionKey'],
-        encryptedSong: maps[i]['encryptedSong'],
+//        encryptedSong: maps[i]['encryptedSong'],
       );
+      print(offlineSong);
+      return offlineSong;
     });
   }
 }

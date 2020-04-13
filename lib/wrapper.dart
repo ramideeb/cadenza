@@ -25,7 +25,7 @@ class Wrapper extends StatelessWidget {
         providers: [
           ChangeNotifierProvider<Library>(
             create: (context) => Library(
-              user: User(uid:"username"),
+              user: User("username"),
             ),
           ),
           ChangeNotifierProxyProvider<Library, Queue>(

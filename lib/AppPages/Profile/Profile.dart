@@ -1,21 +1,24 @@
+import 'dart:typed_data';
+
 import 'package:cadenza/modules/genre.dart';
 import 'package:cadenza/modules/artist.dart';
 import 'package:cadenza/modules/Album.dart';
+import 'package:cadenza/modules/song.dart';
 import 'package:cadenza/AppPages/PublicWidgets/FullWidthViewSong.dart';
 import 'package:cadenza/AppPages/PublicWidgets/circularArtistView.dart';
 import 'package:cadenza/LoginPages/f_services/auth.dart';
 import 'package:cadenza/modules/DatabaseController.dart';
-import 'package:cadenza/modules/song.dart';
 import 'package:flutter/material.dart';
 import 'package:sqflite/sqflite.dart';
 
 class ProfilePage extends StatelessWidget {
-//  final Future<Database> database = DatabaseController.database;
-//  bool toggle = true;
-//  int count = 0;
+  bool testToggle = true;
+  int count = 0;
+
 
   @override
   Widget build(BuildContext context) {
+    final Future<Database> database = DatabaseController.database;
     final Auth _auth = Auth();
     return Container(
       child: SingleChildScrollView(
@@ -66,19 +69,21 @@ class ProfilePage extends StatelessWidget {
               children: <Widget>[
                 FlatButton(
                   onPressed: () async {
-//                    if (toggle) {
-//                      DatabaseController.insertSong(OfflineSong(
-//                          songID: "$count",
-//                          name: "name:$count",
-//                          decryptionKey: "$count",
-//                          artist: Artist(uid: "2222"),
-//                          genre: Genre(genreID: "ffff",genreImageUrl: "fff",genreName: "dffff"),
-//                          album: Album(albumArtImageUrl: "fff",albumID: "1222",albumName: "ddd",artist: Artist(uid: "2222"))));
-//                      count++;
-//                    } else {
-//                      print(DatabaseController.getOfflineSong());
-//                    }
-//                    toggle = !toggle;
+                    if (testToggle) {
+                      DatabaseController.insertSong(
+                        OfflineSong(
+                            songID: "$count",
+                            name: "$count",
+                            decryptionKey: "ggggg",
+                            genre: Genre(genreID: "123"),
+                            album: Album(albumID: "dddd"),
+                            artist: Artist(uid: "11111")),
+                      );
+                    } else {
+                      print(DatabaseController.getOfflineSong());
+                    }
+                    testToggle = !testToggle;
+                    count++;
                   },
                   child: Text("Edit Profile"),
                   shape: RoundedRectangleBorder(
