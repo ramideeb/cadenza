@@ -1,4 +1,4 @@
-import 'package:assets_audio_player_example/AppPages/LibrariesPage/MainList/libraypage.dart';
+import 'package:cadenza/AppPages/LibrariesPage/MainList/libraypage.dart';
 import 'package:flutter/material.dart';
 
 import 'AlbumsList/albumslist.dart';

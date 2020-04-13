@@ -1,6 +1,6 @@
-name: assets_audio_player_example
-description: Demonstrates how to use the assets_audio_player plugin.
-publish_to: 'none'
+name: cadenza
+description: Music streaming app
+
 
 version: 1.0.0+1
 
@@ -12,10 +12,13 @@ dependencies:
   cupertino_icons: ^0.1.2
   path_provider:
   http: ^0.12.0+4
-  audioplayer: ^0.5.2
+ # audioplayer: ^0.5.2
+  audioplayers: ^0.14.2
   font_awesome_flutter: "any"
   pinput: ^0.1.10
   carousel_slider: ^1.4.1
+  provider: ^4.0.4
+  cloud_firestore: ^0.13.4+2
 
 dev_dependencies:
   flutter_test:
@@ -55,6 +58,7 @@ flutter:
 
 
   assets:
+    - assets/AudioFiles/
     - assets/GenresImages/
     - assets/AlbumImages/
     - logo.png

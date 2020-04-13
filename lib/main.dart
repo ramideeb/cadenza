@@ -1,13 +1,35 @@
-import 'package:assets_audio_player_example/LoginPages/resetpass.dart';
-import 'package:assets_audio_player_example/LoginPages/verificationPage.dart';
+import 'package:cadenza/LoginPages/resetpass.dart';
+import 'package:cadenza/LoginPages/verificationPage.dart';
+import 'package:cadenza/modules/library.dart';
+import 'package:cadenza/modules/queue.dart';
+import 'package:cadenza/modules/user.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'AppPages/MainWidget.dart';
 import 'LoginPages/forgetPass.dart';
 import 'LoginPages/loginpage.dart';
 
-
-void main() => runApp(MyApp());
-
+Future<void> main()  {  
+  runApp(
+      MultiProvider(
+        providers: [
+          ChangeNotifierProvider<Library>(
+            create: (context) => Library(
+              user: User("username"),
+            ),
+          ),
+          ChangeNotifierProxyProvider<Library, Queue>(
+            create: (_) => Queue(recommenderURL: ""),
+            update: (_, lib, queue) {
+              queue.library = lib;
+              return queue;
+            },
+          ),
+        ],
+        child: MyApp(),
+      ),
+    );
+}
 class MyApp extends StatelessWidget {
   ThemeData applicationtheme(BuildContext context) {
     return Theme.of(context).copyWith(

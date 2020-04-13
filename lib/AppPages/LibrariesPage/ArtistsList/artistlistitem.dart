@@ -1,4 +1,4 @@
-import 'package:assets_audio_player_example/modules/artist.dart';
+import 'package:cadenza/modules/artist.dart';
 import 'package:flutter/material.dart';
 
 import '../../../SizeConfig.dart';
@@ -30,7 +30,7 @@ class ArtistListItem extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Text(
-                  "${artist.artistName}",
+                  "${artist.username}",
                   style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.w600,

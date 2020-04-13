@@ -1,5 +1,5 @@
-import 'package:assets_audio_player_example/SizeConfig.dart';
-import 'package:assets_audio_player_example/modules/Album.dart';
+import 'package:cadenza/SizeConfig.dart';
+import 'package:cadenza/modules/Album.dart';
 import 'package:flutter/material.dart';
 
 class MuiscGrid extends StatelessWidget {

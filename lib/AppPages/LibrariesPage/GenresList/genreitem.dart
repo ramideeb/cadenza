@@ -1,5 +1,5 @@
 //TODO: to be replaced with Discovery after Discovery was made dynamic
-import 'package:assets_audio_player_example/modules/genre.dart';
+import 'package:cadenza/modules/genre.dart';
 import 'package:flutter/material.dart';
 
 class GenreItem extends StatelessWidget {

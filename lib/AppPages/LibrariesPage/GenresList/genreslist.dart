@@ -1,7 +1,7 @@
-import 'package:assets_audio_player_example/AppPages/LibrariesPage/GenresList/genresgrid.dart';
-import 'package:assets_audio_player_example/AppPages/LibrariesPage/searchbar.dart';
-import 'package:assets_audio_player_example/AppPages/LibrariesPage/toprow.dart';
-import 'package:assets_audio_player_example/modules/genre.dart';
+import 'package:cadenza/AppPages/LibrariesPage/GenresList/genresgrid.dart';
+import 'package:cadenza/AppPages/LibrariesPage/searchbar.dart';
+import 'package:cadenza/AppPages/LibrariesPage/toprow.dart';
+import 'package:cadenza/modules/genre.dart';
 import 'package:flutter/material.dart';
 
 import '../../../SizeConfig.dart';

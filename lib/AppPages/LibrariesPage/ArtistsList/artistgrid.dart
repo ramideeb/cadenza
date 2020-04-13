@@ -1,5 +1,5 @@
-import 'package:assets_audio_player_example/AppPages/LibrariesPage/ArtistsList/artistlistitem.dart';
-import 'package:assets_audio_player_example/modules/artist.dart';
+import 'package:cadenza/AppPages/LibrariesPage/ArtistsList/artistlistitem.dart';
+import 'package:cadenza/modules/artist.dart';
 import 'package:flutter/material.dart';
 
 class ArtistGrid extends StatelessWidget {

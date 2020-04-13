@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "641549630965",
+    "firebase_url": "https://cadenza-db-and-storage.firebaseio.com",
+    "project_id": "cadenza-db-and-storage",
+    "storage_bucket": "cadenza-db-and-storage.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:641549630965:android:f94aaf003ffb7ebaf974bc",
+        "android_client_info": {
+          "package_name": "com.cadenza.Cadenza"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "641549630965-st8pocb619j1gr7l4u98d2j08f3r02go.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDZUQECmCCjGoDA581TpP2qVtTppU4oo0g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "641549630965-st8pocb619j1gr7l4u98d2j08f3r02go.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

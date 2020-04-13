@@ -1,5 +1,5 @@
-import 'package:assets_audio_player_example/AppPages/LibrariesPage/ArtistsList/artistgrid.dart';
-import 'package:assets_audio_player_example/modules/artist.dart';
+import 'package:cadenza/AppPages/LibrariesPage/ArtistsList/artistgrid.dart';
+import 'package:cadenza/modules/artist.dart';
 import 'package:flutter/material.dart';
 
 import '../../../SizeConfig.dart';
@@ -35,15 +35,15 @@ class _ArtistsListState extends State<ArtistsList> {
 
     ArtistGrid _artistGrid = ArtistGrid(
       items: [
-        Artist(artistName: "B-Doge", songsCount: 53),
-        Artist(artistName: "B-Doge", songsCount: 53),
-        Artist(artistName: "B-Doge", songsCount: 53),
-        Artist(artistName: "B-Doge", songsCount: 53),
-        Artist(artistName: "B-Doge", songsCount: 53),
-        Artist(artistName: "B-Doge", songsCount: 53),
-        Artist(artistName: "B-Doge", songsCount: 53),
-        Artist(artistName: "B-Doge", songsCount: 53),
-        Artist(artistName: "B-Doge", songsCount: 53),
+        Artist(username: "B-Doge", songsCount: 53),
+        Artist(username: "B-Doge", songsCount: 53),
+        Artist(username: "B-Doge", songsCount: 53),
+        Artist(username: "B-Doge", songsCount: 53),
+        Artist(username: "B-Doge", songsCount: 53),
+        Artist(username: "B-Doge", songsCount: 53),
+        Artist(username: "B-Doge", songsCount: 53),
+        Artist(username: "B-Doge", songsCount: 53),
+        Artist(username: "B-Doge", songsCount: 53),
 
       ],
     );

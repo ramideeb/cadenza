@@ -1,11 +1,11 @@
-import 'package:assets_audio_player_example/AppPages/LibrariesPage/AlbumsList/albumslist.dart';
-import 'package:assets_audio_player_example/AppPages/LibrariesPage/ArtistsList/artistslist.dart';
-import 'package:assets_audio_player_example/AppPages/LibrariesPage/GenresList/genreslist.dart';
-import 'package:assets_audio_player_example/AppPages/LibrariesPage/MainList/playlistsgrid.dart';
-import 'package:assets_audio_player_example/AppPages/LibrariesPage/SongsList/songslist.dart';
-import 'package:assets_audio_player_example/SizeConfig.dart';
-import 'package:assets_audio_player_example/modules/playlist.dart';
-import 'package:assets_audio_player_example/presentation/cutsom_icons_icons.dart';
+import 'package:cadenza/AppPages/LibrariesPage/AlbumsList/albumslist.dart';
+import 'package:cadenza/AppPages/LibrariesPage/ArtistsList/artistslist.dart';
+import 'package:cadenza/AppPages/LibrariesPage/GenresList/genreslist.dart';
+import 'package:cadenza/AppPages/LibrariesPage/MainList/playlistsgrid.dart';
+import 'package:cadenza/AppPages/LibrariesPage/SongsList/songslist.dart';
+import 'package:cadenza/SizeConfig.dart';
+import 'package:cadenza/modules/playlist.dart';
+import 'package:cadenza/presentation/cutsom_icons_icons.dart';
 import 'package:flutter/material.dart';
 
 import '../library.dart';
@@ -13,6 +13,7 @@ import 'playlistcarousel.dart';
 
 List<Playlist> playlistsExample = [
   Playlist(
+    
     imageUrl: "assets/AlbumImages/art15.jpg",
     name: "Beyond",
     description:
@@ -59,7 +60,7 @@ class _LibraryPageState extends State<LibraryPage> {
 
     Widget _libraryText = Padding(
       padding: EdgeInsets.only(
-        top: SizeConfig.blockSizeVertical * 4,
+        top: SizeConfig.blockSizeVertical ,
         left: SizeConfig.blockSizeHorizontal * 4,
         bottom: SizeConfig.blockSizeVertical * 3.5,
       ),
