@@ -20,24 +20,7 @@ class Wrapper extends StatelessWidget {
     
     } 
     else {
-      
-      return MultiProvider(
-        providers: [
-          ChangeNotifierProvider<Library>(
-            create: (context) => Library(
-              user: User("username"),
-            ),
-          ),
-          ChangeNotifierProxyProvider<Library, Queue>(
-            create: (_) => Queue(recommenderURL: ""),
-            update: (_, lib, queue) {
-              queue.library = lib;
-              return queue;
-            },
-          ),
-        ],
-        child: HomePage(),
-      );
+      return HomePage();
     }
   }
 }
