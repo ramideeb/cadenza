@@ -76,9 +76,13 @@ class _HomePageState extends State<HomePage> {
   bool firstBuild = true;
   bool queueEmpty;
   @override
+  void initState() {
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     if (firstBuild) {
+      Provider.of<Queue>(context).initializeQueue();
       Provider.of<Queue>(context, listen: false).testBuild(songExamples);
       firstBuild = false;
     }

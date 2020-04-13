@@ -32,15 +32,30 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        home: StreamProvider<User>.value(value: Auth().user, child: Wrapper()),
-        title: 'Flutter Demo',
-        theme: applicationtheme(context));
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider<Library>(
+          create: (context) => Library(
+            user: User("username"),
+          ),
+        ),
+        ChangeNotifierProxyProvider<Library, Queue>(
+          create: (_) => Queue(recommenderURL: ""),
+          update: (_, lib, queue) {
+            queue.library = lib;
+            return queue;
+          },
+        ),
+      ],
+      child: MaterialApp(
+          debugShowCheckedModeBanner: false,
+          home:
+              StreamProvider<User>.value(value: Auth().user, child: Wrapper()),
+          title: 'Flutter Demo',
+          theme: applicationtheme(context)),
+    );
   }
 }
-
-
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key, this.title}) : super(key: key);
