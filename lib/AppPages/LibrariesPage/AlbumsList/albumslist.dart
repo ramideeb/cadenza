@@ -2,31 +2,32 @@ import 'package:cadenza/AppPages/LibrariesPage/AlbumsList/albumsgrid.dart';
 import 'package:cadenza/AppPages/LibrariesPage/searchbar.dart';
 import 'package:cadenza/AppPages/LibrariesPage/toprow.dart';
 import 'package:cadenza/modules/Album.dart';
+import 'package:cadenza/modules/artist.dart';
 import 'package:flutter/material.dart';
 
 import '../../../SizeConfig.dart';
 
 final List<Album> albumExamples = [
-//  Album(
-//    albumName: "Album",
-//    albumArtImageUrl: "assets/AlbumImages/art2.jpg",
-//    artistName: "Shosmo",
-//  ),
-//  Album(
-//    albumName: "Album",
-//    albumArtImageUrl: "assets/AlbumImages/art3.jpg",
-//    artistName: "Shosmo",
-//  ),
-//  Album(
-//    albumName: "Album",
-//    albumArtImageUrl: "assets/AlbumImages/art6.jpg",
-//    artistName: "Shosmo",
-//  ),
-//  Album(
-//    albumName: "Album",
-//    albumArtImageUrl: "assets/AlbumImages/art5.jpg",
-//    artistName: "Shosmo",
-//  ),
+ Album(
+   albumName: "Album",
+   albumArtImageUrl: "assets/AlbumImages/art2.jpg",
+   artist: Artist(username:"Shosmo"),
+ ),
+ Album(
+   albumName: "Album",
+   albumArtImageUrl: "assets/AlbumImages/art3.jpg",
+   artist: Artist(username:"Shosmo"),
+ ),
+ Album(
+   albumName: "Album",
+   albumArtImageUrl: "assets/AlbumImages/art6.jpg",
+   artist: Artist(username:"Shosmo"),
+ ),
+ Album(
+   albumName: "Album",
+   albumArtImageUrl: "assets/AlbumImages/art5.jpg",
+   artist: Artist(username:"Shosmo"),
+ ),
 ];
 
 class AlbumsList extends StatefulWidget {
