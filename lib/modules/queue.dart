@@ -39,7 +39,9 @@ class Queue extends ChangeNotifier {
   bool doneRepeatOnce;
   RepeatState repeat;
 
-  Queue({this.recommenderURL, this.library}) {
+  Queue({this.recommenderURL, this.library});
+  
+  void initializeQueue(){
     duration = Duration(microseconds: 0);
     position = Duration(microseconds: 0);
 
@@ -48,22 +50,24 @@ class Queue extends ChangeNotifier {
     repeat = RepeatState.NONE;
     doneRepeatOnce = true;
     shuffle = true;
-
   }
-
-  @override
-  void dispose() {
+ 
+  void disposePlayer(){
     player.release();
     _durationSubscription?.cancel();
     _positionSubscription?.cancel();
     _playerCompleteSubscription?.cancel();
     _playerErrorSubscription?.cancel();
     // _playerStateSubscription?.cancel();
+  } 
+  @override
+  void dispose() {
+    disposePlayer();
     super.dispose();
   }
 
   void _initAudioPlayer() {
-    player = AudioPlayer();
+    player = AudioPlayer(playerId: "onlyplayer");
     player.setReleaseMode(ReleaseMode.STOP);
 
     _durationSubscription = player.onDurationChanged.listen((duration) {

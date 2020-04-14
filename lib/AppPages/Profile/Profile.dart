@@ -1,7 +1,9 @@
 import 'package:cadenza/AppPages/PublicWidgets/FullWidthViewSong.dart';
 import 'package:cadenza/AppPages/PublicWidgets/circularArtistView.dart';
 import 'package:cadenza/LoginPages/f_services/auth.dart';
+import 'package:cadenza/modules/queue.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class ProfilePage extends StatelessWidget {
 
@@ -66,7 +68,8 @@ class ProfilePage extends StatelessWidget {
                 ),
                 SizedBox(width: 10),
                 FlatButton(
-                  onPressed: () async {
+                  onPressed: () async{
+                    Provider.of<Queue>(context,listen: false).disposePlayer();
                     await _auth.signOut();
                   },
                   child: Text("Sign Out"),
