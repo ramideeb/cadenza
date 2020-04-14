@@ -1,3 +1,5 @@
+import 'package:cadenza/LoginPages/f_services/auth.dart';
+
 import 'login.dart';
 import 'widgets/onesideroundedbutton.dart';
 import 'package:flutter/material.dart';
@@ -5,8 +7,10 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter/services.dart' ;
 
 
+
 class Opening extends StatelessWidget {
   @override
+final _auth = Auth();
   Widget build(BuildContext context) {
     SystemChrome.setPreferredOrientations([
         DeviceOrientation.portraitUp,
@@ -56,7 +60,18 @@ class Opening extends StatelessWidget {
                     ),
                     text: Text('Continue using Facebook',
                         style: TextStyle(fontSize: 15)),
-                    textcolor: Colors.white),
+                    textcolor: Colors.white
+                    
+                    ,
+                    onsbmt:(){
+                    _auth.Facebooksignin();
+
+                    }
+                    ),
+
+
+
+                    
                 SizedBox(
                     height: MediaQuery.of(context).size.height *
                         0.01), // for spacing

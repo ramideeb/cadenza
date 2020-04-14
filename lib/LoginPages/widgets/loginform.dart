@@ -1,4 +1,4 @@
-import 'package:cadenza/AppPages/MainWidget.dart';
+
 import 'package:cadenza/LoginPages/EmailSignUp.dart';
 import 'package:cadenza/LoginPages/f_services/auth.dart';
 import 'package:flutter/material.dart';
