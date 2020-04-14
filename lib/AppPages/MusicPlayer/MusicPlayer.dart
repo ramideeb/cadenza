@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:cadenza/SizeConfig.dart';
 import 'package:cadenza/modules/queue.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -23,9 +24,11 @@ class MusicPlayer extends StatefulWidget {
 
 class _MusicPlayerState extends State<MusicPlayer> {
   double timestamp = 0;
+  final SizeConfig _sizeConfig = SizeConfig();
 
   @override
   Widget build(BuildContext context) {
+    print(SizeConfig.screenHeight);
     IconData repeatIcon;
     RepeatState repeatState = Provider.of<Queue>(context).repeat;
     if (repeatState == RepeatState.LOOP || repeatState == RepeatState.NONE)
@@ -82,12 +85,12 @@ class _MusicPlayerState extends State<MusicPlayer> {
                   ),
                 ],
               ),
-              SizedBox(height: MediaQuery.of(context).size.height * 0.1),
+              SizedBox(height: SizeConfig.blockSizeVertical * 3,),
               Column(
                 children: <Widget>[
                   Container(
-                    height: MediaQuery.of(context).size.width * 0.8,
-                    width: MediaQuery.of(context).size.width * 0.8,
+                    height: SizeConfig.blockSizeVertical*40,
+                    width: SizeConfig.blockSizeVertical*40,
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
                         boxShadow: [
@@ -118,7 +121,7 @@ class _MusicPlayerState extends State<MusicPlayer> {
                       ),
                     ),
                   ),
-                  SizedBox(height: MediaQuery.of(context).size.height * 0.0125),
+                  SizedBox(height: SizeConfig.blockSizeVertical*1.24),
                   Text(
                     queue.currentSong.name,
                     style: TextStyle(
@@ -139,7 +142,7 @@ class _MusicPlayerState extends State<MusicPlayer> {
                 ],
               ),
               Container(
-                margin: EdgeInsets.symmetric(vertical: 30, horizontal: 10),
+                margin: EdgeInsets.symmetric(vertical: SizeConfig.blockSizeVertical*3.5, horizontal: 10),
                 child: Column(
                   children: <Widget>[
                     Slider(

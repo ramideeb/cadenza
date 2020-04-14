@@ -34,7 +34,7 @@ class _LoginPageState extends State<LoginPage> {
     Widget _logoRow = Container(
       padding: EdgeInsets.only(
           left: SizeConfig.blockSizeHorizontal * 3,
-          top: SizeConfig.blockSizeVertical * 4),
+          top: SizeConfig.blockSizeVertical * 3.5),
       child: Row(
         children: <Widget>[
           Image.asset("logo.png"),
@@ -60,48 +60,47 @@ class _LoginPageState extends State<LoginPage> {
       // crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
         Padding(
-          padding: EdgeInsets.only(
-            left: SizeConfig.blockSizeHorizontal * 2,
-            bottom: SizeConfig.blockSizeVertical * 9.5,
-          ),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-//            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
+          padding: EdgeInsets.only(left: SizeConfig.blockSizeHorizontal*2, bottom: SizeConfig.blockSizeVertical*9.5),
+          child: Stack(
+            overflow: Overflow.visible,
             children: <Widget>[
-              Text(
-                "Dance to the",
-                style: TextStyle(
-                  fontSize: 30.0,
-                  color: Color.fromARGB(255, 230, 57, 70),
-                  fontFamily: "OpenSans",
-                  height: 1,
-                  fontWeight: FontWeight.bold,
+              Positioned(
+                child: Text(
+                  "Dance to the",
+                  style: TextStyle(
+                      fontSize: 30.0,
+                      color: Color.fromARGB(255, 230, 57, 70),
+                      fontFamily: "OpenSans",
+                      fontWeight: FontWeight.bold),
                 ),
               ),
-              Text(
-                "Rhythm",
-                style: TextStyle(
-                    fontSize: 62.0,
-                    color: Color.fromARGB(255, 230, 57, 70),
-                    height: 1,
-                    fontFamily: "OpenSans",
-                    fontWeight: FontWeight.bold),
+              Positioned(
+                top: SizeConfig.blockSizeVertical*2.7,
+                left: SizeConfig.blockSizeHorizontal*-1,
+                child: Text(
+                  "Rhythm",
+                  style: TextStyle(
+                      fontSize: 62.0,
+                      color: Color.fromARGB(255, 230, 57, 70),
+                      fontFamily: "OpenSans",
+                      fontWeight: FontWeight.bold),
+                ),
               ),
-              Text(
-                "Of your heart",
-                style: TextStyle(
-                  fontSize: 30.0,
-                  height: 1,
-                  color: Color.fromARGB(255, 230, 57, 70),
-                  fontFamily: "OpenSans",
+              Positioned(
+                top: SizeConfig.blockSizeVertical*13,
+                child: Text(
+                  "Of your heart",
+                  style: TextStyle(
+                    fontSize: 30.0,
+                    color: Color.fromARGB(255, 230, 57, 70),
+                    fontFamily: "OpenSans",
+                  ),
                 ),
               ),
             ],
           ),
         ),
         FittedBox(
-          
           child: Image.asset("circle.png"),
           fit: BoxFit.fill,
         )
@@ -109,19 +108,15 @@ class _LoginPageState extends State<LoginPage> {
     );
 
     Widget _inputRow = Padding(
-      padding:
-          EdgeInsets.symmetric(horizontal: SizeConfig.blockSizeHorizontal * 4),
+      padding: EdgeInsets.symmetric(horizontal: SizeConfig.blockSizeHorizontal*4),
       child: Column(
         children: <Widget>[
-
-
-          
           Padding(
             padding: EdgeInsets.only(),
             child: TextField(
               controller: _usernameController,
               decoration: InputDecoration(
-                hintText: "Username1",
+                hintText: "Username",
                 enabled: true,
                 enabledBorder: UnderlineInputBorder(
                     borderSide:
@@ -130,8 +125,7 @@ class _LoginPageState extends State<LoginPage> {
             ),
           ),
           Padding(
-            padding:
-                EdgeInsets.only(bottom: SizeConfig.blockSizeHorizontal * 4),
+            padding: EdgeInsets.only(bottom: SizeConfig.blockSizeHorizontal*4),
             child: TextField(
               obscureText: true,
               controller: _passwordController,
@@ -147,8 +141,8 @@ class _LoginPageState extends State<LoginPage> {
           RaisedButton(
             onPressed: () {},
             child: Container(
-              width: SizeConfig.blockSizeHorizontal * 40,
-              height: SizeConfig.blockSizeVertical * 6,
+              width: SizeConfig.blockSizeHorizontal*40,
+              height: SizeConfig.blockSizeVertical*6,
               child: Center(
                 child: Text(
                   "Sing in",
@@ -161,7 +155,7 @@ class _LoginPageState extends State<LoginPage> {
             color: Color.fromARGB(255, 230, 57, 70),
           ),
           Padding(
-            padding: EdgeInsets.only(top: SizeConfig.blockSizeVertical * 1.5),
+            padding: EdgeInsets.only(top: SizeConfig.blockSizeVertical*1.5),
             child: Text(
               "RESET YOUR PASSWORD >",
               style: TextStyle(
@@ -175,16 +169,23 @@ class _LoginPageState extends State<LoginPage> {
       ),
     );
 
-    return Container(
-      child: SingleChildScrollView(
-        child: Column(
-          children: <Widget>[
-            _logoRow,
-            _textRow,
-            _inputRow,
-          ],
-        ),
-      ),
+    return Stack(
+      fit: StackFit.expand,
+      overflow: Overflow.clip,
+      children: <Widget>[
+//        Image.asset("BG.jpg", repeat: ImageRepeat.repeat),
+        Container(
+          child: SingleChildScrollView(
+            child: Column(
+              children: <Widget>[
+                _logoRow,
+                _textRow,
+                _inputRow,
+              ],
+            ),
+          ),
+        )
+      ],
     );
   }
 }
