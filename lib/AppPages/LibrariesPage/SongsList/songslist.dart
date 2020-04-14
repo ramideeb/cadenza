@@ -2,6 +2,7 @@ import 'package:cadenza/AppPages/LibrariesPage/SongsList/songgrid.dart';
 import 'package:cadenza/AppPages/LibrariesPage/searchbar.dart';
 import 'package:cadenza/AppPages/LibrariesPage/toprow.dart';
 import 'package:cadenza/SizeConfig.dart';
+import 'package:cadenza/modules/artist.dart';
 import 'package:cadenza/modules/song.dart';
 import 'package:flutter/material.dart';
 
@@ -35,27 +36,28 @@ class _SongsListState extends State<SongsList> {
 
     SongsGrid _list = SongsGrid(
       items: [
-//        Song(name: "We'll meet again", artistName: "Vera Lynn"),
-//        Song(name: "We'll meet again", artistName: "Vera Lynn"),
-//        Song(name: "We'll meet again", artistName: "Vera Lynn"),
-//        Song(name: "We'll meet again", artistName: "Vera Lynn"),
-//        Song(name: "We'll meet again", artistName: "Vera Lynn"),
-//        Song(name: "We'll meet again", artistName: "Vera Lynn"),
-//        Song(name: "We'll meet again", artistName: "Vera Lynn"),
-//        Song(name: "We'll meet again", artistName: "Vera Lynn"),
-//        Song(name: "We'll meet again", artistName: "Vera Lynn"),
-//        Song(name: "We'll meet again", artistName: "Vera Lynn"),
-//        Song(name: "We'll meet again", artistName: "Vera Lynn"),
-//        Song(name: "We'll meet again", artistName: "Vera Lynn"),
-//        Song(name: "We'll meet again", artistName: "Vera Lynn"),
-//        Song(name: "We'll meet again", artistName: "Vera Lynn"),
-//        Song(name: "We'll meet again", artistName: "Vera Lynn"),
-//        Song(name: "We'll meet again", artistName: "Vera Lynn"),
-//        Song(name: "We'll meet again", artistName: "Vera Lynn"),
-//        Song(name: "We'll meet again", artistName: "Vera Lynn"),
-//        Song(name: "We'll meet again", artistName: "Vera Lynn"),
-//        Song(name: "We'll meet again", artistName: "Vera Lynn"),
-//        Song(name: "We'll meet again", artistName: "Vera Lynn"),
+       Song(name: "We'll meet again", artist: Artist(username:"Vera Lynn")),
+       Song(name: "We'll meet again", artist: Artist(username:"Vera Lynn")),
+       Song(name: "We'll meet again", artist: Artist(username:"Vera Lynn")),
+       Song(name: "We'll meet again", artist: Artist(username:"Vera Lynn")),
+       Song(name: "We'll meet again", artist: Artist(username:"Vera Lynn")),
+       Song(name: "We'll meet again", artist: Artist(username:"Vera Lynn")),
+       Song(name: "We'll meet again", artist: Artist(username:"Vera Lynn")),
+       Song(name: "We'll meet again", artist: Artist(username:"Vera Lynn")),
+       Song(name: "We'll meet again", artist: Artist(username:"Vera Lynn")),
+       Song(name: "We'll meet again", artist: Artist(username:"Vera Lynn")),
+       Song(name: "We'll meet again", artist: Artist(username:"Vera Lynn")),
+       Song(name: "We'll meet again", artist: Artist(username:"Vera Lynn")),
+       Song(name: "We'll meet again", artist: Artist(username:"Vera Lynn")),
+       Song(name: "We'll meet again", artist: Artist(username:"Vera Lynn")),
+       Song(name: "We'll meet again", artist: Artist(username:"Vera Lynn")),
+       Song(name: "We'll meet again", artist: Artist(username:"Vera Lynn")),
+       Song(name: "We'll meet again", artist: Artist(username:"Vera Lynn")),
+       Song(name: "We'll meet again", artist: Artist(username:"Vera Lynn")),
+       Song(name: "We'll meet again", artist: Artist(username:"Vera Lynn")),
+       Song(name: "We'll meet again", artist: Artist(username:"Vera Lynn")),
+       Song(name: "We'll meet again", artist: Artist(username:"Vera Lynn")),
+       
       ],
     );
 
