@@ -2,7 +2,9 @@ import 'package:cadenza/AppPages/MusicPlayer/MusicPlayer.dart';
 import 'package:cadenza/AppPages/Home/homepage.dart';
 import 'package:cadenza/AppPages/LibrariesPage/library.dart';
 import 'package:cadenza/modules/Album.dart';
+import 'package:cadenza/modules/artist.dart';
 import 'package:cadenza/modules/queue.dart';
+import 'package:cadenza/modules/genre.dart';
 import 'package:cadenza/modules/song.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -11,40 +13,82 @@ import 'Search/Search.dart';
 
 final List<Album> exampleAlbums = [
   Album(
-      albumName: "ABBA",
-      albumArtImageUrl: "assets/AlbumImages/art1.jpg",
-      artistName: "ABBA"),
-  Album(
-      albumName: "Piano Man Album",
-      albumArtImageUrl: "assets/AlbumImages/art19.jpg",
-      artistName: "Billy Joel"),
-  Album(
-      albumName: "Sies",
-      albumArtImageUrl: "assets/AlbumImages/art20.jpg",
-      artistName: "Donna"),
+    artist: Artist(
+      uid: "ddd",
+    ),
+    albumName: "fff",
+    albumID: "12222",
+    albumArtImageUrl: "assets/AlbumImages/art1.jpg",
+  ),
+//  Album(
+//      albumName: "ABBA",
+//      albumArtImageUrl: "assets/AlbumImages/art1.jpg",
+//      artistName: "ABBA"),
+//  Album(
+//      albumName: "Piano Man Album",
+//      albumArtImageUrl: "assets/AlbumImages/art19.jpg",
+//      artistName: "Billy Joel"),
+//  Album(
+//      albumName: "Sies",
+//      albumArtImageUrl: "assets/AlbumImages/art20.jpg",
+//      artistName: "Donna"),
 ];
 
 final List<Song> songExamples = [
   Song(
-    album: exampleAlbums[1],
-    artistName: "Billy Joel",
-    name: "Piano Man",
-    url:
-        "https://file-examples.com/wp-content/uploads/2017/11/file_example_MP3_5MG.mp3",
+    artist: Artist(
+      uid: "ddd",
+    ),
+    album: Album(
+      artist: Artist(
+        uid: "ddd",
+      ),
+      albumName: "fff",
+      albumID: "12222",
+      albumArtImageUrl: "assets/AlbumImages/art1.jpg",
+    ),
+    name: "songg",
+    songID: "11111",
+    genre: Genre(genreName: "ggg",genreImageUrl:"assets/AlbumImages/art1.jpg",genreID: "4444"),
+
   ),
   Song(
-      album: exampleAlbums[2],
-      artistName: "Donna",
-      name: "Mala Fama",
-      url:
-          "https://file-examples.com/wp-content/uploads/2017/11/file_example_MP3_5MG.mp3"),
-  Song(
-    album: exampleAlbums[0],
-    artistName: "ABBA",
-    name: "Super Trooper",
-    url:
-        "https://file-examples.com/wp-content/uploads/2017/11/file_example_MP3_5MG.mp3",
+    artist: Artist(
+      uid: "ddd",
+    ),
+    album: Album(
+      artist: Artist(
+        uid: "ddd",
+      ),
+      albumName: "fff",
+      albumID: "12222",
+      albumArtImageUrl: "assets/AlbumImages/art1.jpg",
+    ),
+    name: "songg",
+    songID: "11111",
+    genre: Genre(genreName: "ggg",genreImageUrl:"assets/AlbumImages/art1.jpg",genreID: "4444"),
+
   ),
+//  Song(
+//    album: exampleAlbums[1],
+//    artistName: "Billy Joel",
+//    name: "Piano Man",
+//    url:
+//        "https://file-examples.com/wp-content/uploads/2017/11/file_example_MP3_5MG.mp3",
+//  ),
+//  Song(
+//      album: exampleAlbums[2],
+//      artistName: "Donna",
+//      name: "Mala Fama",
+//      url:
+//          "https://file-examples.com/wp-content/uploads/2017/11/file_example_MP3_5MG.mp3"),
+//  Song(
+//    album: exampleAlbums[0],
+//    artistName: "ABBA",
+//    name: "Super Trooper",
+//    url:
+//        "https://file-examples.com/wp-content/uploads/2017/11/file_example_MP3_5MG.mp3",
+//  ),
 ];
 
 class HomePage extends StatefulWidget {
@@ -60,7 +104,7 @@ class _HomePageState extends State<HomePage> {
     fontSize: 30,
     fontWeight: FontWeight.bold,
   );
-  static List<Widget> _widgetOptions = <Widget>[
+  final List<Widget> _widgetOptions = <Widget>[
     HomePageWidget(),
     Search(),
     Library(),
@@ -75,10 +119,15 @@ class _HomePageState extends State<HomePage> {
 
   bool firstBuild = true;
   bool queueEmpty;
+
   @override
+  void initState() {
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     if (firstBuild) {
+      Provider.of<Queue>(context).initializeQueue();
       Provider.of<Queue>(context, listen: false).testBuild(songExamples);
       firstBuild = false;
     }

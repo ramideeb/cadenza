@@ -33,7 +33,7 @@ class PlaylistItemMinimized extends StatelessWidget {
           ),
           Center(
             child: Text(
-              "${playlist.name}",
+              "${playlist.PlaylistName}",
               style: TextStyle(
                 fontSize: 25,
                 fontWeight: FontWeight.w600,

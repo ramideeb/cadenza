@@ -13,27 +13,27 @@ import 'playlistcarousel.dart';
 
 List<Playlist> playlistsExample = [
   Playlist(
-    
+
     imageUrl: "assets/AlbumImages/art15.jpg",
-    name: "Beyond",
+    PlaylistName: "Beyond",
     description:
         " Enjoy the best music done by artists who are beyond amazeballz",
   ),
   Playlist(
     imageUrl: "assets/AlbumImages/playlist1.jpg",
-    name: "Luminate",
+    PlaylistName: "Luminate",
     description:
         " Enjoy the best music done by artists who are beyond amazeballz",
   ),
   Playlist(
     imageUrl: "assets/AlbumImages/playlist2.jpg",
-    name: "Beatz",
+    PlaylistName: "Beatz",
     description:
         " Enjoy the best music done by artists who are beyond amazeballz",
   ),
   Playlist(
     imageUrl: "assets/AlbumImages/playlist3.jpg",
-    name: "Hayooo!",
+    PlaylistName: "Hayooo!",
     description:
         " Enjoy the best music done by artists who are beyond amazeballz",
   ),
