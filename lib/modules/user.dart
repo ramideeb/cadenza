@@ -1,8 +1,8 @@
 class User{
   //TODO:to be implemented
   final String uid;
-  String username;
+  final String username;
   
-  User(this.uid);
+  User({this.uid, this.username});
 //  User({this.uid,this.username});
 }

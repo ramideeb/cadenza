@@ -36,7 +36,7 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider<Library>(
           create: (context) => Library(
-            user: User("username"),
+            user: User(username:"username"),
           ),
         ),
         ChangeNotifierProxyProvider<Library, Queue>(

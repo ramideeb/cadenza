@@ -14,7 +14,7 @@ class Artist extends User {
 //  List<Song> songsList;
 
 //  Artist({String username,String uid,this.songsCount}) : super(uid:uid,username:username);
-  Artist({String username, String uid, this.songsCount}) : super(uid);
+  Artist({String username, String uid, this.songsCount}) : super(username:username,uid:uid);
 
   Map<String, dynamic> toMap() {
     return {
