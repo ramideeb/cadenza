@@ -4,4 +4,5 @@ class User{
   String username;
   
   User(this.uid);
+//  User({this.uid,this.username});
 }

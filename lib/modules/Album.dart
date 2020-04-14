@@ -1,5 +1,5 @@
+import 'package:cadenza/modules/DatabaseController.dart';
 import 'package:cadenza/modules/song.dart';
-
 import 'artist.dart';
 
 class Album {
@@ -7,6 +7,8 @@ class Album {
   final String albumName;
   final Artist artist;
   final String albumArtImageUrl;
+
+  //TODO: replace it with function get albums songs  getAlbumSongs()
   List<Song> albumSongs;
 
   Album({
@@ -14,21 +16,19 @@ class Album {
     this.albumID,
     this.albumName,
     this.albumArtImageUrl,
-  }){
-    this.albumSongs = new List<Song>();
+  });
+
+  Map<String, dynamic> toMap() {
+    return {
+      "albumID": albumID,
+      "albumName":albumName,
+      "artist": artist.uid,
+      "albumArtImageUrl":albumArtImageUrl,
+    };
   }
 
-  List<Map<String,dynamic>> toMap(){
-    return albumSongs.map((song) {
-      return
-      {
-        "albumID": albumID,
-        "songID": song.songID,
-        "albumName":albumName,
-        "artist": artist.uid,
-        "albumArtImageUrl":albumArtImageUrl,
-      };
-    }).toList();
+  Future<List<OfflineSong>> getAlbumSongs()async{
+    return await DatabaseController.getOfflineSong(albumID: this.albumID);
   }
 
 

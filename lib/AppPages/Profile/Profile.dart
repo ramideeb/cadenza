@@ -1,24 +1,12 @@
-import 'dart:typed_data';
-
-import 'package:cadenza/modules/genre.dart';
-import 'package:cadenza/modules/artist.dart';
-import 'package:cadenza/modules/Album.dart';
-import 'package:cadenza/modules/song.dart';
 import 'package:cadenza/AppPages/PublicWidgets/FullWidthViewSong.dart';
 import 'package:cadenza/AppPages/PublicWidgets/circularArtistView.dart';
 import 'package:cadenza/LoginPages/f_services/auth.dart';
-import 'package:cadenza/modules/DatabaseController.dart';
 import 'package:flutter/material.dart';
-import 'package:sqflite/sqflite.dart';
 
 class ProfilePage extends StatelessWidget {
-  bool testToggle = true;
-  int count = 0;
-
 
   @override
   Widget build(BuildContext context) {
-    final Future<Database> database = DatabaseController.database;
     final Auth _auth = Auth();
     return Container(
       child: SingleChildScrollView(
@@ -68,23 +56,7 @@ class ProfilePage extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 FlatButton(
-                  onPressed: () async {
-                    if (testToggle) {
-                      DatabaseController.insertSong(
-                        OfflineSong(
-                            songID: "$count",
-                            name: "$count",
-                            decryptionKey: "ggggg",
-                            genre: Genre(genreID: "123"),
-                            album: Album(albumID: "dddd"),
-                            artist: Artist(uid: "11111")),
-                      );
-                    } else {
-                      print(DatabaseController.getOfflineSong());
-                    }
-                    testToggle = !testToggle;
-                    count++;
-                  },
+                  onPressed: () async {},
                   child: Text("Edit Profile"),
                   shape: RoundedRectangleBorder(
                       borderRadius: new BorderRadius.circular(18.0),

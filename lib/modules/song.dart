@@ -66,12 +66,13 @@ class OfflineSong extends Song {
       "songGenre": genre.genreID,
       "artist": artist.uid,
       "decryptionKey": decryptionKey,
-      "encryptedSong": "ffffff",
+      "encryptedSong": storeEncryptedSong(),
     };
   }
 
   String storeEncryptedSong() {
     //TODO: should store the encrypted song and return the name file at the local storage
+    //TODO: it should return the encrypted song name at the file system
     return "not implemnted";
   }
   @override
