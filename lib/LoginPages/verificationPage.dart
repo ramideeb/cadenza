@@ -112,14 +112,14 @@ class _VerificationPageState extends State<VerificationPage> {
             SizedBox(
               height: MediaQuery.of(context).size.height * 0.02,
             ),
-          ButtonTheme(
+            ButtonTheme(
                 minWidth: MediaQuery.of(context).size.width * 0.9,
                 child: RaisedButton(
                     onPressed: () {
-                     Navigator.push(
-    context,
-    MaterialPageRoute(builder: (context) => ResetPass()),
-  );
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => ResetPass()),
+                      );
                     },
                     shape: RoundedRectangleBorder(
                         borderRadius: new BorderRadius.circular(15.0),
@@ -130,14 +130,11 @@ class _VerificationPageState extends State<VerificationPage> {
                       padding: const EdgeInsets.all(12.0),
                       child: Text("Done", style: TextStyle(fontSize: 15)),
                     ))),
-
-    SizedBox(
+            SizedBox(
               height: MediaQuery.of(context).size.height * 0.02,
             ),
             new GestureDetector(
-                onTap: () {
-                  
-                },
+                onTap: () {},
                 child: new Text(
                   "Send a new code",
                 ))
