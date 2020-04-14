@@ -10,8 +10,13 @@
         android:name="io.flutter.app.FlutterApplication"
         android:label="Cadenza"
         android:icon="@mipmap/ic_launcher"
+
         
         >
+
+        <meta-data android:value="@string/facebook_app_id"
+                   android:name="com.facebook.sdk.ApplicationId"/>
+
         
         <activity
             android:name=".MainActivity"

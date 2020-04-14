@@ -20,6 +20,7 @@ dependencies:
   provider: ^4.0.4
   cloud_firestore: ^0.13.4+2
   firebase_auth: ^0.14.0+5
+  flutter_facebook_login: ^2.0.1
   
 
 dev_dependencies:
