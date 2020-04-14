@@ -33,7 +33,7 @@ class AlbumArtWidget extends StatelessWidget {
           Padding(
             padding: EdgeInsets.only(top: SizeConfig.blockSizeVertical),
             child: Text(
-              album.albumName,
+              album.artist.username,
               style: TextStyle(
                 fontWeight: FontWeight.w800,
                 fontSize: 18,
@@ -41,7 +41,7 @@ class AlbumArtWidget extends StatelessWidget {
             ),
           ),
           Text(
-            album.artistName,
+            album.artist.username,
             style: TextStyle(
               color: Colors.grey,
               fontSize: 11,

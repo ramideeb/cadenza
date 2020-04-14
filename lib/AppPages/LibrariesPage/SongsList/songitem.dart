@@ -21,14 +21,14 @@ class SongItem extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Text(
-                song.name,
+                song.artist.uid,
                 style: TextStyle(
                   fontSize: 15,
                   fontWeight: FontWeight.w500,
                 ),
               ),
               Text(
-                song.artistName,
+                song.artist.uid,
                 style: TextStyle(
                   fontSize: 13,
                   color: Color.fromRGBO(131, 131, 131, 1),

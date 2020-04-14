@@ -7,26 +7,26 @@ import 'package:flutter/material.dart';
 import '../../../SizeConfig.dart';
 
 final List<Album> albumExamples = [
-  Album(
-    albumName: "Album",
-    albumArtImageUrl: "assets/AlbumImages/art2.jpg",
-    artistName: "Shosmo",
-  ),
-  Album(
-    albumName: "Album",
-    albumArtImageUrl: "assets/AlbumImages/art3.jpg",
-    artistName: "Shosmo",
-  ),
-  Album(
-    albumName: "Album",
-    albumArtImageUrl: "assets/AlbumImages/art6.jpg",
-    artistName: "Shosmo",
-  ),
-  Album(
-    albumName: "Album",
-    albumArtImageUrl: "assets/AlbumImages/art5.jpg",
-    artistName: "Shosmo",
-  ),
+//  Album(
+//    albumName: "Album",
+//    albumArtImageUrl: "assets/AlbumImages/art2.jpg",
+//    artistName: "Shosmo",
+//  ),
+//  Album(
+//    albumName: "Album",
+//    albumArtImageUrl: "assets/AlbumImages/art3.jpg",
+//    artistName: "Shosmo",
+//  ),
+//  Album(
+//    albumName: "Album",
+//    albumArtImageUrl: "assets/AlbumImages/art6.jpg",
+//    artistName: "Shosmo",
+//  ),
+//  Album(
+//    albumName: "Album",
+//    albumArtImageUrl: "assets/AlbumImages/art5.jpg",
+//    artistName: "Shosmo",
+//  ),
 ];
 
 class AlbumsList extends StatefulWidget {

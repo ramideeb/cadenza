@@ -6,9 +6,10 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class ProfilePage extends StatelessWidget {
+
   @override
   Widget build(BuildContext context) {
-    final Auth _auth=Auth();
+    final Auth _auth = Auth();
     return Container(
       child: SingleChildScrollView(
         child: Column(
@@ -57,7 +58,7 @@ class ProfilePage extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 FlatButton(
-                  onPressed: null,
+                  onPressed: () async {},
                   child: Text("Edit Profile"),
                   shape: RoundedRectangleBorder(
                       borderRadius: new BorderRadius.circular(18.0),
@@ -70,7 +71,6 @@ class ProfilePage extends StatelessWidget {
                   onPressed: () async{
                     Provider.of<Queue>(context,listen: false).disposePlayer();
                     await _auth.signOut();
-                    
                   },
                   child: Text("Sign Out"),
                   shape: RoundedRectangleBorder(
