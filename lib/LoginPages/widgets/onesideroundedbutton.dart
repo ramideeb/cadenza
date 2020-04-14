@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 
 class Onesideroundedbutton extends StatelessWidget {
-  const Onesideroundedbutton({Key key, this.color, this.icon, this.text,this.textcolor})
+  const Onesideroundedbutton({Key key, this.color, this.icon, this.text,this.textcolor,this.onsbmt})
       : super(key: key);
 
   final Color color;
   final Icon icon;
   final Text text;
   final Color textcolor;
+  final Function onsbmt;
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +23,7 @@ class Onesideroundedbutton extends StatelessWidget {
                 bottomLeft: Radius.circular(30.0),
               ),
               child: RaisedButton(
-                  onPressed: () {},
+                  onPressed: onsbmt ,
                   textColor: this.textcolor,
                   color: this.color,
                   child: Padding(

@@ -15,7 +15,7 @@ class _EmailSignUpState extends State<EmailSignUp> {
   String Email;
   String Password;
   String CPassword;
-  final Auth auth=Auth();
+ final Auth _auth = Auth();
 
   final _formKey = GlobalKey<FormState>();
 
@@ -135,12 +135,11 @@ validator: (val){
                         child: RaisedButton(
                             onPressed: () async {
                               if (_formKey.currentState.validate()) {
-                               dynamic result=await auth.RegisterWithEmail(Email,Password);
+                               dynamic result=await _auth.RegisterWithEmail(Email,Password);
                                if(result!=null)
                                {
-                                    Navigator.pushNamedAndRemoveUntil(context, "/HomePage", (r) => false);
-
-
+                                 Navigator.of(context).popUntil((route) => route.isFirst);
+                              
                                }
 
                               }
