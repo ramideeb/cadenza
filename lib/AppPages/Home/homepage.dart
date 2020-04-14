@@ -10,97 +10,50 @@ import 'package:flutter/material.dart';
 // import 'genreswidget.dart';
 
 final List<Album> albumExamples = [
-  Album(
-    artist: Artist(
-      uid: "ddd",
-    ),
-    albumName: "fff",
-    albumID: "12222",
-    albumArtImageUrl: "assets/AlbumImages/art1.jpg",
-  ),
-  Album(
-    artist: Artist(
-      uid: "ddd",
-    ),
-    albumName: "fff",
-    albumID: "12222",
-    albumArtImageUrl: "assets/AlbumImages/art1.jpg",
-  ),
-//  Album(
-//    albumName: "Album",
-//    albumArtImageUrl: "assets/AlbumImages/art2.jpg",
-//    artistName: "Shosmo",
-//  ),
-//  Album(
-//    albumName: "Album",
-//    albumArtImageUrl: "assets/AlbumImages/art3.jpg",
-//    artistName: "Shosmo",
-//  ),
-//  Album(
-//    albumName: "Album",
-//    albumArtImageUrl: "assets/AlbumImages/art6.jpg",
-//    artistName: "Shosmo",
-//  ),
-//  Album(
-//    albumName: "Album",
-//    albumArtImageUrl: "assets/AlbumImages/art5.jpg",
-//    artistName: "Shosmo",
-//  ),
+
+ Album(
+   albumName: "Album",
+   albumArtImageUrl: "assets/AlbumImages/art2.jpg",
+   artist: Artist(username:"Shosmo"),
+ ),
+ Album(
+   albumName: "Album",
+   albumArtImageUrl: "assets/AlbumImages/art3.jpg",
+   artist: Artist(username:"Shosmo"),
+ ),
+ Album(
+   albumName: "Album",
+   albumArtImageUrl: "assets/AlbumImages/art6.jpg",
+   artist: Artist(username:"Shosmo"),
+ ),
+ Album(
+   albumName: "Album",
+   albumArtImageUrl: "assets/AlbumImages/art5.jpg",
+   artist: Artist(username:"Shosmo"),
+ ),
 ];
 
 final List<Album> gridAlbumExamples = [
-  Album(
-    artist: Artist(
-      uid: "ddd",
-    ),
-    albumName: "fff",
-    albumID: "12222",
-    albumArtImageUrl: "assets/AlbumImages/art1.jpg",
-  ),
-  Album(
-    artist: Artist(
-      uid: "ddd",
-    ),
-    albumName: "fff",
-    albumID: "12222",
-    albumArtImageUrl: "assets/AlbumImages/art1.jpg",
-  ),
-  Album(
-    artist: Artist(
-      uid: "ddd",
-    ),
-    albumName: "fff",
-    albumID: "12222",
-    albumArtImageUrl: "assets/AlbumImages/art1.jpg",
-  ),
-  Album(
-    artist: Artist(
-      uid: "ddd",
-    ),
-    albumName: "fff",
-    albumID: "12222",
-    albumArtImageUrl: "assets/AlbumImages/art1.jpg",
-  )
-//  Album(
-//    albumName: "Album",
-//    albumArtImageUrl: "assets/AlbumImages/art12.jpg",
-//    artistName: "Shosmo",
-//  ),
-//  Album(
-//    albumName: "Album",
-//    albumArtImageUrl: "assets/AlbumImages/art7.png",
-//    artistName: "Shosmo",
-//  ),
-//  Album(
-//    albumName: "Album",
-//    albumArtImageUrl: "assets/AlbumImages/art8.jpg",
-//    artistName: "Shosmo",
-//  ),
-//  Album(
-//    albumName: "Album",
-//    albumArtImageUrl: "assets/AlbumImages/art11.jpg",
-//    artistName: "Shosmo",
-//  ),
+ Album(
+   albumName: "Album",
+   albumArtImageUrl: "assets/AlbumImages/art12.jpg",
+   artist: Artist(username:"Shosmo"),
+ ),
+ Album(
+   albumName: "Album",
+   albumArtImageUrl: "assets/AlbumImages/art7.png",
+   artist: Artist(username:"Shosmo"),
+ ),
+ Album(
+   albumName: "Album",
+   albumArtImageUrl: "assets/AlbumImages/art8.jpg",
+   artist: Artist(username:"Shosmo"),
+ ),
+ Album(
+   albumName: "Album",
+   albumArtImageUrl: "assets/AlbumImages/art11.jpg",
+   artist: Artist(username:"Shosmo"),
+ ),
 ];
 
 final List<Genre> genreExamples = [

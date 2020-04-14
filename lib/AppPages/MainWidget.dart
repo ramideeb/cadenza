@@ -13,82 +13,44 @@ import 'Search/Search.dart';
 
 final List<Album> exampleAlbums = [
   Album(
-    artist: Artist(
-      uid: "ddd",
-    ),
-    albumName: "fff",
-    albumID: "12222",
+    albumName: "ABBA",
     albumArtImageUrl: "assets/AlbumImages/art1.jpg",
+    artist: Artist(username: "ABBA"),
   ),
-//  Album(
-//      albumName: "ABBA",
-//      albumArtImageUrl: "assets/AlbumImages/art1.jpg",
-//      artistName: "ABBA"),
-//  Album(
-//      albumName: "Piano Man Album",
-//      albumArtImageUrl: "assets/AlbumImages/art19.jpg",
-//      artistName: "Billy Joel"),
-//  Album(
-//      albumName: "Sies",
-//      albumArtImageUrl: "assets/AlbumImages/art20.jpg",
-//      artistName: "Donna"),
+  Album(
+    albumName: "Piano Man Album",
+    albumArtImageUrl: "assets/AlbumImages/art19.jpg",
+    artist: Artist(username: "Billy Joel"),
+  ),
+  Album(
+    albumName: "Sies",
+    albumArtImageUrl: "assets/AlbumImages/art20.jpg",
+    artist: Artist(username: "Donna"),
+  ),
 ];
 
 final List<Song> songExamples = [
-  Song(
-    artist: Artist(
-      uid: "ddd",
-    ),
-    album: Album(
-      artist: Artist(
-        uid: "ddd",
-      ),
-      albumName: "fff",
-      albumID: "12222",
-      albumArtImageUrl: "assets/AlbumImages/art1.jpg",
-    ),
-    name: "songg",
-    songID: "11111",
-    genre: Genre(genreName: "ggg",genreImageUrl:"assets/AlbumImages/art1.jpg",genreID: "4444"),
-
-  ),
-  Song(
-    artist: Artist(
-      uid: "ddd",
-    ),
-    album: Album(
-      artist: Artist(
-        uid: "ddd",
-      ),
-      albumName: "fff",
-      albumID: "12222",
-      albumArtImageUrl: "assets/AlbumImages/art1.jpg",
-    ),
-    name: "songg",
-    songID: "11111",
-    genre: Genre(genreName: "ggg",genreImageUrl:"assets/AlbumImages/art1.jpg",genreID: "4444"),
-
-  ),
-//  Song(
-//    album: exampleAlbums[1],
-//    artistName: "Billy Joel",
-//    name: "Piano Man",
-//    url:
-//        "https://file-examples.com/wp-content/uploads/2017/11/file_example_MP3_5MG.mp3",
-//  ),
-//  Song(
-//      album: exampleAlbums[2],
-//      artistName: "Donna",
-//      name: "Mala Fama",
-//      url:
-//          "https://file-examples.com/wp-content/uploads/2017/11/file_example_MP3_5MG.mp3"),
-//  Song(
-//    album: exampleAlbums[0],
-//    artistName: "ABBA",
-//    name: "Super Trooper",
-//    url:
-//        "https://file-examples.com/wp-content/uploads/2017/11/file_example_MP3_5MG.mp3",
-//  ),
+ 
+ OnlineSong(
+   album: exampleAlbums[1],
+   artist: exampleAlbums[1].artist,
+   name: "Piano Man",
+   url:
+       "https://file-examples.com/wp-content/uploads/2017/11/file_example_MP3_5MG.mp3",
+ ),
+ OnlineSong(
+     album: exampleAlbums[2],
+     artist: exampleAlbums[2].artist,
+     name: "Mala Fama",
+     url:
+         "https://file-examples.com/wp-content/uploads/2017/11/file_example_MP3_5MG.mp3"),
+ OnlineSong(
+   album: exampleAlbums[0],
+   artist: exampleAlbums[0].artist,
+   name: "Super Trooper",
+   url:
+       "https://file-examples.com/wp-content/uploads/2017/11/file_example_MP3_5MG.mp3",
+ ),
 ];
 
 class HomePage extends StatefulWidget {
@@ -124,6 +86,7 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     if (firstBuild) {
