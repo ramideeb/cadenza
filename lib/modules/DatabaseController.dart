@@ -33,7 +33,7 @@ class DatabaseController {
 
         db.execute("CREATE TABLE Artist (uid TEXT PRIMARY KEY, username TEXT)");
         return db.execute(
-            "CREATE TABLE Playlist ( playlistId TEXT, songID TEXT, PlaylistName TEXT, description TEXT, imageUrl TEXT, PRIMARY KEY (playlistId, songID))");
+            "CREATE TABLE Playlist (playlistId TEXT, songID TEXT, PlaylistName TEXT, description TEXT, imageUrl TEXT, PRIMARY KEY (playlistId, songID))");
       },
     );
   }

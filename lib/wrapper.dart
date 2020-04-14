@@ -5,8 +5,7 @@ import 'package:provider/provider.dart';
 
 import 'AppPages/MainWidget.dart';
 import 'LoginPages/f_services/auth.dart';
-import 'modules/library.dart';
-import 'modules/queue.dart';
+
 
 class Wrapper extends StatelessWidget {
   final Auth auth = Auth();
@@ -16,10 +15,12 @@ class Wrapper extends StatelessWidget {
     final user = Provider.of<User>(context);
 
     if (user == null) {
+      print(1);
       return Opening();
     
     } 
     else {
+      print(2);
       return HomePage();
     }
   }
