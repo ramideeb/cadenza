@@ -77,6 +77,9 @@ class Opening extends StatelessWidget {
                   text: Text('Continue using Google',
                       style: TextStyle(fontSize: 15)),
                   textcolor: Color.fromRGBO(230, 57, 70, 1),
+                  onsbmt: (){
+                    _auth.GooglSignIn();
+                  },
                 ),
                 Align(
                     alignment: Alignment.centerRight,

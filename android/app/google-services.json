@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "641549630965-p456svc3i6d8h55k2unq5ujakh7erjtp.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.cadenza.Cadenza",
+            "certificate_hash": "58f288f640d783552e485a3911b44f59c3259074"
+          }
+        },
+        {
           "client_id": "641549630965-st8pocb619j1gr7l4u98d2j08f3r02go.apps.googleusercontent.com",
           "client_type": 3
         }
