@@ -4,17 +4,15 @@ import 'login.dart';
 import 'widgets/onesideroundedbutton.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:flutter/services.dart' ;
-
-
+import 'package:flutter/services.dart';
 
 class Opening extends StatelessWidget {
   @override
-final _auth = Auth();
+  final _auth = Auth();
   Widget build(BuildContext context) {
     SystemChrome.setPreferredOrientations([
-        DeviceOrientation.portraitUp,
-      ]);
+      DeviceOrientation.portraitUp,
+    ]);
     return Scaffold(
         body: Padding(
             padding: EdgeInsets.fromLTRB(
@@ -60,18 +58,11 @@ final _auth = Auth();
                     ),
                     text: Text('Continue using Facebook',
                         style: TextStyle(fontSize: 15)),
-                    textcolor: Colors.white
-                    
-                    ,
-                    onsbmt:(){
-                    _auth.Facebooksignin();
+                    textcolor: Colors.white,
+                    onsbmt: () {
+                      _auth.Facebooksignin();
+                    }),
 
-                    }
-                    ),
-
-
-
-                    
                 SizedBox(
                     height: MediaQuery.of(context).size.height *
                         0.01), // for spacing
@@ -86,11 +77,13 @@ final _auth = Auth();
                   text: Text('Continue using Google',
                       style: TextStyle(fontSize: 15)),
                   textcolor: Color.fromRGBO(230, 57, 70, 1),
+                  onsbmt: (){
+                    _auth.GooglSignIn();
+                  },
                 ),
                 Align(
                     alignment: Alignment.centerRight,
                     child: FlatButton(
-                      
                       onPressed: () {
                         Navigator.push(
                           context,
@@ -100,8 +93,7 @@ final _auth = Auth();
                         );
                       },
                       child: Text(" Continue using email or signup using email",
-                          style: TextStyle(fontSize: 12
-                        )),
+                          style: TextStyle(fontSize: 12)),
                     ))
               ],
             )));
