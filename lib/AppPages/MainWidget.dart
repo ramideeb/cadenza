@@ -4,12 +4,12 @@ import 'package:cadenza/AppPages/LibrariesPage/library.dart';
 import 'package:cadenza/modules/Album.dart';
 import 'package:cadenza/modules/artist.dart';
 import 'package:cadenza/modules/queue.dart';
-import 'package:cadenza/modules/genre.dart';
 import 'package:cadenza/modules/song.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'Profile/Profile.dart';
 import 'Search/Search.dart';
+import 'justfortest.dart';
 
 final List<Album> exampleAlbums = [
   Album(
@@ -29,7 +29,6 @@ final List<Album> exampleAlbums = [
   ),
 ];
 
-
 class HomePage extends StatefulWidget {
   HomePage({Key key}) : super(key: key);
 
@@ -47,7 +46,8 @@ class _HomePageState extends State<HomePage> {
     HomePageWidget(),
     Search(),
     Library(),
-    ProfilePage()
+    ProfilePage(),
+    JustForTest(),
   ];
 
   void _onItemTapped(int index) {
@@ -68,28 +68,27 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     if (firstBuild) {
       final List<Song> songExamples = [
- 
- OnlineSong(
-   album: exampleAlbums[1],
-   artist: exampleAlbums[1].artist,
-   name: "Piano Man",
-   url:
-       "https://file-examples.com/wp-content/uploads/2017/11/file_example_MP3_5MG.mp3",
- ),
- OnlineSong(
-     album: exampleAlbums[2],
-     artist: exampleAlbums[2].artist,
-     name: "Mala Fama",
-     url:
-         "https://file-examples.com/wp-content/uploads/2017/11/file_example_MP3_5MG.mp3"),
- OnlineSong(
-   album: exampleAlbums[0],
-   artist: exampleAlbums[0].artist,
-   name: "Super Trooper",
-   url:
-       "https://file-examples.com/wp-content/uploads/2017/11/file_example_MP3_5MG.mp3",
- ),
-];
+        OnlineSong(
+          album: exampleAlbums[1],
+          artist: exampleAlbums[1].artist,
+          name: "Piano Man",
+          url:
+              "https://file-examples.com/wp-content/uploads/2017/11/file_example_MP3_5MG.mp3",
+        ),
+        OnlineSong(
+            album: exampleAlbums[2],
+            artist: exampleAlbums[2].artist,
+            name: "Mala Fama",
+            url:
+                "https://file-examples.com/wp-content/uploads/2017/11/file_example_MP3_5MG.mp3"),
+        OnlineSong(
+          album: exampleAlbums[0],
+          artist: exampleAlbums[0].artist,
+          name: "Super Trooper",
+          url:
+              "https://file-examples.com/wp-content/uploads/2017/11/file_example_MP3_5MG.mp3",
+        ),
+      ];
       Provider.of<Queue>(context).initializeQueue();
       Provider.of<Queue>(context, listen: false).testBuild(songExamples);
       firstBuild = false;
@@ -224,6 +223,10 @@ class _HomePageState extends State<HomePage> {
             BottomNavigationBarItem(
               icon: Icon(Icons.account_circle),
               title: Text('PROFILE'),
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.delete),
+              title: Text('testing'),
             ),
           ],
           currentIndex: _selectedIndex,
