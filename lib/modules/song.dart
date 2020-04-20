@@ -12,24 +12,32 @@ class Song {
   final String name;
   final Album album;
   int playtime;
+  bool isLocallyStored;
+  String url;
 
-  //TODO: temp remove it
-   String url;
-
-  Song({this.songID, this.genre, this.artist, this.name, this.album});
+  Song(
+      {this.songID,
+      this.genre,
+      this.artist,
+      this.name,
+      this.album,
+      this.url,
+      this.isLocallyStored});
 }
 
 class OnlineSong extends Song {
-  final String url;
+//  final String url;
 
-  OnlineSong(
-      {String songID,
-      String name,
-      Genre genre,
-      Artist artist,
-      Album album,
-      this.url})
-      : super(
+  OnlineSong({
+    String songID,
+    String name,
+    Genre genre,
+    Artist artist,
+    Album album,
+    String url,
+  }) : super(
+          isLocallyStored: false,
+          url: url,
           songID: songID,
           name: name,
           album: album,
@@ -40,23 +48,25 @@ class OnlineSong extends Song {
 
 class OfflineSong extends Song {
   final String decryptionKey;
-  final ByteBuffer encryptedSong;
+  String encryptedSong;
 
-  OfflineSong(
-      {String name,
-      Album album,
-      String songID,
-      Genre genre,
-      Artist artist,
-      this.decryptionKey,
-      this.encryptedSong})
-      : super(
+  OfflineSong({
+    String name,
+    String url,
+    Album album,
+    String songID,
+    Genre genre,
+    Artist artist,
+    this.decryptionKey,
+  }) : super(
+          url: url,
+          isLocallyStored: true,
           songID: songID,
           name: name,
           genre: genre,
           artist: artist,
           album: album,
-        );
+        ){this.encryptedSong = url;}
 
   Map<String, dynamic> toMap() {
     return {
@@ -66,7 +76,7 @@ class OfflineSong extends Song {
       "songGenre": genre.genreID,
       "artist": artist.uid,
       "decryptionKey": decryptionKey,
-      "encryptedSong": storeEncryptedSong(),
+      "encryptedSong": encryptedSong,
     };
   }
 
@@ -75,6 +85,7 @@ class OfflineSong extends Song {
     //TODO: it should return the encrypted song name at the file system
     return "not implemnted";
   }
+
   @override
   String toString() {
     return 'song{id: $songID, name: $name,}';

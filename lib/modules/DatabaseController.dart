@@ -1,7 +1,9 @@
+
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
 import 'Album.dart';
+import 'FileHandler.dart';
 import 'genre.dart';
 import 'artist.dart';
 import 'playlist.dart';
@@ -9,6 +11,7 @@ import 'song.dart';
 
 class DatabaseController {
   static Database _database;
+  static FileHandler _fileHandler;
 
   static Future<Database> get database async {
     if (_database == null) {
@@ -17,11 +20,18 @@ class DatabaseController {
     return _database;
   }
 
+  static FileHandler get fileHandler {
+    if (_fileHandler == null) {
+      _fileHandler = FileHandler();
+    }
+    return _fileHandler;
+  }
+
   static Database ret() => _database;
 
   static initializeDatabase() {
     return openDatabase(
-      join(getDatabasesPath().toString(), 'local_database15.db'),
+      join(getDatabasesPath().toString(), 'local_database.db'),
       version: 1,
       onCreate: (db, version) {
         db.execute(
@@ -98,12 +108,16 @@ class DatabaseController {
 
     List<Map<String, dynamic>> maps;
     if (albumID != null) {
-      maps = await db.query('Album', where: "albumID = ?", whereArgs: [albumID]);
-    }
-    else if(artist != null){
-      maps = await db.query('Album', where: "artist = ?", whereArgs: [artist.uid]);
-    }else{
-      maps = await db.query('Album',orderBy: "albumID",);
+      maps =
+          await db.query('Album', where: "albumID = ?", whereArgs: [albumID]);
+    } else if (artist != null) {
+      maps =
+          await db.query('Album', where: "artist = ?", whereArgs: [artist.uid]);
+    } else {
+      maps = await db.query(
+        'Album',
+        orderBy: "albumID",
+      );
     }
 
     return List.generate(maps.length, (i) {
