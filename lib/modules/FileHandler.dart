@@ -27,63 +27,69 @@ class FileHandler {
       @required String theFileName,
       @required String theEncryptionKey}) async {
     String theEncryptedFileName = "$theFileName.aes";
-
-    File temporaryCacheFile = await storeOnlineFileIntoCache(
-        onlineUriString: onlineUriString, temporaryName: theFileName);
-
-    return encryptFile(
-        cacheFile: temporaryCacheFile,
-        theEncryptedFileName: theEncryptedFileName,
-        theEncryptionKey: theEncryptionKey);
+    return storeOnlineFileIntoCache(
+            onlineUriString: onlineUriString, temporaryName: theFileName)
+        .then((File temporaryCacheFile) => encryptFile(
+            cacheFile: temporaryCacheFile,
+            theEncryptedFileName: theEncryptedFileName,
+            theEncryptionKey: theEncryptionKey));
   }
 
   Future<File> storeOnlineFileIntoCache(
       {@required String onlineUriString,
       @required String temporaryName}) async {
 
-    String theCachePath = await _localTempCachePath;
-    Dio temp = new Dio();
-    String cacheFileName = "$theCachePath/$temporaryName";
-    Uri onlineUri = Uri.parse(onlineUriString);
+    Dio temp;
+    String cacheFileName;
+    Uri onlineUri;
 
-    await temp.downloadUri(onlineUri, cacheFileName);
-    File cacheFile = File(cacheFileName);
-    return cacheFile;
-
+    return _localTempCachePath.then((String theCachePath){
+       temp = new Dio();
+       cacheFileName = "$theCachePath/$temporaryName";
+       onlineUri = Uri.parse(onlineUriString);
+    }).then((_)=> temp.downloadUri(onlineUri, cacheFileName)).then((_){
+      File cacheFile = File(cacheFileName);
+      return cacheFile;
+    });
   }
 
   Future<String> encryptFile(
       {@required File cacheFile,
       @required String theEncryptedFileName,
       @required String theEncryptionKey}) async {
-    String localPath = await _localPath;
-    String cacheFilePath = cacheFile.path;
-    String encryptedFilePath = "$localPath/$theEncryptedFileName";
 
-    crypt.setPassword(theEncryptionKey);
-    crypt.setOverwriteMode(AesCryptOwMode.on);
-    String toReturnString = await crypt.encryptFile(cacheFilePath, encryptedFilePath);
-    cacheFile.delete();
+    String cacheFilePath;
+    String encryptedFilePath;
 
-    return toReturnString;
+    return _localPath.then((String localPath){
+      cacheFilePath = cacheFile.path;
+      encryptedFilePath = "$localPath/$theEncryptedFileName";
+      crypt.setPassword(theEncryptionKey);
+      crypt.setOverwriteMode(AesCryptOwMode.on);
+    }).then((_)=> crypt.encryptFileSync(cacheFilePath, encryptedFilePath)).then((String toReturnString ){
+      cacheFile.delete();
+      return toReturnString;
+    });
   }
 
   Future<String> decryptFile(
       {@required String theEncryptedFilePath,
       @required String theDecryptedFileName,
       @required String theEncryptionKey}) async {
-    String theCachePath = await _localTempCachePath;
-    String decryptionFilePath = "$theCachePath/$theDecryptedFileName";
-    crypt.setPassword(theEncryptionKey);
 
-    return crypt.decryptFile(theEncryptedFilePath, decryptionFilePath);
+    String decryptionFilePath;
+    return _localTempCachePath.then((String theCachePath)async{
+      decryptionFilePath = "$theCachePath/$theDecryptedFileName";
+      crypt.setPassword(theEncryptionKey);
+      crypt.setOverwriteMode(AesCryptOwMode.on);
+      return crypt.decryptFileSync(theEncryptedFilePath, decryptionFilePath);
+    });
   }
 
-  void deleteTheEncryptedFile({@required String theEncryptedFilePath}) {
-    Uri uriFile = Uri.parse(theEncryptedFilePath);
+  void deleteFile({@required String theFilePath}) {
+    Uri uriFile = Uri.parse(theFilePath);
     File toDeleteFile = File.fromUri(uriFile);
     toDeleteFile.delete();
-
   }
 
   Future<bool> isTheFileExist(String theFilePath) async {
