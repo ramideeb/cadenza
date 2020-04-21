@@ -1,19 +1,27 @@
 import 'dart:typed_data';
 import 'package:cadenza/modules/Album.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/services.dart';
 
 import 'artist.dart';
 import 'genre.dart';
 
 class Song {
-  final String songID;
-  final Genre genre;
-  final Artist artist;
-  final String name;
-  final Album album;
+
+  String songID;
+  Genre genre;
+  Artist artist;
+  String name;
+  Album album;
+  String url;
   int playtime;
   bool isLocallyStored;
-  String url;
+  String albumArtURL;
+  int timesPlayed;
+  bool isDownloaded;
+  Timestamp lastPlayed;
+
+
 
   Song(
       {this.songID,
@@ -21,12 +29,21 @@ class Song {
       this.artist,
       this.name,
       this.album,
+
+      this.isDownloaded,
       this.url,
-      this.isLocallyStored});
+      this.isLocallyStored,
+      this.albumArtURL,
+      this.timesPlayed,
+      this.lastPlayed});
 }
 
 class OnlineSong extends Song {
-//  final String url;
+  String genreName;
+  String artistName;
+  String albumTitle;
+  DocumentReference albumRef;
+  DocumentReference artistRef;
 
   OnlineSong({
     String songID,
@@ -35,14 +52,30 @@ class OnlineSong extends Song {
     Artist artist,
     Album album,
     String url,
+
+    String albumArtURL,
+    Timestamp lastPlayed,
+    int timesPlayed,
+    this.artistName,
+    this.genreName,
+    this.albumTitle,
+    this.albumRef,
+    this.artistRef,
   }) : super(
+
+
           isLocallyStored: false,
           url: url,
+
           songID: songID,
           name: name,
           album: album,
           artist: artist,
           genre: genre,
+          url: url,
+          albumArtURL: albumArtURL,
+          lastPlayed: lastPlayed,
+          timesPlayed: timesPlayed,
         );
 }
 

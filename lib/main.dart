@@ -35,9 +35,7 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider<Library>(
-          create: (context) => Library(
-            user: User(username:"username"),
-          ),
+          create: (context) => Library(),
         ),
         ChangeNotifierProxyProvider<Library, Queue>(
           create: (_) => Queue(recommenderURL: ""),
