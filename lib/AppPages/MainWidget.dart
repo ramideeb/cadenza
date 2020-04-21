@@ -29,7 +29,6 @@ final List<Album> exampleAlbums = [
   ),
 ];
 
-
 class HomePage extends StatefulWidget {
   HomePage({Key key}) : super(key: key);
 
@@ -66,34 +65,33 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    if (firstBuild) {
-      final List<Song> songExamples = [
- 
- OnlineSong(
-   album: exampleAlbums[1],
-   artist: exampleAlbums[1].artist,
-   name: "Piano Man",
-   url:
-       "https://file-examples.com/wp-content/uploads/2017/11/file_example_MP3_5MG.mp3",
- ),
- OnlineSong(
-     album: exampleAlbums[2],
-     artist: exampleAlbums[2].artist,
-     name: "Mala Fama",
-     url:
-         "https://file-examples.com/wp-content/uploads/2017/11/file_example_MP3_5MG.mp3"),
- OnlineSong(
-   album: exampleAlbums[0],
-   artist: exampleAlbums[0].artist,
-   name: "Super Trooper",
-   url:
-       "https://file-examples.com/wp-content/uploads/2017/11/file_example_MP3_5MG.mp3",
- ),
-];
-      Provider.of<Queue>(context).initializeQueue();
-      Provider.of<Queue>(context, listen: false).testBuild(songExamples);
-      firstBuild = false;
-    }
+    // if (firstBuild) {
+    //   final List<Song> songExamples = [
+    //     OnlineSong(
+    //       album: exampleAlbums[1],
+    //       artist: exampleAlbums[1].artist,
+    //       name: "Piano Man",
+    //       url:
+    //           "https://file-examples.com/wp-content/uploads/2017/11/file_example_MP3_5MG.mp3",
+    //     ),
+    //     OnlineSong(
+    //         album: exampleAlbums[2],
+    //         artist: exampleAlbums[2].artist,
+    //         name: "Mala Fama",
+    //         url:
+    //             "https://file-examples.com/wp-content/uploads/2017/11/file_example_MP3_5MG.mp3"),
+    //     OnlineSong(
+    //       album: exampleAlbums[0],
+    //       artist: exampleAlbums[0].artist,
+    //       name: "Super Trooper",
+    //       url:
+    //           "https://file-examples.com/wp-content/uploads/2017/11/file_example_MP3_5MG.mp3",
+    //     ),
+    //   ];
+    //   Provider.of<Queue>(context).initializeQueue();
+    //   Provider.of<Queue>(context, listen: false).testBuild(songExamples);
+    //   firstBuild = false;
+    // }
     queueEmpty = Provider.of<Queue>(context, listen: false).queue.isEmpty;
     return Scaffold(
       body: Stack(

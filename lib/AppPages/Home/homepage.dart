@@ -6,54 +6,58 @@ import 'package:cadenza/AppPages/PublicWidgets/circularArtistView.dart';
 import 'package:cadenza/SizeConfig.dart';
 import 'package:cadenza/modules/Album.dart';
 import 'package:cadenza/modules/genre.dart';
+import 'package:cadenza/modules/library.dart';
+import 'package:cadenza/modules/song.dart';
+import 'package:cadenza/modules/user.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 // import 'genreswidget.dart';
 
 final List<Album> albumExamples = [
-
- Album(
-   albumName: "Album",
-   albumArtImageUrl: "assets/AlbumImages/art2.jpg",
-   artist: Artist(username:"Shosmo"),
- ),
- Album(
-   albumName: "Album",
-   albumArtImageUrl: "assets/AlbumImages/art3.jpg",
-   artist: Artist(username:"Shosmo"),
- ),
- Album(
-   albumName: "Album",
-   albumArtImageUrl: "assets/AlbumImages/art6.jpg",
-   artist: Artist(username:"Shosmo"),
- ),
- Album(
-   albumName: "Album",
-   albumArtImageUrl: "assets/AlbumImages/art5.jpg",
-   artist: Artist(username:"Shosmo"),
- ),
+  Album(
+    albumName: "Album",
+    albumArtImageUrl: "assets/AlbumImages/art2.jpg",
+    artist: Artist(username: "Shosmo"),
+  ),
+  Album(
+    albumName: "Album",
+    albumArtImageUrl: "assets/AlbumImages/art3.jpg",
+    artist: Artist(username: "Shosmo"),
+  ),
+  Album(
+    albumName: "Album",
+    albumArtImageUrl: "assets/AlbumImages/art6.jpg",
+    artist: Artist(username: "Shosmo"),
+  ),
+  Album(
+    albumName: "Album",
+    albumArtImageUrl: "assets/AlbumImages/art5.jpg",
+    artist: Artist(username: "Shosmo"),
+  ),
 ];
 
 final List<Album> gridAlbumExamples = [
- Album(
-   albumName: "Album",
-   albumArtImageUrl: "assets/AlbumImages/art12.jpg",
-   artist: Artist(username:"Shosmo"),
- ),
- Album(
-   albumName: "Album",
-   albumArtImageUrl: "assets/AlbumImages/art7.png",
-   artist: Artist(username:"Shosmo"),
- ),
- Album(
-   albumName: "Album",
-   albumArtImageUrl: "assets/AlbumImages/art8.jpg",
-   artist: Artist(username:"Shosmo"),
- ),
- Album(
-   albumName: "Album",
-   albumArtImageUrl: "assets/AlbumImages/art11.jpg",
-   artist: Artist(username:"Shosmo"),
- ),
+  Album(
+    albumName: "Album",
+    albumArtImageUrl: "assets/AlbumImages/art12.jpg",
+    artist: Artist(username: "Shosmo"),
+  ),
+  Album(
+    albumName: "Album",
+    albumArtImageUrl: "assets/AlbumImages/art7.png",
+    artist: Artist(username: "Shosmo"),
+  ),
+  Album(
+    albumName: "Album",
+    albumArtImageUrl: "assets/AlbumImages/art8.jpg",
+    artist: Artist(username: "Shosmo"),
+  ),
+  Album(
+    albumName: "Album",
+    albumArtImageUrl: "assets/AlbumImages/art11.jpg",
+    artist: Artist(username: "Shosmo"),
+  ),
 ];
 
 final List<Genre> genreExamples = [
@@ -82,7 +86,14 @@ class HomePageWidget extends StatefulWidget {
 
 class _HomePageWidgetState extends State<HomePageWidget> {
   SizeConfig _sizeConfig = SizeConfig();
-
+  Widget topChartsWidget = Center();
+  bool loadedCharts = false;
+  Widget artistsWidget = Center();
+  bool loadedArtists = false;
+  Widget genresWidget;
+  bool loadedGenres = false;
+  Widget _recentlyPlayed = Center();
+  Widget _mostPlayed = Center();
   @override
   Widget build(BuildContext context) {
     _sizeConfig.init(context);
@@ -102,62 +113,149 @@ class _HomePageWidgetState extends State<HomePageWidget> {
       ),
     );
 
-    DefaultMusicRow _recentlyPlayed = DefaultMusicRow(
-      title: "Recently Played",
-      musicElements: albumExamples,
-    );
+    List<Song> librarySongs = Provider.of<Library>(context).songs;
 
-    DefaultMusicRow _recommendedForYou = DefaultMusicRow(
-      title: "Recommended For You",
-      musicElements: albumExamples,
-    );
+    List<Song> recentlyPlayedList = List<Song>.from(librarySongs);
+    recentlyPlayedList.sort((a, b) => a.lastPlayed.compareTo(b.lastPlayed));
+    if (recentlyPlayedList.length < 6)
+      _recentlyPlayed = Center();
+    else
+      _recentlyPlayed = DefaultMusicRow(
+        title: "Jump Back In",
+        musicElements: recentlyPlayedList.sublist(0, 6),
+      );
 
-    MuiscGrid _top50Widget = MuiscGrid(
-      title: "Top 50",
-      musicElements: gridAlbumExamples,
-    );
+    List<Song> mostPlayedList = List<Song>.from(librarySongs);
+    mostPlayedList.sort((a, b) => a.timesPlayed.compareTo(b.timesPlayed));
+    if (mostPlayedList.length < 6)
+      _mostPlayed = Center();
+    else
+      _mostPlayed = DefaultMusicRow(
+        title: "Most Played",
+        musicElements: mostPlayedList.sublist(0, 6),
+      );
 
-    Widget _artistRow = SingleChildScrollView(
-      scrollDirection: Axis.horizontal,
-      child: Row(
-        children: <Widget>[
-          circularArtistView(),
-          circularArtistView(),
-          circularArtistView(),
-          circularArtistView(),
-          circularArtistView(),
-        ],
-      ),
-    );
+    List<Song> chartsList = [];
+    if (!loadedCharts) {
+      topChartsWidget = SliverToBoxAdapter(child: Center());
+      Firestore.instance
+          .collection('topCharts')
+          .where("name", isEqualTo: "Top 50 Rap")
+          .getDocuments()
+          .then((querySnapshot) {
+        DocumentSnapshot topChartDoc = querySnapshot.documents[0];
+        if (topChartDoc.exists) {
+          for (String key in topChartDoc.data['songs'].keys) {
+            var songMap = topChartDoc.data['songs'][key];
+            chartsList.add(OnlineSong(
+              songID: key,
+              name: songMap['songName'],
+              artistName: songMap['artistName'],
+              url: songMap['songURL'],
+              albumRef: songMap['albumRef'],
+              artistRef: songMap['artistRef'],
+              albumArtURL: songMap['albumArtURL'],
+            ));
+          }
+          setState(() {
+            topChartsWidget = MusicGrid(
+              title: "Top 50",
+              musicElements: chartsList,
+            );
+            loadedCharts = true;
+          });
+        }
+      });
+    }
 
-    Widget _popularArtists = Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        Padding(
-          padding: EdgeInsets.only(
-            top: SizeConfig.blockSizeVertical * 1.5,
-            left: SizeConfig.blockSizeHorizontal * 2,
-            bottom: SizeConfig.blockSizeVertical,
-          ),
-          child: Text(
-            "Popular Artists",
-            style: TextStyle(
-              fontWeight: FontWeight.w700,
-              fontSize: 21,
-            ),
-          ),
-        ),
-        Padding(
-          padding: EdgeInsets.only(left: SizeConfig.blockSizeHorizontal),
-          child: _artistRow,
-        ),
-      ],
-    );
+    List<Artist> artistsList = [];
+    if (!loadedArtists) {
+      artistsWidget = Center();
+      Firestore.instance
+          .collection("artists")
+          .orderBy("followers", descending: true)
+          .limit(6)
+          .getDocuments()
+          .then((querySnapshot) {
+        if (querySnapshot.documents.length > 0) {
+          for (DocumentSnapshot artistDoc in querySnapshot.documents) {
+            artistsList.add(Artist(
+              username: artistDoc.data['username'],
+              profilePictureURL: artistDoc.data['profilePictureURL'],
+              uid: artistDoc.documentID,
+            ));
+          }
+          setState(() {
+            artistsWidget = Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Padding(
+                  padding: EdgeInsets.only(
+                    top: SizeConfig.blockSizeVertical * 1.5,
+                    left: SizeConfig.blockSizeHorizontal * 2,
+                    bottom: SizeConfig.blockSizeVertical,
+                  ),
+                  child: Text(
+                    "Popular Artists",
+                    style: TextStyle(
+                      fontWeight: FontWeight.w700,
+                      fontSize: 21,
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding:
+                      EdgeInsets.only(left: SizeConfig.blockSizeHorizontal),
+                  child: SizedBox(
+                    height: SizeConfig.blockSizeVertical * 25,
+                    child: ListView.builder(
+                      shrinkWrap: true,
+                      scrollDirection: Axis.horizontal,
+                      itemCount: artistsList.length,
+                      itemBuilder: (con, i) => circularArtistView(
+                        artist: artistsList[i],
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            );
 
-    GenresRow _genresAndMoods = GenresRow(
-      genreElements: genreExamples,
-      title: "Genres and Moods",
-    );
+            loadedArtists = true;
+          });
+        }
+      });
+    }
+
+    List<Genre> genresList = [];
+    if (!loadedGenres) {
+      genresWidget = Center();
+      List<String> usersGenreNames =
+          Provider.of<User>(context).favoriteGenreNames;
+      Firestore.instance
+          .collection("genres")
+          .where("name", whereIn: usersGenreNames)
+          .getDocuments()
+          .then((querySnapshot) {
+        if (querySnapshot.documents.length > 0) {
+          for (DocumentSnapshot genreDoc in querySnapshot.documents) {
+            genresList.add(Genre(
+              genreName: genreDoc.data['name'],
+              genreImageUrl: genreDoc.data['imageURL'],
+              genreID: genreDoc.documentID,
+            ));
+          }
+          setState(() {
+            genresWidget = GenresRow(
+              genreElements: genresList,
+              title: "Genres and Moods",
+            );
+
+            loadedGenres = true;
+          });
+        }
+      });
+    }
 
     return Padding(
       padding: EdgeInsets.only(left: SizeConfig.blockSizeHorizontal * 2),
@@ -168,15 +266,15 @@ class _HomePageWidgetState extends State<HomePageWidget> {
               [
                 _exploreText,
                 _recentlyPlayed,
-                _recommendedForYou,
+                _mostPlayed,
               ],
             ),
           ),
-          _top50Widget,
+          topChartsWidget,
           SliverList(
             delegate: SliverChildListDelegate([
-              _popularArtists,
-              _genresAndMoods,
+              artistsWidget,
+              genresWidget,
             ]),
           )
         ],

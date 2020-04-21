@@ -1,12 +1,12 @@
 import 'package:cadenza/AppPages/PublicWidgets/FullWidthViewSong.dart';
 import 'package:cadenza/AppPages/PublicWidgets/circularArtistView.dart';
 import 'package:cadenza/LoginPages/f_services/auth.dart';
+import 'package:cadenza/modules/artist.dart';
 import 'package:cadenza/modules/queue.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class ProfilePage extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
     final Auth _auth = Auth();
@@ -68,8 +68,8 @@ class ProfilePage extends StatelessWidget {
                 ),
                 SizedBox(width: 10),
                 FlatButton(
-                  onPressed: () async{
-                    Provider.of<Queue>(context,listen: false).disposePlayer();
+                  onPressed: () async {
+                    Provider.of<Queue>(context, listen: false).disposePlayer();
                     await _auth.signOut();
                   },
                   child: Text("Sign Out"),
@@ -131,11 +131,26 @@ class ProfilePage extends StatelessWidget {
             SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
                 child: Row(children: <Widget>[
-                  circularArtistView(),
-                  circularArtistView(),
-                  circularArtistView(),
-                  circularArtistView(),
-                  circularArtistView()
+                  circularArtistView(
+                    artist:
+                        Artist(profilePictureURL: "", username: "Rami Theeb"),
+                  ),
+                  circularArtistView(
+                    artist:
+                        Artist(profilePictureURL: "", username: "Rami Theeb"),
+                  ), circularArtistView(
+                    artist:
+                        Artist(profilePictureURL: "", username: "Rami Theeb"),
+                  ), circularArtistView(
+                    artist:
+                        Artist(profilePictureURL: "", username: "Rami Theeb"),
+                  ), circularArtistView(
+                    artist:
+                        Artist(profilePictureURL: "", username: "Rami Theeb"),
+                  ), circularArtistView(
+                    artist:
+                        Artist(profilePictureURL: "", username: "Rami Theeb"),
+                  ),
                 ]))
           ],
         ),
