@@ -7,24 +7,32 @@ import 'artist.dart';
 import 'genre.dart';
 
 class Song {
+
   String songID;
   Genre genre;
   Artist artist;
   String name;
   Album album;
   String url;
+  int playtime;
+  bool isLocallyStored;
   String albumArtURL;
   int timesPlayed;
   bool isDownloaded;
   Timestamp lastPlayed;
+
+
+
   Song(
       {this.songID,
       this.genre,
       this.artist,
       this.name,
       this.album,
+
       this.isDownloaded,
       this.url,
+      this.isLocallyStored,
       this.albumArtURL,
       this.timesPlayed,
       this.lastPlayed});
@@ -36,6 +44,7 @@ class OnlineSong extends Song {
   String albumTitle;
   DocumentReference albumRef;
   DocumentReference artistRef;
+
   OnlineSong({
     String songID,
     String name,
@@ -43,6 +52,7 @@ class OnlineSong extends Song {
     Artist artist,
     Album album,
     String url,
+
     String albumArtURL,
     Timestamp lastPlayed,
     int timesPlayed,
@@ -52,6 +62,11 @@ class OnlineSong extends Song {
     this.albumRef,
     this.artistRef,
   }) : super(
+
+
+          isLocallyStored: false,
+          url: url,
+
           songID: songID,
           name: name,
           album: album,
@@ -66,23 +81,25 @@ class OnlineSong extends Song {
 
 class OfflineSong extends Song {
   final String decryptionKey;
-  final ByteBuffer encryptedSong;
+  String encryptedSong;
 
-  OfflineSong(
-      {String name,
-      Album album,
-      String songID,
-      Genre genre,
-      Artist artist,
-      this.decryptionKey,
-      this.encryptedSong})
-      : super(
+  OfflineSong({
+    String name,
+    String url,
+    Album album,
+    String songID,
+    Genre genre,
+    Artist artist,
+    this.decryptionKey,
+  }) : super(
+          url: url,
+          isLocallyStored: true,
           songID: songID,
           name: name,
           genre: genre,
           artist: artist,
           album: album,
-        );
+        ){this.encryptedSong = url;}
 
   Map<String, dynamic> toMap() {
     return {
@@ -92,7 +109,7 @@ class OfflineSong extends Song {
       "songGenre": genre.genreID,
       "artist": artist.uid,
       "decryptionKey": decryptionKey,
-      "encryptedSong": storeEncryptedSong(),
+      "encryptedSong": encryptedSong,
     };
   }
 
