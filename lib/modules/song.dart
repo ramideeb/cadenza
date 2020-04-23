@@ -65,7 +65,7 @@ class OnlineSong extends Song {
 
 
           isLocallyStored: false,
-          url: url,
+//          url: url,
 
           songID: songID,
           name: name,
