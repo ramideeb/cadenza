@@ -12,6 +12,13 @@ class LoginForm extends StatefulWidget {
 
 class _LoginFormState extends State<LoginForm> {
   final _focusNode = FocusNode();
+    CreateAlertDialog (){
+    return showDialog(context: context,builder: (context){
+      return AlertDialog(title:Text("Login Failed") , content: new Icon (Icons.warning) ,);
+    });
+
+  }
+
 
   String Email;
   String err = "";
@@ -165,6 +172,7 @@ class _LoginFormState extends State<LoginForm> {
                                             Email, Password);
 
                                     if (result == null) {
+                                      CreateAlertDialog();
                                       setState(() {
                                         err = "login Failed";
                                       });

@@ -1,4 +1,5 @@
 import 'package:cadenza/LoginPages/opening.dart';
+import 'package:cadenza/LoginPages/welcoming_screen/welcome.dart';
 import 'package:cadenza/modules/user.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -6,6 +7,7 @@ import 'package:provider/provider.dart';
 
 import 'AppPages/MainWidget.dart';
 import 'LoginPages/f_services/auth.dart';
+import 'LoginPages/welcoming_screen/welcome.dart';
 import 'modules/library.dart';
 import 'modules/queue.dart';
 

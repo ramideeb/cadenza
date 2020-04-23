@@ -72,7 +72,7 @@ class OnlineSong extends Song {
           album: album,
           artist: artist,
           genre: genre,
-          url: url,
+   
           albumArtURL: albumArtURL,
           lastPlayed: lastPlayed,
           timesPlayed: timesPlayed,

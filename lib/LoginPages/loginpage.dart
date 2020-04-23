@@ -7,6 +7,10 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+
+
+
+
   TextEditingController _usernameController;
   TextEditingController _passwordController;
   bool typing = false;
