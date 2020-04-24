@@ -1,4 +1,6 @@
 import 'package:cadenza/LoginPages/f_services/auth.dart';
+import 'package:cadenza/LoginPages/welcoming_screen/welcome.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 import 'login.dart';
 import 'widgets/onesideroundedbutton.dart';
@@ -77,8 +79,23 @@ class Opening extends StatelessWidget {
                   text: Text('Continue using Google',
                       style: TextStyle(fontSize: 15)),
                   textcolor: Color.fromRGBO(230, 57, 70, 1),
-                  onsbmt: (){
-                    _auth.GooglSignIn();
+                  onsbmt: () async {
+                  await _auth.GooglSignIn().then((onValue){
+                  if( onValue.additionalUserInfo.isNewUser){
+                       Navigator.push(
+                                    context,
+                                    MaterialPageRoute(builder: (context) => welcome() ),
+                                  );
+                  }
+                 
+                });
+
+              
+              
+
+
+
+
                   },
                 ),
                 Align(

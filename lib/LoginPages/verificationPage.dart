@@ -68,7 +68,7 @@ class _VerificationPageState extends State<VerificationPage> {
                   Flexible(
                       child: FittedBox(
                     fit: BoxFit.contain,
-                    child: Text("Please enter the verification code.",
+                    child: Text("Please check your email.",
                         style: TextStyle(
                             fontWeight: FontWeight.bold,
                             color: Color.fromRGBO(230, 57, 70, 1),
@@ -85,7 +85,7 @@ class _VerificationPageState extends State<VerificationPage> {
                     child: Container(
                       width: MediaQuery.of(context).size.width * 0.75,
                       child: Text(
-                          "We have sent a verification code to your regesteresd email ID.",
+                          "We have sent an email with a link to reset your password .",
                           style: TextStyle(fontSize: 12)),
                     ),
                   ),
@@ -95,31 +95,14 @@ class _VerificationPageState extends State<VerificationPage> {
             SizedBox(
               height: MediaQuery.of(context).size.height * 0.02,
             ),
-            Container(
-              width: MediaQuery.of(context).size.width * 0.77,
-              child: Form(
-                  child: Column(
-                children: <Widget>[
-                  PinPut(
-                    fieldsCount: 4,
-                    actionButtonsEnabled: false,
-                    spaceBetween: 10,
-                    onSubmit: (String pin) => {},
-                  ),
-                ],
-              )),
-            ),
-            SizedBox(
+         SizedBox(
               height: MediaQuery.of(context).size.height * 0.02,
             ),
             ButtonTheme(
                 minWidth: MediaQuery.of(context).size.width * 0.9,
                 child: RaisedButton(
                     onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => ResetPass()),
-                      );
+                  Navigator.of(context).popUntil((route) => route.isFirst);
                     },
                     shape: RoundedRectangleBorder(
                         borderRadius: new BorderRadius.circular(15.0),
@@ -133,12 +116,7 @@ class _VerificationPageState extends State<VerificationPage> {
             SizedBox(
               height: MediaQuery.of(context).size.height * 0.02,
             ),
-            new GestureDetector(
-                onTap: () {},
-                child: new Text(
-                  "Send a new code",
-                ))
-          ]),
+            ]),
         ),
       ),
     );

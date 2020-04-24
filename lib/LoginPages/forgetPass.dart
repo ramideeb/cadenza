@@ -1,10 +1,21 @@
 import 'package:cadenza/LoginPages/verificationPage.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'widgets/ForgotPassheader.dart';
 
-class Forgetpass extends StatelessWidget {
+class Forgetpass extends StatefulWidget {
+
+  @override
+  _ForgetpassState createState() => _ForgetpassState();
+}
+
+class _ForgetpassState extends State<Forgetpass> {
+  final _formKey = GlobalKey<FormState>();
+
+  String email;
+
   @override
   Widget build(BuildContext context) {
 
@@ -71,10 +82,29 @@ class Forgetpass extends StatelessWidget {
             Container(
               width: MediaQuery.of(context).size.width * 0.9,
               child: Form(
+               key:_formKey,
+
                   child: Column(
                 children: <Widget>[
                   TextFormField(
-//                controller: _usernameController,
+                    onChanged: (val){
+
+                    setState(() {
+                      email=val;
+                    });
+
+
+                    },
+                    validator: (val){
+                          bool emailValid = RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(val);
+                          if (emailValid == true){
+                            return null;
+                          }
+                          else{
+                            return "invalid email";
+                          }
+                        },
+
                     textInputAction: TextInputAction.next,
 
                     decoration: InputDecoration(
@@ -94,11 +124,21 @@ class Forgetpass extends StatelessWidget {
             ButtonTheme(
                 minWidth: MediaQuery.of(context).size.width * 0.9,
                 child: RaisedButton(
-                    onPressed: () {
-                      Navigator.push(
+                    onPressed: () async {
+                           if (_formKey.currentState.validate()) {
+                             try{
+                        final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+                        await _firebaseAuth.sendPasswordResetEmail(email: this.email);
+                             }
+                             catch(e){
+                               print(e);
+                             }
+                           Navigator.push(
     context,
     MaterialPageRoute(builder: (context) => VerificationPage()),
   );
+                           
+                           }
                     },
                     shape: RoundedRectangleBorder(
                         borderRadius: new BorderRadius.circular(15.0),
