@@ -1,4 +1,5 @@
 import 'package:cadenza/modules/Album.dart';
+import 'package:cadenza/modules/song.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
 import 'package:flutter/material.dart';
@@ -7,10 +8,11 @@ import '../../SizeConfig.dart';
 
 class AlbumArtWidget extends StatelessWidget {
   final Album album;
+  final Function(Album) showAlbum;
 
   final SizeConfig _sizeConfig = SizeConfig();
 
-  AlbumArtWidget({Key key, this.album}) : super(key: key);
+  AlbumArtWidget({Key key, this.album,this.showAlbum}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     _sizeConfig.init(context);
@@ -23,7 +25,35 @@ class AlbumArtWidget extends StatelessWidget {
         builder: (context, url) {
           
           if (url.connectionState == ConnectionState.waiting || url.hasError)
-            return Padding(
+            return GestureDetector(
+              onTap: (){
+                if(album.isSnippet){
+                  album.albumRef.get().then((snapshot){
+                    if(snapshot.exists){
+                      for(String key in snapshot.data["songs"].keys){
+                        album.albumSongs.add(
+                          OnlineSong(
+                            songID: key,
+                            url: snapshot.data['songs'][key]["songURL"],
+                            name: snapshot.data['songs'][key]['songName'],
+                            album: album,
+                            albumTitle: album.albumName,
+                            artistName: album.artistName,
+                            albumArtURL: album.albumArtImageUrl,
+                            artistRef: album.artistRef,
+                            genreName: album.genreName,
+                          )
+                        );
+                      }
+                      album.isSnippet = false;
+                      showAlbum(album);
+                    }
+                  });
+                }
+                // else
+                  showAlbum(album);
+              },
+              child:Padding(
               padding: EdgeInsets.symmetric(
                 horizontal: SizeConfig.blockSizeHorizontal,
               ),
@@ -62,9 +92,38 @@ class AlbumArtWidget extends StatelessWidget {
                   ),
                 ],
               ),
+            ),
             );
           
-          return Padding(
+          return GestureDetector(
+             onTap: (){
+                if(album.isSnippet){
+                  album.albumRef.get().then((snapshot){
+                    if(snapshot.exists){
+                      for(String key in snapshot.data["songs"].keys){
+                        album.albumSongs.add(
+                          OnlineSong(
+                            songID: key,
+                            url: snapshot.data['songs'][key]["songURL"],
+                            name: snapshot.data['songs'][key]['songName'],
+                            album: album,
+                            albumTitle: album.albumName,
+                            artistName: album.artistName,
+                            albumArtURL: album.albumArtImageUrl,
+                            artistRef: album.artistRef,
+                            genreName: album.genreName,
+                          )
+                        );
+                      }
+                      album.isSnippet = false;
+                      showAlbum(album);
+                    }
+                  });
+                }
+                else
+                  showAlbum(album);
+              },
+            child: Padding(
             padding: EdgeInsets.symmetric(
               horizontal: SizeConfig.blockSizeHorizontal,
             ),
@@ -109,6 +168,7 @@ class AlbumArtWidget extends StatelessWidget {
                 ),
               ],
             ),
+          ),
           );
         });
   }

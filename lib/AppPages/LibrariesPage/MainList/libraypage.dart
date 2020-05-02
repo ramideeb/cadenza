@@ -1,14 +1,9 @@
-import 'package:cadenza/AppPages/LibrariesPage/AlbumsList/albumslist.dart';
-import 'package:cadenza/AppPages/LibrariesPage/ArtistsList/artistslist.dart';
-import 'package:cadenza/AppPages/LibrariesPage/GenresList/genreslist.dart';
 import 'package:cadenza/AppPages/LibrariesPage/MainList/playlistsgrid.dart';
-import 'package:cadenza/AppPages/LibrariesPage/SongsList/songslist.dart';
 import 'package:cadenza/SizeConfig.dart';
 import 'package:cadenza/modules/playlist.dart';
 import 'package:cadenza/presentation/cutsom_icons_icons.dart';
 import 'package:flutter/material.dart';
 
-import '../library.dart';
 import 'playlistcarousel.dart';
 
 List<Playlist> playlistsExample = [

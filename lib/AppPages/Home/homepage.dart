@@ -5,6 +5,7 @@ import 'package:cadenza/AppPages/Home/musicrow.dart';
 import 'package:cadenza/AppPages/PublicWidgets/circularArtistView.dart';
 import 'package:cadenza/SizeConfig.dart';
 import 'package:cadenza/modules/Album.dart';
+import 'package:cadenza/modules/charts.dart';
 import 'package:cadenza/modules/genre.dart';
 import 'package:cadenza/modules/library.dart';
 import 'package:cadenza/modules/song.dart';
@@ -80,6 +81,13 @@ final List<Genre> genreExamples = [
 ];
 
 class HomePageWidget extends StatefulWidget {
+  final Function(Album) showAlbum;
+  final Function(Charts) showCharts;
+  const HomePageWidget(
+      {Key key,
+      this.showAlbum,
+      this.showCharts,})
+      : super(key: key);
   @override
   _HomePageWidgetState createState() => _HomePageWidgetState();
 }
@@ -113,7 +121,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
       ),
     );
 
-    List<Song> librarySongs = Provider.of<Library>(context).songs;
+    List<Song> librarySongs = Provider.of<Library>(context,listen: false).songs;
 
     List<Song> recentlyPlayedList = List<Song>.from(librarySongs);
     recentlyPlayedList.sort((a, b) => a.lastPlayed.compareTo(b.lastPlayed));
@@ -121,6 +129,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
       _recentlyPlayed = Center();
     else
       _recentlyPlayed = DefaultMusicRow(
+        showAlbum: widget.showAlbum,
         title: "Jump Back In",
         musicElements: recentlyPlayedList.sublist(0, 6),
       );
@@ -131,6 +140,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
       _mostPlayed = Center();
     else
       _mostPlayed = DefaultMusicRow(
+        showAlbum: widget.showAlbum,
         title: "Most Played",
         musicElements: mostPlayedList.sublist(0, 6),
       );
@@ -140,27 +150,36 @@ class _HomePageWidgetState extends State<HomePageWidget> {
       topChartsWidget = SliverToBoxAdapter(child: Center());
       Firestore.instance
           .collection('topCharts')
-          .where("name", isEqualTo: "Top 50 Rap")
+          .where("name", isEqualTo: "Top 50")
           .getDocuments()
           .then((querySnapshot) {
         DocumentSnapshot topChartDoc = querySnapshot.documents[0];
         if (topChartDoc.exists) {
+          String name = topChartDoc.data['name'];
+          String imageURL = topChartDoc.data['imageURL'];
           for (String key in topChartDoc.data['songs'].keys) {
             var songMap = topChartDoc.data['songs'][key];
             chartsList.add(OnlineSong(
               songID: key,
               name: songMap['songName'],
               artistName: songMap['artistName'],
+              albumTitle: songMap['albumName'],
               url: songMap['songURL'],
               albumRef: songMap['albumRef'],
               artistRef: songMap['artistRef'],
               albumArtURL: songMap['albumArtURL'],
             ));
           }
+          Charts charts = Charts(
+            name: name,
+            imageURL: imageURL,
+            songsList: chartsList,
+          );
+
           setState(() {
             topChartsWidget = MusicGrid(
-              title: "Top 50",
-              musicElements: chartsList,
+             charts:charts,
+             showCharts: widget.showCharts,
             );
             loadedCharts = true;
           });
@@ -231,7 +250,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
     if (!loadedGenres) {
       genresWidget = Center();
       List<String> usersGenreNames =
-          Provider.of<User>(context).favoriteGenreNames;
+          Provider.of<User>(context,listen: false).favoriteGenreNames;
       Firestore.instance
           .collection("genres")
           .where("name", whereIn: usersGenreNames)
