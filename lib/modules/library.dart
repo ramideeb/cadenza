@@ -34,7 +34,5 @@ class Library extends ChangeNotifier{
         lastPlayed: songMap['lastPlayed'],
       ));
     }
-    print(songs);
   }
-  //TODO:to be implemented
 }

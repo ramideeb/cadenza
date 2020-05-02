@@ -8,6 +8,7 @@ import 'package:cadenza/modules/user.dart';
 import 'package:cadenza/wrapper.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'AppPages/Album/Album.dart';
 import 'AppPages/MainWidget.dart';
 import 'LoginPages/forgetPass.dart';
 import 'LoginPages/loginpage.dart';
@@ -15,7 +16,7 @@ import 'LoginPages/opening.dart';
 
 Future<void> main() {
   runApp(
-    MyApp(),
+    MyApp()
   );
 }
 
