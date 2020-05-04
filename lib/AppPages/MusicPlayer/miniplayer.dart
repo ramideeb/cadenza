@@ -117,7 +117,6 @@ class MiniPlayer extends StatelessWidget {
                           size: 30,
                         ),
                         onTap: () {
-                          print(queue.state);
                           if (queue.state == PlayerState.PLAYING)
                             queue.pauseCurrentSong();
                           else if (queue.state == PlayerState.PAUSED)

@@ -17,9 +17,11 @@ class Song {
   String genreName;
   Artist artist;
   String artistName;
+  DocumentReference artistRef;
   String name;
   Album album;
   String albumTitle;
+  DocumentReference albumRef;
   String url;
   String actualURL;
   bool urlReady = false;
@@ -35,7 +37,9 @@ class Song {
       this.artist,
       this.name,
       this.album,
+      this.albumRef,
       this.artistName,
+      this.artistRef,
       this.genreName,
       this.albumTitle,
       this.isDownloaded,
@@ -51,9 +55,7 @@ class Song {
 }
 
 class OnlineSong extends Song {
-  DocumentReference albumRef;
-  DocumentReference artistRef;
-
+  
   OnlineSong({
     String songID,
     String name,
@@ -67,8 +69,8 @@ class OnlineSong extends Song {
     String artistName,
     String genreName,
     String albumTitle,
-    this.albumRef,
-    this.artistRef,
+    DocumentReference albumRef,
+    DocumentReference artistRef,
   }) : super(
             songID: songID,
             name: name,
@@ -81,7 +83,9 @@ class OnlineSong extends Song {
             timesPlayed: timesPlayed,
             albumTitle: albumTitle,
             genreName: genreName,
-            artistName: artistName);
+            artistName: artistName,
+            albumRef:albumRef,
+            artistRef:artistRef);
   @override
   Future<dynamic> getActualURL() async {
     return FirebaseStorage.instance.ref().child(url).getDownloadURL();

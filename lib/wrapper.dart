@@ -22,7 +22,9 @@ class Wrapper extends StatelessWidget {
     } else {
       print(2);
       Provider.of<Queue>(context,listen: false).initializeQueue();
-
+      bool songsReady = Provider.of<Library>(context,listen:false).songsReady;
+      if(songsReady)
+        return HomePage();
       return FutureBuilder<DocumentSnapshot>(
         future:
             Firestore.instance.collection('libraries').document(user.uid).get(),
