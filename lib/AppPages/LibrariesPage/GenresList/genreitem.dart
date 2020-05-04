@@ -1,5 +1,6 @@
 //TODO: to be replaced with Discovery after Discovery was made dynamic
 import 'package:cadenza/modules/genre.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 
 class GenreItem extends StatelessWidget {
@@ -17,10 +18,24 @@ class GenreItem extends StatelessWidget {
               borderRadius: BorderRadius.circular(10),
               child: Opacity(
                 opacity: 0.6,
-                child: Image.asset(
-                genre.genreImageUrl,
-                fit: BoxFit.cover,
-              ),
+                child: FutureBuilder(
+                  future: FirebaseStorage.instance
+                      .ref()
+                      .child(genre.genreImageUrl)
+                      .getDownloadURL(),
+                  builder: (con, url) {
+                    if (url.connectionState == ConnectionState.waiting ||
+                        url.hasError)
+                      return Image.asset(
+                        "assets/GenresImages/nogenre.png",
+                        fit: BoxFit.cover,
+                      );
+                    return Image.network(
+                        url.data,
+                        fit: BoxFit.cover,
+                      );
+                  },
+                ),
               ),
             ),
             Center(

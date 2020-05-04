@@ -107,7 +107,9 @@ class _HomePageState extends State<HomePage> {
         showCharts: showChartsCallback,
       ),
       Search(),
-      Library(),
+      Library(
+        showAlbum: showAlbumCallback,
+      ),
       ProfilePage(),
       JustForTest(),
     ];

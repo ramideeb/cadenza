@@ -165,18 +165,31 @@ class Queue extends ChangeNotifier {
     prepareQueue(0);
   }
 
-  void buildFromLibrary() {
-    queue = library.songs;
-    if (_shuffle) queue.shuffle();
-    notifyListeners();
+  void buildFromLibrary([Song songZero]) {
+    if (songZero != null) {
+      queue = library.songs;
+      if (_shuffle) queue.shuffle();
+      queue.remove(songZero);
+      queue.insert(0, songZero);
+      currentSong = queue[0];
+      currentSongIndex = 0;
+      playCurrentSong();
+      notifyListeners();
+    } else {
+      queue = library.songs;
+      if (_shuffle) queue.shuffle();
+      currentSong = queue[0];
+      currentSongIndex = 0;
+      playCurrentSong();
+      notifyListeners();
+    }
+    prepareQueue(0);
   }
 
   void playSingleSong(Song song) async {
     if (!song.urlReady)
       song.getActualURL().then((url) {
-        print("url is $url");
         player.play(url);
-        print("playing song");
       });
     else
       print("shouldn't print");
@@ -196,8 +209,6 @@ class Queue extends ChangeNotifier {
         return;
       Song song = queue[i];
       if (!(song.urlReady) && !(song.gettingURL)) {
-        AnsiPen pen = AnsiPen()..rgb(r: 0, g: 1.0, b: 0);
-         print(pen("getting url for${song.name}"));
         song.gettingURL = true;
         song.getActualURL().then((url) {
           song.actualURL = url;
@@ -285,8 +296,7 @@ class Queue extends ChangeNotifier {
       this.state = PlayerState.LOADING;
       this.duration = Duration(milliseconds: 0);
       if (currentSong.gettingURL) {
-        AnsiPen pen = AnsiPen()..rgb(r: 0, g: 0, b: 1.0);
-        print(pen("waiting for url ${currentSong.name}"));
+        
         _waitingForURL = true;
         _waitingSongID = currentSong.songID;
       } 
@@ -294,7 +304,6 @@ class Queue extends ChangeNotifier {
         currentSong.gettingURL = true;
         currentSong.getActualURL().then((url) {
           AnsiPen pen = AnsiPen()..rgb(r: 1.0, g: 0, b: 0);
-          print(pen("getting url for ${currentSong.name}"));
           currentSong.urlReady = true;
           currentSong.gettingURL = false;
           currentSong.actualURL=url;
@@ -306,7 +315,7 @@ class Queue extends ChangeNotifier {
       }
     } else {
       AnsiPen pen = AnsiPen()..rgb(r: 1.0, g: 0, b: 0.1);
-      print(pen("url is ready"));
+     
       player.setUrl(currentSong.actualURL);
       player.resume();
       state = PlayerState.PLAYING;

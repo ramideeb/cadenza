@@ -6,8 +6,8 @@ import '../../../SizeConfig.dart';
 
 class AlbumsGrid extends StatelessWidget {
   final List<Album> items;
-
-  AlbumsGrid({Key key, this.items}) : super(key: key);
+  final Function(Album) showAlbum;
+  AlbumsGrid({Key key, this.items, this.showAlbum}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return SliverPadding(
@@ -24,6 +24,7 @@ class AlbumsGrid extends StatelessWidget {
             alignment: Alignment.center,
             child: AlbumArtWidget(
               album: items[i],
+              showAlbum: showAlbum,
             ),
           ),
           childCount: items.length,

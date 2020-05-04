@@ -21,8 +21,8 @@ String timestampFormat(Duration d) {
 class MusicPlayer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    AnsiPen pen = AnsiPen()..rgb(r: 1.0, g: 0, b: 0);
-    print(pen("rebuilt music player"));
+    // AnsiPen pen = AnsiPen()..rgb(r: 1.0, g: 0, b: 0);
+    // print(pen("rebuilt music player"));
     return SafeArea(
       child: Container(
         margin: EdgeInsets.only(

@@ -1,6 +1,8 @@
 import 'package:cadenza/AppPages/LibrariesPage/ArtistsList/artistgrid.dart';
 import 'package:cadenza/modules/artist.dart';
+import 'package:cadenza/modules/library.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../../SizeConfig.dart';
 import '../searchbar.dart';
@@ -16,6 +18,12 @@ class ArtistsList extends StatefulWidget {
 
 class _ArtistsListState extends State<ArtistsList> {
   ScrollController _scrollController;
+  String pattern = "";
+  searchThroughArtists(String pattern) {
+    setState(() {
+      this.pattern = pattern;
+    });
+  }
 
   @override
   void initState() {
@@ -23,39 +31,62 @@ class _ArtistsListState extends State<ArtistsList> {
     _scrollController = ScrollController(
         initialScrollOffset: SizeConfig.blockSizeVertical * 12);
   }
-   goBack(){
+
+  goBack() {
     widget.changePage("main");
   }
 
   @override
   Widget build(BuildContext context) {
-    SearchBar _searchBar = SearchBar();
+    bool artistsReady =
+        Provider.of<Library>(context, listen: false).artistsReady;
+    if (artistsReady) {
+      SearchBar _searchBar = SearchBar(
+        search: searchThroughArtists,
+      );
 
-    TopRow _topRow = TopRow(goBack: goBack);
+      TopRow _topRow = TopRow(goBack: goBack);
 
-    ArtistGrid _artistGrid = ArtistGrid(
-      items: [
-        Artist(uid: "B-Doge", songsCount: 53),
-        Artist(uid: "B-Doge", songsCount: 53),
-        Artist(uid: "B-Doge", songsCount: 53),
-        Artist(uid: "B-Doge", songsCount: 53),
-        Artist(uid: "B-Doge", songsCount: 53),
-        Artist(uid: "B-Doge", songsCount: 53),
-        Artist(uid: "B-Doge", songsCount: 53),
-        Artist(uid: "B-Doge", songsCount: 53),
-        Artist(uid: "B-Doge", songsCount: 53),
+      ArtistGrid _artistGrid = ArtistGrid(
+        items: Provider.of<Library>(context).artists.where((a)=>a.username.contains(pattern)).toList(),
+      );
 
-      ],
-    );
+      return CustomScrollView(
+        controller: _scrollController,
+        slivers: <Widget>[
+          _searchBar,
+          SliverToBoxAdapter(child: _topRow),
+          _artistGrid,
+        ],
+      );
+    }
+    return FutureBuilder(
+      future: Provider.of<Library>(context, listen: false).fetchArtists(),
+      builder: (context, finishedFetching) {
+        if (finishedFetching.connectionState == ConnectionState.waiting ||
+            finishedFetching.hasError)
+          return Center(child: CircularProgressIndicator());
+        else {
+          SearchBar _searchBar = SearchBar(
+            search: searchThroughArtists,
+          );
 
-    return CustomScrollView(
-      controller: _scrollController,
-      slivers: <Widget>[
-        _searchBar,
-        SliverToBoxAdapter(child: _topRow),
-        _artistGrid,
-        
-      ],
+          TopRow _topRow = TopRow(goBack: goBack);
+
+          ArtistGrid _artistGrid = ArtistGrid(
+            items: Provider.of<Library>(context).artists.where((a)=>a.username.contains(pattern)).toList(),
+          );
+
+          return CustomScrollView(
+            controller: _scrollController,
+            slivers: <Widget>[
+              _searchBar,
+              SliverToBoxAdapter(child: _topRow),
+              _artistGrid,
+            ],
+          );
+        }
+      },
     );
   }
 }
