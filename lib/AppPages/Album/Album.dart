@@ -12,9 +12,10 @@ import '../../SizeConfig.dart';
 class AlbumWidget extends StatelessWidget {
   final Album album;
   final Function() hideAlbum;
- 
-  playAlbum(Song song,BuildContext context){
-    Provider.of<Queue>(context,listen: false).buildFromList(album.albumSongs, song);
+
+  playAlbum(Song song, BuildContext context) {
+    Provider.of<Queue>(context, listen: false)
+        .buildFromList(album.albumSongs, song);
   }
 
   const AlbumWidget({Key key, this.album, this.hideAlbum}) : super(key: key);
@@ -46,33 +47,33 @@ class AlbumWidget extends StatelessWidget {
                       bottom: Radius.circular(30),
                     ),
                     child: Hero(
-                        tag: "album",
-                        transitionOnUserGestures: true,
-                        child: FutureBuilder(
-                          future: FirebaseStorage.instance
-                              .ref()
-                              .child(album.albumArtImageUrl)
-                              .getDownloadURL(),
-                          builder: (con, url) {
-                            if (url.connectionState ==
-                                    ConnectionState.waiting ||
-                                url.hasError)
-                              return Image.asset(
-                                "assets/AlbumImages/noart.png",
-                                width: MediaQuery.of(context).size.width,
-                                height: MediaQuery.of(context).size.width,
-                                fit: BoxFit.cover,
-                              );
-                            return Image(
+                      tag: "album",
+                      transitionOnUserGestures: true,
+                      child: FutureBuilder(
+                        future: FirebaseStorage.instance
+                            .ref()
+                            .child(album.albumArtImageUrl)
+                            .getDownloadURL(),
+                        builder: (con, url) {
+                          if (url.connectionState == ConnectionState.waiting ||
+                              url.hasError)
+                            return Image.asset(
+                              "assets/AlbumImages/noart.png",
                               width: MediaQuery.of(context).size.width,
                               height: MediaQuery.of(context).size.width,
-                              image: NetworkImage(
-                                url.data,
-                              ),
                               fit: BoxFit.cover,
                             );
-                          },
-                        )),
+                          return Image(
+                            width: MediaQuery.of(context).size.width,
+                            height: MediaQuery.of(context).size.width,
+                            image: NetworkImage(
+                              url.data,
+                            ),
+                            fit: BoxFit.cover,
+                          );
+                        },
+                      ),
+                    ),
                   ),
                 ),
                 Padding(
@@ -159,7 +160,8 @@ class AlbumWidget extends StatelessWidget {
                       ),
                       elevation: 0,
                       onPressed: () {
-                        Provider.of<Queue>(context,listen: false).buildFromList(album.albumSongs);
+                        Provider.of<Queue>(context, listen: false)
+                            .buildFromList(album.albumSongs);
                       },
                     ),
                   ),
@@ -170,7 +172,7 @@ class AlbumWidget extends StatelessWidget {
           SliverToBoxAdapter(child: SizedBox(height: 20)),
           SliverList(
             delegate: SliverChildBuilderDelegate(
-              (con, i) => SongItem(song: album.albumSongs[i],play: playAlbum),
+              (con, i) => SongItem(song: album.albumSongs[i], play: playAlbum),
               childCount: album.albumSongs.length,
             ),
           ),

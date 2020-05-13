@@ -1,5 +1,6 @@
 import 'package:cadenza/AppPages/LibrariesPage/MainList/libraypage.dart';
 import 'package:cadenza/modules/Album.dart';
+import 'package:cadenza/modules/playlist.dart';
 import 'package:cadenza/modules/queue.dart';
 import 'package:cadenza/modules/song.dart';
 import 'package:flutter/material.dart';
@@ -12,8 +13,8 @@ import 'SongsList/songslist.dart';
 
 class Library extends StatefulWidget {
   final Function(Album) showAlbum;
-
-  const Library({Key key, this.showAlbum}) : super(key: key);
+  final Function(Playlist) showPlaylist;
+  const Library({Key key, this.showAlbum, this.showPlaylist}) : super(key: key);
   @override
   _LibraryState createState() => _LibraryState();
 }
@@ -24,12 +25,12 @@ class _LibraryState extends State<Library> {
       currentPage = s;
     });
   }
-  playFromLibrary(Song song,BuildContext context){
-    Provider.of<Queue>(context,listen: false).buildFromLibrary(song);
+
+  playFromLibrary(Song song, BuildContext context) {
+    Provider.of<Queue>(context, listen: false).buildFromLibrary(song);
   }
 
   String currentPage = "main";
-
 
   @override
   Widget build(BuildContext context) {
@@ -38,13 +39,17 @@ class _LibraryState extends State<Library> {
         changePage: pageChangeCallback,
         playLibrarySongs: playFromLibrary,
       ),
-      "albums": AlbumsList(changePage: pageChangeCallback,showAlbum: widget.showAlbum,),
+      "albums": AlbumsList(
+        changePage: pageChangeCallback,
+        showAlbum: widget.showAlbum,
+      ),
       "genres": GenresList(changePage: pageChangeCallback),
       "artists": ArtistsList(
         changePage: pageChangeCallback,
       ),
       "main": LibraryPage(
         changePage: pageChangeCallback,
+        showPlaylist: widget.showPlaylist,
       ),
     };
 

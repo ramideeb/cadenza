@@ -14,6 +14,7 @@ class Library extends ChangeNotifier {
   List<Album> albums = [];
   bool albumsReady = false;
   List<Playlist> playlists = [];
+  bool playlistsReady = false;
   List<Genre> genres = [];
   bool genresReady = false;
   List<Artist> artists = [];
@@ -104,5 +105,49 @@ class Library extends ChangeNotifier {
       ));
     }
     genresReady = true;
+  }
+
+  Future<void> fetchPlaylists() async {
+    // QuerySnapshot userPlaylistsQuery = await Firestore.instance.collection("libraries").document(user.uid).collection("userPlaylists").getDocuments();
+    // QuerySnapshot systemPlaylistsQuery = await Firestore.instance.collection("libraries").document(user.uid).collection("systemGeneratedPlaylists").getDocuments();
+    // for(DocumentSnapshot playlistSnapshot in userPlaylistsQuery.documents){
+
+    // }
+    this.playlists = [
+      Playlist(
+        imageUrl: "assets/AlbumImages/art15.jpg",
+        playlistName: "Beyond",
+        description:
+            " Enjoy the best music done by artists who are beyond amazing",
+      ),
+      Playlist(
+        imageUrl: "assets/AlbumImages/playlist1.jpg",
+        playlistName: "Luminate",
+        description:
+            " Enjoy the best music done by artists who are beyond amazing",
+      ),
+      Playlist(
+        imageUrl: "assets/AlbumImages/playlist2.jpg",
+        playlistName: "Beatz",
+        description:
+            " Enjoy the best music done by artists who are beyond amazing",
+      ),
+      Playlist(
+        imageUrl: "assets/AlbumImages/playlist3.jpg",
+        playlistName: "Hayooo!",
+        description:
+            " Enjoy the best music done by artists who are beyond amazing",
+      ),
+    ];
+    for(int i = 0;i<50;i++){
+      this.playlists[i%4].playlistSongs.add(this.songs[i]);
+    }
+    this.playlistsReady = true;
+    return Future.delayed(Duration(microseconds: 400));
+  }
+
+  void addPlaylist(Playlist newPlaylist){
+    this.playlists.add(newPlaylist);
+    notifyListeners();
   }
 }

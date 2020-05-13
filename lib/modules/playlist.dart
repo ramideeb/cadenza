@@ -1,14 +1,16 @@
 import 'package:cadenza/modules/song.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Playlist{
-  final String playlistId;
-  final String PlaylistName;
-  final String description;
-  final String imageUrl;
-  
-  List<Song> playlistSongs;
+  String playlistId;
+  String playlistName;
+  String description;
+  String imageUrl;
+  bool isSnippet = false;
+  DocumentReference playlistRef;
+  List<Song> playlistSongs =[];
 
-  Playlist({this.playlistId, this.PlaylistName, this.description, this.imageUrl});
+  Playlist({this.playlistId, this.playlistName, this.description, this.imageUrl});
 
   List<Map<String,dynamic>> toMap(){
     return playlistSongs.map((song) {
@@ -16,7 +18,7 @@ class Playlist{
         {
           "playlistId": playlistId,
           "songID": song.songID,
-          "PlaylistName":PlaylistName,
+          "PlaylistName":playlistName,
           "description": description,
           "imageUrl":imageUrl,
         };
