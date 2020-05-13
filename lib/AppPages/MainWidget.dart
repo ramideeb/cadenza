@@ -3,9 +3,11 @@ import 'package:cadenza/AppPages/MusicPlayer/MusicPlayer.dart';
 import 'package:cadenza/AppPages/Home/homepage.dart';
 import 'package:cadenza/AppPages/LibrariesPage/library.dart';
 import 'package:cadenza/AppPages/MusicPlayer/miniplayer.dart';
+import 'package:cadenza/AppPages/Playlist/playlist.dart';
 import 'package:cadenza/modules/Album.dart';
 import 'package:cadenza/modules/artist.dart';
 import 'package:cadenza/modules/charts.dart';
+import 'package:cadenza/modules/playlist.dart';
 import 'package:cadenza/modules/queue.dart';
 import 'package:cadenza/modules/song.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -72,6 +74,9 @@ class _HomePageState extends State<HomePage> {
   Album albumShowing;
   bool showingCharts = false;
   Charts chartsShowing;
+  bool showingPlaylist = false;
+  Playlist playlistShowing;
+
   showAlbumCallback(Album album) {
     setState(() {
       showingAlbum = true;
@@ -98,6 +103,18 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
+  showPlaylistCallback(Playlist playlist) {
+    setState(() {
+      showingPlaylist = true;
+      playlistShowing = playlist;
+    });
+  }
+
+  hidePlaylistCallback() {
+    setState(() {
+      showingPlaylist = false;
+    });
+  }
   @override
   void initState() {
     super.initState();
@@ -109,9 +126,11 @@ class _HomePageState extends State<HomePage> {
       Search(),
       Library(
         showAlbum: showAlbumCallback,
+        showPlaylist: showPlaylistCallback,
       ),
       ProfilePage(),
-      JustForTest(),
+      // JustForTest(),
+      PlaylistWidget(hidePlaylist: hidePlaylistCallback,)
     ];
   }
 
@@ -150,6 +169,11 @@ class _HomePageState extends State<HomePage> {
       widgetShowing = ChartsWidget(
         hideCharts: hideChartsCallback,
         charts: chartsShowing,
+      );
+    else if (showingPlaylist)
+      widgetShowing = PlaylistWidget(
+        hidePlaylist:hidePlaylistCallback,
+        playlist: playlistShowing,
       );
     else
       widgetShowing = _widgetOptions.elementAt(_selectedIndex);

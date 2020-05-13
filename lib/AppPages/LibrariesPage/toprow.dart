@@ -1,5 +1,7 @@
+import 'package:cadenza/modules/queue.dart';
 import 'package:cadenza/presentation/cutsom_icons_icons.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../SizeConfig.dart';
 
@@ -12,7 +14,11 @@ class TopRow extends StatelessWidget {
     return Padding(
       padding:
           EdgeInsets.only(top: 40, bottom: SizeConfig.blockSizeVertical * 4),
-      child: Row(
+      child: GestureDetector(
+        onTap: (){
+          Provider.of<Queue>(context,listen: false).buildFromLibrary();
+        },
+        child:Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
           IconButton(
@@ -54,6 +60,7 @@ class TopRow extends StatelessWidget {
           ),
           SizedBox(width: SizeConfig.blockSizeHorizontal * 10)
         ],
+      ),
       ),
     );
   }

@@ -5,11 +5,16 @@ import '../../../SizeConfig.dart';
 
 class PlaylistItemMinimized extends StatelessWidget {
   final Playlist playlist;
+  final Function(Playlist) showPlaylist;
 
-  const PlaylistItemMinimized({Key key, this.playlist}) : super(key: key);
+  const PlaylistItemMinimized({Key key, this.playlist, this.showPlaylist}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return GestureDetector(
+      onTap: (){
+        showPlaylist(playlist);
+      },
+      child: Container(
       decoration: BoxDecoration(
           border: Border.all(
             width: 0.3,
@@ -33,7 +38,7 @@ class PlaylistItemMinimized extends StatelessWidget {
           ),
           Center(
             child: Text(
-              "${playlist.PlaylistName}",
+              "${playlist.playlistName}",
               style: TextStyle(
                 fontSize: 25,
                 fontWeight: FontWeight.w600,
@@ -42,6 +47,7 @@ class PlaylistItemMinimized extends StatelessWidget {
           )
         ],
       ),
+    ),
     );
   }
 }

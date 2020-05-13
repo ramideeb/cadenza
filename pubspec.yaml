@@ -29,7 +29,7 @@ dependencies:
   aes_crypt: ^0.1.1
   dio: 3.0.9
   ansicolor: ^1.0.2
-
+  file_picker: ^1.9.0+1
   
 
 

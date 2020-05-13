@@ -7,14 +7,15 @@ import '../../../SizeConfig.dart';
 
 class PlaylistsCarousel extends StatelessWidget {
   final List<Playlist> items;
-
-  const PlaylistsCarousel({Key key, this.items}) : super(key: key);
+  final Function(Playlist) showPlaylists;
+  const PlaylistsCarousel({Key key, this.items, this.showPlaylists}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return CarouselSlider.builder(
       itemCount: items.length,
       itemBuilder: (con, i) => PlayListItem(
         playlist: items[i],
+        showPlaylist: showPlaylists,
       ),
       autoPlay: true,
       autoPlayAnimationDuration: Duration(seconds: 2),
