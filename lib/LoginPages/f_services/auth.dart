@@ -7,6 +7,8 @@ import 'dart:convert' as JSON;
 
 class Auth {
   final FirebaseAuth _auth = FirebaseAuth.instance;
+
+
   final GoogleSignIn googleSignIn = GoogleSignIn();
 
 
@@ -39,12 +41,13 @@ class Auth {
     }
   }
 
-  Future SignInWithEmail(String Email, String Password) async {
+  Future<AuthResult> SignInWithEmail(String Email, String Password) async {
     try {
       AuthResult result = await _auth.signInWithEmailAndPassword(
           email: Email, password: Password);
       FirebaseUser user = result.user;
-      return _userFromFirebaseUser(user);
+      return result;
+
     } catch (e) {
       print(e.toString());
       return null;

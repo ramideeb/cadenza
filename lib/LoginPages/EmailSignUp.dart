@@ -1,4 +1,5 @@
 import 'package:cadenza/LoginPages/f_services/auth.dart';
+import 'package:cadenza/LoginPages/welcoming_screen/welcome.dart';
 import 'package:flutter/material.dart';
 
 class EmailSignUp extends StatefulWidget {
@@ -136,9 +137,16 @@ validator: (val){
                             onPressed: () async {
                               if (_formKey.currentState.validate()) {
                                dynamic result=await _auth.RegisterWithEmail(Email,Password);
+
                                if(result!=null)
                                {
                                  Navigator.of(context).popUntil((route) => route.isFirst);
+
+                                   Navigator.push(
+                                    context,
+                                    MaterialPageRoute(builder: (context) => welcome() ),
+                                  );
+
                               
                                }
 
