@@ -239,21 +239,40 @@ packages:
       name: image
       url: "https://pub.dartlang.org"
     source: hosted
+<<<<<<< Updated upstream
     version: "2.1.4"
+=======
+    version: "2.1.12"
+>>>>>>> Stashed changes
   image_cropper:
     dependency: "direct main"
     description:
       name: image_cropper
       url: "https://pub.dartlang.org"
     source: hosted
+<<<<<<< Updated upstream
     version: "1.2.1"
+=======
+    version: "1.2.2"
+>>>>>>> Stashed changes
   image_picker:
     dependency: "direct main"
     description:
       name: image_picker
       url: "https://pub.dartlang.org"
     source: hosted
+<<<<<<< Updated upstream
     version: "0.6.5+2"
+=======
+    version: "0.6.6+1"
+  image_picker_platform_interface:
+    dependency: transitive
+    description:
+      name: image_picker_platform_interface
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.0"
+>>>>>>> Stashed changes
   js:
     dependency: transitive
     description:

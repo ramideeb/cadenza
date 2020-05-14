@@ -5,11 +5,38 @@ import 'package:cadenza/modules/artist.dart';
 import 'package:cadenza/modules/queue.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 
-class ProfilePage extends StatelessWidget {
+
+class ProfilePage extends StatefulWidget {
+  @override
+  _ProfilePageState createState() => _ProfilePageState();
+}
+
+class _ProfilePageState extends State<ProfilePage> {
+  Image firstImage;
+    final FirebaseStorage _storage =
+      FirebaseStorage(storageBucket: 'gs://cadenza-db-and-storage.appspot.com');
+bool loadedFirst = false;
+ String inputref = "";
   @override
   Widget build(BuildContext context) {
     final Auth _auth = Auth();
+
+          _storage.ref().child(inputref).getDownloadURL().then((url) {
+        setState(() {
+          firstImage = Image.network(
+            url,
+            fit: BoxFit.fill,
+            loadingBuilder: (context, child, progress) {
+              if (progress == null) return child;
+              return Image.asset("assets/AlbumImages/noart.png");
+            },
+          );
+          loadedFirst = true;
+        });
+      });
+
     return Container(
       child: SingleChildScrollView(
         child: Column(
@@ -21,10 +48,7 @@ class ProfilePage extends StatelessWidget {
                   alignment: AlignmentDirectional.bottomCenter,
                   children: <Widget>[
                     Container(
-                      child: Image.asset(
-                        'assets/drawable-xxxhdpi/83957883-cartoon-vector-doodles-music-illustration.png',
-                        width: MediaQuery.of(context).size.width,
-                      ),
+                      child: firstImage
                     ),
                     Container(
                       child: Positioned(
