@@ -1,39 +1,35 @@
-import 'package:cadenza/AppPages/LibrariesPage/AlbumsList/albumslist.dart';
-import 'package:cadenza/AppPages/LibrariesPage/ArtistsList/artistslist.dart';
-import 'package:cadenza/AppPages/LibrariesPage/GenresList/genreslist.dart';
 import 'package:cadenza/AppPages/LibrariesPage/MainList/playlistsgrid.dart';
-import 'package:cadenza/AppPages/LibrariesPage/SongsList/songslist.dart';
 import 'package:cadenza/SizeConfig.dart';
+import 'package:cadenza/modules/library.dart';
 import 'package:cadenza/modules/playlist.dart';
 import 'package:cadenza/presentation/cutsom_icons_icons.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-import '../library.dart';
 import 'playlistcarousel.dart';
 
 List<Playlist> playlistsExample = [
   Playlist(
-
     imageUrl: "assets/AlbumImages/art15.jpg",
-    PlaylistName: "Beyond",
+    playlistName: "Beyond",
     description:
         " Enjoy the best music done by artists who are beyond amazeballz",
   ),
   Playlist(
     imageUrl: "assets/AlbumImages/playlist1.jpg",
-    PlaylistName: "Luminate",
+    playlistName: "Luminate",
     description:
         " Enjoy the best music done by artists who are beyond amazeballz",
   ),
   Playlist(
     imageUrl: "assets/AlbumImages/playlist2.jpg",
-    PlaylistName: "Beatz",
+    playlistName: "Beatz",
     description:
         " Enjoy the best music done by artists who are beyond amazeballz",
   ),
   Playlist(
     imageUrl: "assets/AlbumImages/playlist3.jpg",
-    PlaylistName: "Hayooo!",
+    playlistName: "Hayooo!",
     description:
         " Enjoy the best music done by artists who are beyond amazeballz",
   ),
@@ -41,8 +37,10 @@ List<Playlist> playlistsExample = [
 
 class LibraryPage extends StatefulWidget {
   final Function(String) changePage;
+  final Function(Playlist) showPlaylist;
 
-  const LibraryPage({Key key, this.changePage}) : super(key: key);
+  const LibraryPage({Key key, this.changePage, this.showPlaylist})
+      : super(key: key);
 
   @override
   _LibraryPageState createState() => _LibraryPageState();
@@ -57,10 +55,10 @@ class _LibraryPageState extends State<LibraryPage> {
   @override
   Widget build(BuildContext context) {
     _sizeConfig.init(context);
-
+    bool playlistsReady = Provider.of<Library>(context, listen: false).playlistsReady;
     Widget _libraryText = Padding(
       padding: EdgeInsets.only(
-        top: SizeConfig.blockSizeVertical ,
+        top: SizeConfig.blockSizeVertical,
         left: SizeConfig.blockSizeHorizontal * 4,
         bottom: SizeConfig.blockSizeVertical * 3.5,
       ),
@@ -198,108 +196,115 @@ class _LibraryPageState extends State<LibraryPage> {
       ),
     );
 
-    PlaylistsCarousel _playlistsCarousel = PlaylistsCarousel(
-      items: playlistsExample,
-    );
+    if (playlistsReady) {
+      PlaylistsCarousel _playlistsCarousel = PlaylistsCarousel(
+        items: Provider.of<Library>(context).playlists,
+        showPlaylists: widget.showPlaylist,
+      );
 
-    PlaylistsGrid _playlistsGrid = PlaylistsGrid(items: playlistsExample);
+      PlaylistsGrid _playlistsGrid = PlaylistsGrid(
+        items: Provider.of<Library>(context).playlists,
+        showPlaylist: widget.showPlaylist,
+      );
 
-    // Widget _playlistsNormalGrid = Padding(
-    //   padding: EdgeInsets.only(
-    //       left: SizeConfig.blockSizeHorizontal * 3,
-    //       right: SizeConfig.blockSizeHorizontal * 3,
-    //       bottom: SizeConfig.blockSizeVertical * 3),
-    //   child: GridView.count(
-    //     shrinkWrap: true,
-    //     crossAxisSpacing: SizeConfig.blockSizeHorizontal * 8,
-    //     mainAxisSpacing: SizeConfig.blockSizeVertical * 3,
-    //     crossAxisCount: 2,
-    //     children: <Widget>[
-    //       PlaylistItemMinimized(playlist: playlistsExample[0]),
-    //       PlaylistItemMinimized(playlist: playlistsExample[1]),
-    //       PlaylistItemMinimized(playlist: playlistsExample[2]),
-    //       PlaylistItemMinimized(playlist: playlistsExample[3]),
-    //     ],
-    //   ),
-    // );
+      Widget _playlistArrow = IconButton(
+        icon: Icon(
+          _playlistMinimized
+              ? CutsomIcons.chevron_down
+              : CutsomIcons.chevron_up,
+          size: 32,
+          color: Colors.black,
+        ),
+        onPressed: () {
+          setState(() {
+            _playlistMinimized = !(_playlistMinimized);
+          });
+        },
+      );
 
-    Widget _playlistArrow = IconButton(
-      icon: Icon(
-        _playlistMinimized ? CutsomIcons.chevron_down : CutsomIcons.chevron_up,
-        size: 32,
-        color: Colors.black,
-      ),
-      onPressed: () {
-        setState(() {
-          _playlistMinimized = !(_playlistMinimized);
-          // if (!_playlistMinimized)
-          //   _playlist = _playlistsNormalGrid;
-          // else
-          //   _playlist = _playlistsCarousel;
-        });
+      return CustomScrollView(
+        slivers: <Widget>[
+          SliverList(
+            delegate: SliverChildListDelegate(
+              [
+                _libraryText,
+                _playlistText,
+              ],
+            ),
+          ),
+          _playlistMinimized
+              ? SliverToBoxAdapter(child: _playlistsCarousel)
+              : _playlistsGrid,
+          SliverList(
+            delegate: SliverChildListDelegate([
+              _playlistArrow,
+              _songsText,
+              _albumsText,
+              _genresText,
+              _artistsText,
+            ]),
+          ),
+        ],
+      );
+    }
+    return FutureBuilder(
+      future: Provider.of<Library>(context, listen: false).fetchPlaylists(),
+      builder: (con, finishedFetching) {
+        if (finishedFetching.connectionState == ConnectionState.waiting ||
+            finishedFetching.hasError)
+          return Center(child: CircularProgressIndicator());
+        else {
+          PlaylistsCarousel _playlistsCarousel = PlaylistsCarousel(
+            items: Provider.of<Library>(context).playlists,
+            showPlaylists: widget.showPlaylist,
+          );
+
+          PlaylistsGrid _playlistsGrid = PlaylistsGrid(
+            items: Provider.of<Library>(context).playlists,
+            showPlaylist: widget.showPlaylist,
+          );
+
+          Widget _playlistArrow = IconButton(
+            icon: Icon(
+              _playlistMinimized
+                  ? CutsomIcons.chevron_down
+                  : CutsomIcons.chevron_up,
+              size: 32,
+              color: Colors.black,
+            ),
+            onPressed: () {
+              setState(() {
+                _playlistMinimized = !(_playlistMinimized);
+              });
+            },
+          );
+
+          return CustomScrollView(
+            slivers: <Widget>[
+              SliverList(
+                delegate: SliverChildListDelegate(
+                  [
+                    _libraryText,
+                    _playlistText,
+                  ],
+                ),
+              ),
+              _playlistMinimized
+                  ? SliverToBoxAdapter(child: _playlistsCarousel)
+                  : _playlistsGrid,
+              SliverList(
+                delegate: SliverChildListDelegate([
+                  _playlistArrow,
+                  _songsText,
+                  _albumsText,
+                  _genresText,
+                  _artistsText,
+                ]),
+              ),
+            ],
+          );
+        }
       },
     );
-
-    // if (_firstBuild) {
-    //   _playlist = _playlistsCarousel;
-    //   _firstBuild = false;
-    // }
-
-    return CustomScrollView(
-      slivers: <Widget>[
-        SliverList(
-          delegate: SliverChildListDelegate(
-            [
-              _libraryText,
-              _playlistText,
-            ],
-          ),
-        ),
-        _playlistMinimized
-            ? SliverToBoxAdapter(child: _playlistsCarousel)
-            : _playlistsGrid,
-        SliverList(
-          delegate: SliverChildListDelegate([
-            _playlistArrow,
-            _songsText,
-            _albumsText,
-            _genresText,
-            _artistsText,
-          ]),
-        ),
-      ],
-    );
-
-    // return CustomScrollView(
-    //   slivers: <Widget>[
-    //     SliverList(
-    //       delegate: SliverChildListDelegate(
-    //         [
-    //           _libraryText,
-    //           _playlistText,
-    //         ],
-    //       ),
-    //     ),
-    //     SliverToBoxAdapter(
-    //       child: AnimatedSwitcher(
-    //         transitionBuilder: (Widget child,Animation<double> animation)=>ScaleTransition(scale: animation,child:child),
-    //         duration: Duration(microseconds: 500),
-    //         // switchInCurve: Curves.easeInExpo,
-    //         child: _playlist,
-    //       ),
-    //     ),
-    //     SliverList(
-    //       delegate: SliverChildListDelegate([
-    //         _playlistArrow,
-    //         _songsText,
-    //         _albumsText,
-    //         _genresText,
-    //         _artistsText,
-    //       ]),
-    //     ),
-    //   ],
-    // );
   }
 }
-
-class _LibraryState {}

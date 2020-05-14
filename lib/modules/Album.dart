@@ -6,6 +6,7 @@ import 'artist.dart';
 
 class Album {
   final String albumID;
+  DocumentReference albumRef;
   String albumName;
   String artistName;
   DocumentReference artistRef;
@@ -13,8 +14,9 @@ class Album {
   String albumArtImageUrl;
   String genreName;
   Genre genre;
+  bool isSnippet;
   //TODO: replace it with function get albums songs  getAlbumSongs()
-  List<Song> albumSongs;
+  List<Song> albumSongs = [];
 
   Album({
     this.artist,
@@ -23,8 +25,11 @@ class Album {
     this.albumID,
     this.albumName,
     this.albumArtImageUrl,
+    this.albumRef,
     this.genreName,
     this.genre,
+    this.albumSongs,
+    this.isSnippet,
   });
   
   Map<String, dynamic> toMap() {

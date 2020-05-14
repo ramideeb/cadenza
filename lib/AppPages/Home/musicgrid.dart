@@ -1,14 +1,13 @@
 import 'package:cadenza/SizeConfig.dart';
-import 'package:cadenza/modules/Album.dart';
-import 'package:cadenza/modules/song.dart';
+import 'package:cadenza/modules/charts.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 
 class MusicGrid extends StatefulWidget {
-  final List<Song> musicElements;
-  final String title;
-
-  MusicGrid({Key key, this.musicElements, this.title}) : super(key: key);
+  final Charts charts;
+  final Function(Charts) showCharts;
+  MusicGrid({Key key, this.showCharts, this.charts})
+      : super(key: key);
 
   @override
   _MusicGridState createState() => _MusicGridState();
@@ -32,7 +31,7 @@ class _MusicGridState extends State<MusicGrid> {
       );
       FirebaseStorage.instance
           .ref()
-          .child(widget.musicElements[0].albumArtURL)
+          .child(widget.charts.songsList[0].albumArtURL)
           .getDownloadURL()
           .then((url) {
         setState(() {
@@ -56,7 +55,7 @@ class _MusicGridState extends State<MusicGrid> {
       );
       FirebaseStorage.instance
           .ref()
-          .child(widget.musicElements[1].albumArtURL)
+          .child(widget.charts.songsList[1].albumArtURL)
           .getDownloadURL()
           .then((url) {
         setState(() {
@@ -80,7 +79,7 @@ class _MusicGridState extends State<MusicGrid> {
       );
       FirebaseStorage.instance
           .ref()
-          .child(widget.musicElements[2].albumArtURL)
+          .child(widget.charts.songsList[2].albumArtURL)
           .getDownloadURL()
           .then((url) {
         setState(() {
@@ -104,7 +103,7 @@ class _MusicGridState extends State<MusicGrid> {
       );
       FirebaseStorage.instance
           .ref()
-          .child(widget.musicElements[3].albumArtURL)
+          .child(widget.charts.songsList[3].albumArtURL)
           .getDownloadURL()
           .then((url) {
         setState(() {
@@ -132,50 +131,71 @@ class _MusicGridState extends State<MusicGrid> {
         childAspectRatio: 1.1,
         crossAxisCount: 2,
         children: <Widget>[
-          Opacity(
-            opacity: 0.8,
-            child: ClipRRect(
-              borderRadius: BorderRadius.only(topLeft: Radius.circular(14)),
-              child: firstImage,
-            ),
-          ),
-          Opacity(
-            opacity: 0.8,
-            child: ClipRRect(
-              borderRadius: BorderRadius.only(topRight: Radius.circular(14)),
-              child: secondImage,
-            ),
-          ),
-          Stack(
-            fit: StackFit.expand,
-            children: <Widget>[
-              Opacity(
-                opacity: 0.8,
-                child: ClipRRect(
-                  borderRadius:
-                      BorderRadius.only(bottomLeft: Radius.circular(14)),
-                  child: thirdImage,
-                ),
+          GestureDetector(
+            onTap: () {
+              widget.showCharts(widget.charts);
+            },
+            child: Opacity(
+              opacity: 0.8,
+              child: ClipRRect(
+                borderRadius: BorderRadius.only(topLeft: Radius.circular(14)),
+                child: firstImage,
               ),
-              Positioned(
-                bottom: SizeConfig.blockSizeVertical * 1.5,
-                left: SizeConfig.blockSizeHorizontal * 2,
-                child: Text(
-                  "${widget.title}",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 25,
-                    fontWeight: FontWeight.w400,
+            ),
+          ),
+          GestureDetector(
+            onTap: () {
+              widget.showCharts(widget.charts);
+            },
+            child: Opacity(
+              opacity: 0.8,
+              child: ClipRRect(
+                borderRadius: BorderRadius.only(topRight: Radius.circular(14)),
+                child: secondImage,
+              ),
+            ),
+          ),
+          GestureDetector(
+            onTap: () {
+              widget.showCharts(widget.charts);
+            },
+            child: Stack(
+              fit: StackFit.expand,
+              children: <Widget>[
+                Opacity(
+                  opacity: 0.8,
+                  child: ClipRRect(
+                    borderRadius:
+                        BorderRadius.only(bottomLeft: Radius.circular(14)),
+                    child: thirdImage,
                   ),
                 ),
-              ),
-            ],
+                Positioned(
+                  bottom: SizeConfig.blockSizeVertical * 1.5,
+                  left: SizeConfig.blockSizeHorizontal * 2,
+                  child: Text(
+                    "${widget.charts.name}",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 25,
+                      fontWeight: FontWeight.w400,
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
-          Opacity(
-            opacity: 0.8,
-            child: ClipRRect(
-              borderRadius: BorderRadius.only(bottomRight: Radius.circular(5)),
-              child: fourthImage,
+          GestureDetector(
+            onTap: () {
+              widget.showCharts(widget.charts);
+            },
+            child: Opacity(
+              opacity: 0.8,
+              child: ClipRRect(
+                borderRadius:
+                    BorderRadius.only(bottomRight: Radius.circular(5)),
+                child: fourthImage,
+              ),
             ),
           ),
         ],

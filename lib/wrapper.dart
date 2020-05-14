@@ -17,13 +17,16 @@ class Wrapper extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<User>(context);
-    Provider.of<Library>(context).user = user;
+    Provider.of<Library>(context,listen: false).user = user;
     if (user == null) {
       print(1);
       return Opening();
     } else {
       print(2);
-      Provider.of<Queue>(context).initializeQueue();
+      Provider.of<Queue>(context,listen: false).initializeQueue();
+      bool songsReady = Provider.of<Library>(context,listen:false).songsReady;
+      if(songsReady)
+        return HomePage();
       return FutureBuilder<DocumentSnapshot>(
         future:
             Firestore.instance.collection('libraries').document(user.uid).get(),
@@ -38,7 +41,9 @@ class Wrapper extends StatelessWidget {
               child: CircularProgressIndicator(),
             ));
           if (snapshot.connectionState == ConnectionState.done) {
-            Provider.of<Library>(context)
+            if(!snapshot.data.exists)
+            return Text("ops");
+            Provider.of<Library>(context,listen: false)
                 .initialzieSongsFromOnline(snapshot.data);
             // print(snapshot.data.data['songs']);
           return HomePage();

@@ -1,35 +1,32 @@
+import 'package:cadenza/AppPages/LibrariesPage/SongsList/songitem.dart';
+import 'package:cadenza/modules/Album.dart';
+import 'package:cadenza/modules/queue.dart';
+import 'package:cadenza/modules/song.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-class Album extends StatelessWidget {
-  List<String> litems = [
-    "Intro",
-    "Bad Luck",
-    "My Bad",
-    "Better",
-    "Talk",
-    "right Back",
-    "Don't Pretend (Ft. SAFE)",
-    "Paradise",
-    "Hundres",
-    "Outta My Head by Khalid & John Mayer",
-    "Free Spirit",
-    "Twenty One",
-    "Bluffin'",
-    "Self",
-    "Alive",
-    "Heaven",
-    "Saturda y Nights",
-  ];
+import '../../SizeConfig.dart';
+
+class AlbumWidget extends StatelessWidget {
+  final Album album;
+  final Function() hideAlbum;
+
+  playAlbum(Song song, BuildContext context) {
+    Provider.of<Queue>(context, listen: false)
+        .buildFromList(album.albumSongs, song);
+  }
+
+  const AlbumWidget({Key key, this.album, this.hideAlbum}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Stack(
+      child: CustomScrollView(
+        slivers: <Widget>[
+          SliverToBoxAdapter(
+            child: Stack(
               overflow: Overflow.visible,
               children: <Widget>[
                 Container(
@@ -52,13 +49,29 @@ class Album extends StatelessWidget {
                     child: Hero(
                       tag: "album",
                       transitionOnUserGestures: true,
-                      child: Image(
-                        width: MediaQuery.of(context).size.width,
-                        height: MediaQuery.of(context).size.width,
-                        image: NetworkImage(
-                          "https://images-na.ssl-images-amazon.com/images/I/91zZQ3p3HEL._SL1500_.jpg",
-                        ),
-                        fit: BoxFit.cover,
+                      child: FutureBuilder(
+                        future: FirebaseStorage.instance
+                            .ref()
+                            .child(album.albumArtImageUrl)
+                            .getDownloadURL(),
+                        builder: (con, url) {
+                          if (url.connectionState == ConnectionState.waiting ||
+                              url.hasError)
+                            return Image.asset(
+                              "assets/AlbumImages/noart.png",
+                              width: MediaQuery.of(context).size.width,
+                              height: MediaQuery.of(context).size.width,
+                              fit: BoxFit.cover,
+                            );
+                          return Image(
+                            width: MediaQuery.of(context).size.width,
+                            height: MediaQuery.of(context).size.width,
+                            image: NetworkImage(
+                              url.data,
+                            ),
+                            fit: BoxFit.cover,
+                          );
+                        },
                       ),
                     ),
                   ),
@@ -72,7 +85,7 @@ class Album extends StatelessWidget {
                         color: Colors.white,
                         icon: Icon(Icons.arrow_back),
                         onPressed: () {
-                          Navigator.pop(context);
+                          hideAlbum();
                         },
                       ),
                       IconButton(
@@ -89,14 +102,20 @@ class Album extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      Text(
-                        "Free Spirit",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 35,
-                          fontWeight: FontWeight.w600,
-                          letterSpacing: 0.6,
-                          height: 0,
+                      Padding(
+                        padding: EdgeInsets.only(
+                            bottom: SizeConfig.safeBlockVertical),
+                        child: Text(
+                          (album.albumName.length <= 14)
+                              ? album.albumName
+                              : '${album.albumName.substring(0, 14)}...',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 35,
+                            fontWeight: FontWeight.w600,
+                            letterSpacing: 0.6,
+                            height: 0,
+                          ),
                         ),
                       ),
                       Row(
@@ -107,7 +126,7 @@ class Album extends StatelessWidget {
                             size: 20,
                           ),
                           Text(
-                            "khalid",
+                            album.artistName,
                             style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 20,
@@ -140,60 +159,72 @@ class Album extends StatelessWidget {
                         size: 35,
                       ),
                       elevation: 0,
-                      onPressed: () => {},
+                      onPressed: () {
+                        Provider.of<Queue>(context, listen: false)
+                            .buildFromList(album.albumSongs);
+                      },
                     ),
                   ),
                 ),
               ],
             ),
-            SizedBox(height: 20),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: litems.asMap().entries.map((MapEntry map) {
-                return Column(
-                  children: <Widget>[
-                    Divider(),
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Padding(
-                          padding: EdgeInsets.only(top: 6,right: 5,left: 5),
-                          child: Icon(
-                            Icons.audiotrack,
-                            color: Color.fromRGBO(230, 57, 70, 1),
-                          ),
-                        ),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Text(
-                                litems[map.key],
-                                style: TextStyle(
-                                    color: Color(0xff1D3557),
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.w600,
-                                    letterSpacing: 0.6),
-                              ),
-                              Text(
-                                "Khalid",
-                                style: TextStyle(
-                                    color: Color(0xC01D3557),
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w600,
-                                    letterSpacing: 0.6),
-                              ),
-                            ],
-                          ),
-                        )
-                      ],
-                    ),
-                  ],
-                );
-              }).toList(),
+          ),
+          SliverToBoxAdapter(child: SizedBox(height: 20)),
+          SliverList(
+            delegate: SliverChildBuilderDelegate(
+              (con, i) => SongItem(song: album.albumSongs[i], play: playAlbum),
+              childCount: album.albumSongs.length,
             ),
-          ],
-        ),
+          ),
+          // ListView.builder(
+          //   shrinkWrap: true,
+          //   // crossAxisAlignment: CrossAxisAlignment.start,
+          //   itemCount: album.albumSongs.length,
+          //   itemBuilder: (con, i) => SongItem(song: album.albumSongs[i]),
+          //   // children: litems.asMap().entries.map((MapEntry map) {
+          //   //   return Column(
+          //   //     children: <Widget>[
+          //   //       Divider(),
+          //   //       Row(
+          //   //         crossAxisAlignment: CrossAxisAlignment.start,
+          //   //         children: <Widget>[
+          //   //           Padding(
+          //   //             padding: EdgeInsets.only(top: 6, right: 5, left: 5),
+          //   //             child: Icon(
+          //   //               Icons.audiotrack,
+          //   //               color: Color.fromRGBO(230, 57, 70, 1),
+          //   //             ),
+          //   //           ),
+          //   //           Expanded(
+          //   //             child: Column(
+          //   //               crossAxisAlignment: CrossAxisAlignment.start,
+          //   //               children: <Widget>[
+          //   //                 Text(
+          //   //                   litems[map.key],
+          //   //                   style: TextStyle(
+          //   //                       color: Color(0xff1D3557),
+          //   //                       fontSize: 20,
+          //   //                       fontWeight: FontWeight.w600,
+          //   //                       letterSpacing: 0.6),
+          //   //                 ),
+          //   //                 Text(
+          //   //                   "Khalid",
+          //   //                   style: TextStyle(
+          //   //                       color: Color(0xC01D3557),
+          //   //                       fontSize: 12,
+          //   //                       fontWeight: FontWeight.w600,
+          //   //                       letterSpacing: 0.6),
+          //   //                 ),
+          //   //               ],
+          //   //             ),
+          //   //           )
+          //   //         ],
+          //   //       ),
+          //   //     ],
+          //   //   );
+          //   // }).toList(),
+          // ),
+        ],
       ),
     );
   }

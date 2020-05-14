@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:ansicolor/ansicolor.dart';
 import 'package:cadenza/modules/Album.dart';
 import 'package:cadenza/modules/artist.dart';
 import 'package:cadenza/modules/library.dart';
@@ -7,59 +8,72 @@ import 'package:cadenza/modules/song.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/cupertino.dart';
 
-enum PlayerState { PLAYING, PAUSED, STOPPED }
+enum PlayerState { PLAYING, PAUSED, STOPPED, LOADING }
 enum RepeatState { NONE, ONCE, LOOP }
 
 class Queue extends ChangeNotifier {
-  
-  final String recommenderURL;  
-  
+  final String recommenderURL;
+
   AudioPlayer player;
 
   Duration duration;
   Duration position;
-
+  Stream<Duration> positionStream;
   PlayerState state = PlayerState.STOPPED;
-  // imlplemented one explicitly 
+  // imlplemented one explicitly
   // AudioPlayerState _audioPlayerState;
-  
+
   StreamSubscription _durationSubscription;
   StreamSubscription _positionSubscription;
   StreamSubscription _playerCompleteSubscription;
   StreamSubscription _playerErrorSubscription;
   // StreamSubscription _playerStateSubscription;
 
-  
-
   Library library;
   List<Song> queue = [];
   Song currentSong;
   int currentSongIndex;
-  bool shuffle;
+  bool _shuffle;
   bool doneRepeatOnce;
-  RepeatState repeat;
-
+  RepeatState _repeat;
+  bool _waitingForURL = false;
+  String _waitingSongID;
   Queue({this.recommenderURL, this.library});
-  
-  void initializeQueue(){
+
+  void set shuffle(bool shuffling) {
+    this._shuffle = shuffling;
+    notifyListeners();
+  }
+
+  bool get shuffle => this._shuffle;
+
+  void set repeat(RepeatState state) {
+    this._repeat = state;
+    notifyListeners();
+  }
+
+  RepeatState get repeat => this._repeat;
+
+  void initializeQueue() {
     duration = Duration(microseconds: 0);
     position = Duration(microseconds: 0);
 
     _initAudioPlayer();
-    
-    repeat = RepeatState.NONE;
+
+    _repeat = RepeatState.NONE;
     doneRepeatOnce = true;
-    shuffle = true;
+    _shuffle = true;
   }
- 
-  void disposePlayer(){
+
+  void disposePlayer() {
     player.release();
     _durationSubscription?.cancel();
     _positionSubscription?.cancel();
     _playerCompleteSubscription?.cancel();
     _playerErrorSubscription?.cancel();
     // _playerStateSubscription?.cancel();
-  } 
+  }
+
   @override
   void dispose() {
     disposePlayer();
@@ -67,21 +81,23 @@ class Queue extends ChangeNotifier {
   }
 
   void _initAudioPlayer() {
+    AudioPlayer.logEnabled = false;
     player = AudioPlayer(playerId: "onlyplayer");
     player.setReleaseMode(ReleaseMode.STOP);
 
-    _durationSubscription = player.onDurationChanged.listen((duration) {
+    _durationSubscription =
+        player.onDurationChanged.distinct().listen((duration) {
       this.duration = duration;
-      _durationSubscription.pause();
+      notifyListeners();
+      // _durationSubscription.pause();
     });
-
+    positionStream = player.onAudioPositionChanged;
     _positionSubscription = player.onAudioPositionChanged.listen((p) {
       this.position = p;
-      notifyListeners();
     });
 
     _playerCompleteSubscription = player.onPlayerCompletion.listen((event) {
-      if (repeat == RepeatState.LOOP) {
+      if (_repeat == RepeatState.LOOP) {
         player.stop();
         player.resume();
         return;
@@ -95,24 +111,88 @@ class Queue extends ChangeNotifier {
     // player.onPlayerStateChanged.listen((state) => _audioPlayerState = state);
   }
 
-  void buildAlbumQueue(Album album) {
+  @deprecated
+  void buildAlbumQueue(Album album, Song songZero) {
     queue = album.albumSongs;
-    if (shuffle) queue.shuffle();
+    if (_shuffle) queue.shuffle();
+    queue.remove(songZero);
+    queue.insert(0, songZero);
+    currentSong = queue[0];
+    currentSongIndex = 0;
+    playCurrentSong();
     notifyListeners();
   }
 
-  void buildPlaylistQueue(Playlist playlist) {
+  @deprecated
+  void buildPlaylistQueue(Playlist playlist, Song songZero) {
     queue = playlist.playlistSongs;
-    if (shuffle) queue.shuffle();
+    if (_shuffle) queue.shuffle();
+    queue.remove(songZero);
+    queue.insert(0, songZero);
+    currentSong = queue[0];
+    currentSongIndex = 0;
+    playCurrentSong();
     notifyListeners();
   }
 
+  @deprecated
   void buildArtistQueue(Artist artist) {
     for (Album album in artist.albumsList) {
       queue.addAll(album.albumSongs);
     }
-    if (shuffle) queue.shuffle();
+    if (_shuffle) queue.shuffle();
     notifyListeners();
+  }
+
+  void buildFromList(List<Song> songs, [Song songZero]) {
+    if (songZero != null) {
+      queue = songs;
+      if (_shuffle) queue.shuffle();
+      queue.remove(songZero);
+      queue.insert(0, songZero);
+      currentSong = queue[0];
+      currentSongIndex = 0;
+      playCurrentSong();
+      notifyListeners();
+    } else {
+      queue = songs;
+      if (_shuffle) queue.shuffle();
+      currentSong = queue[0];
+      currentSongIndex = 0;
+      playCurrentSong();
+      notifyListeners();
+    }
+    prepareQueue(0);
+  }
+
+  void buildFromLibrary([Song songZero]) {
+    if (songZero != null) {
+      queue = library.songs;
+      if (_shuffle) queue.shuffle();
+      queue.remove(songZero);
+      queue.insert(0, songZero);
+      currentSong = queue[0];
+      currentSongIndex = 0;
+      playCurrentSong();
+      notifyListeners();
+    } else {
+      queue = library.songs;
+      if (_shuffle) queue.shuffle();
+      currentSong = queue[0];
+      currentSongIndex = 0;
+      playCurrentSong();
+      notifyListeners();
+    }
+    prepareQueue(0);
+  }
+
+  void playSingleSong(Song song) async {
+    if (!song.urlReady)
+      song.getActualURL().then((url) {
+        player.play(url);
+      });
+    else
+      print("shouldn't print");
   }
 
   void testBuild(List<Song> testingList) {
@@ -123,14 +203,28 @@ class Queue extends ChangeNotifier {
     state = PlayerState.PLAYING;
   }
 
-  void playMoreLikeThis(Song song) {
-    //TODO:implement when recommender server is up
-    notifyListeners();
+  void prepareQueue(int startAt) {
+    for (int i = startAt; i < 20; i++) {
+      if(i==queue.length)
+        return;
+      Song song = queue[i];
+      if (!(song.urlReady) && !(song.gettingURL)) {
+        song.gettingURL = true;
+        song.getActualURL().then((url) {
+          song.actualURL = url;
+          song.urlReady = true;
+          song.gettingURL = false;
+          if (_waitingForURL && (_waitingSongID == song.songID)) {
+            playCurrentSong();
+            _waitingForURL = false;
+          }
+        });
+      }
+    }
   }
 
-  void buildFromLibrary() {
-    queue = library.songs;
-    if (shuffle) queue.shuffle();
+  void playMoreLikeThis(Song song) {
+    //TODO:implement when recommender server is up
     notifyListeners();
   }
 
@@ -145,22 +239,22 @@ class Queue extends ChangeNotifier {
   }
 
   bool nextSong() {
-    if(!doneRepeatOnce){
+    if (!doneRepeatOnce) {
       doneRepeatOnce = true;
-      repeat = RepeatState.NONE;
+      _repeat = RepeatState.NONE;
     }
     if (currentSongIndex < (queue.length - 1)) {
       player.resume();
       player.stop();
       currentSongIndex++;
       currentSong = queue[currentSongIndex];
-      player.setUrl(currentSong.url);
       playCurrentSong();
+      if(currentSongIndex%20==0)
+        prepareQueue(currentSongIndex);
       return true;
     }
     notifyListeners();
     return false;
-
   }
 
   bool previousSong() {
@@ -169,7 +263,7 @@ class Queue extends ChangeNotifier {
       player.stop();
       currentSongIndex--;
       currentSong = queue[currentSongIndex];
-      player.play(currentSong.url);
+      playCurrentSong();
       notifyListeners();
       return true;
     }
@@ -177,12 +271,11 @@ class Queue extends ChangeNotifier {
     return false;
   }
 
-  void repeatOnce(bool repeat){
-    if(repeat){
-    queue.insert(1, currentSong);
-    doneRepeatOnce = false;
-    }
-    else
+  void repeatOnce(bool repeat) {
+    if (repeat) {
+      queue.insert(1, currentSong);
+      doneRepeatOnce = false;
+    } else
       queue.removeAt(1);
   }
 
@@ -192,10 +285,42 @@ class Queue extends ChangeNotifier {
     notifyListeners();
   }
 
-  void playCurrentSong() {
+  void resumeCurrentSong() {
     player.resume();
     state = PlayerState.PLAYING;
     notifyListeners();
+  }
+
+  void playCurrentSong() {
+    if (!currentSong.urlReady) {
+      this.state = PlayerState.LOADING;
+      this.duration = Duration(milliseconds: 0);
+      if (currentSong.gettingURL) {
+        
+        _waitingForURL = true;
+        _waitingSongID = currentSong.songID;
+      } 
+      else{
+        currentSong.gettingURL = true;
+        currentSong.getActualURL().then((url) {
+          AnsiPen pen = AnsiPen()..rgb(r: 1.0, g: 0, b: 0);
+          currentSong.urlReady = true;
+          currentSong.gettingURL = false;
+          currentSong.actualURL=url;
+          player.setUrl(url);
+          player.resume();
+          state = PlayerState.PLAYING;
+          this.notifyListeners();
+        });
+      }
+    } else {
+      AnsiPen pen = AnsiPen()..rgb(r: 1.0, g: 0, b: 0.1);
+     
+      player.setUrl(currentSong.actualURL);
+      player.resume();
+      state = PlayerState.PLAYING;
+      notifyListeners();
+    }
   }
 
   void clearQueue() {

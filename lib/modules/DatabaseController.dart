@@ -223,7 +223,7 @@ class DatabaseController {
       tempList = maps.sublist(0, tempLastIndex);
       tempPlaylist = Playlist(
         playlistId: maps.elementAt(0)["playlistId"],
-        PlaylistName: maps.elementAt(0)["PlaylistName"],
+        playlistName: maps.elementAt(0)["PlaylistName"],
         description: maps.elementAt(0)["description"],
         imageUrl: maps.elementAt(0)["imageUrl"],
       );

@@ -6,7 +6,7 @@ import 'DatabaseController.dart';
 
 class Artist extends User {
   //TODO: change count to function when connected to database;
-  final songsCount;
+  int songsCount;
 
   //TODO: replace it with getArtistAlbum()
   List<Album> albumsList;

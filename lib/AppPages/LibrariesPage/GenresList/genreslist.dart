@@ -2,7 +2,9 @@ import 'package:cadenza/AppPages/LibrariesPage/GenresList/genresgrid.dart';
 import 'package:cadenza/AppPages/LibrariesPage/searchbar.dart';
 import 'package:cadenza/AppPages/LibrariesPage/toprow.dart';
 import 'package:cadenza/modules/genre.dart';
+import 'package:cadenza/modules/library.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../../SizeConfig.dart';
 
@@ -75,7 +77,12 @@ class GenresList extends StatefulWidget {
 
 class _GenresListState extends State<GenresList> {
   ScrollController _scrollController;
-
+  String pattern = "";
+  searchThroughGenres(String pattern) {
+    setState(() {
+      this.pattern = pattern;
+    });
+  }
   @override
   void initState() {
     super.initState();
@@ -89,23 +96,58 @@ class _GenresListState extends State<GenresList> {
 
   @override
   Widget build(BuildContext context) {
-    SearchBar _searchBar = SearchBar();
+    bool genresReady = Provider.of<Library>(context, listen: false).genresReady;
+    if (genresReady) {
+      SearchBar _searchBar = SearchBar(
+        search: searchThroughGenres,
+      );
 
-    TopRow _topRow = TopRow(
-      goBack: goBack,
-    );
+      TopRow _topRow = TopRow(
+        goBack: goBack,
+      );
 
-    GenresGrid _grid = GenresGrid(
-      items: genreExamples,
-    );
+      GenresGrid _grid = GenresGrid(
+        items: Provider.of<Library>(context).genres.where((g)=>g.genreName.contains(pattern)).toList(),
+      );
 
-    return CustomScrollView(
-      controller: _scrollController,
-      slivers: <Widget>[
-        _searchBar,
-        SliverToBoxAdapter(child: _topRow),
-        _grid,
-      ],
+      return CustomScrollView(
+        controller: _scrollController,
+        slivers: <Widget>[
+          _searchBar,
+          SliverToBoxAdapter(child: _topRow),
+          _grid,
+        ],
+      );
+    }
+    return FutureBuilder(
+      future: Provider.of<Library>(context, listen: false).fetchGenres(),
+      builder: (con, finishedFetching) {
+        if (finishedFetching.connectionState == ConnectionState.waiting ||
+            finishedFetching.hasError)
+          return Center(child: CircularProgressIndicator());
+        else {
+          SearchBar _searchBar = SearchBar(
+            search: searchThroughGenres,
+          );
+
+          TopRow _topRow = TopRow(
+            goBack: goBack,
+          );
+
+          GenresGrid _grid = GenresGrid(
+            items: Provider.of<Library>(context).genres.where((g)=>g.genreName.contains(pattern)).toList(),
+          );
+
+          return CustomScrollView(
+            controller: _scrollController,
+            slivers: <Widget>[
+              _searchBar,
+              SliverToBoxAdapter(child: _topRow),
+              _grid,
+            ],
+          );
+        }
+      },
     );
   }
 }

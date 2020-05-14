@@ -1,7 +1,10 @@
 import 'dart:ui';
 
+import 'package:ansicolor/ansicolor.dart';
 import 'package:cadenza/SizeConfig.dart';
 import 'package:cadenza/modules/queue.dart';
+import 'package:cadenza/modules/song.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -15,36 +18,21 @@ String timestampFormat(Duration d) {
   return "$minutes:$seconds";
 }
 
-class MusicPlayer extends StatefulWidget {
-  final double musicDuration = 100;
-
-  @override
-  _MusicPlayerState createState() => _MusicPlayerState();
-}
-
-class _MusicPlayerState extends State<MusicPlayer> {
-  double timestamp = 0;
-  final SizeConfig _sizeConfig = SizeConfig();
-
+class MusicPlayer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    print(SizeConfig.screenHeight);
-    IconData repeatIcon;
-    RepeatState repeatState = Provider.of<Queue>(context).repeat;
-    if (repeatState == RepeatState.LOOP || repeatState == RepeatState.NONE)
-      repeatIcon = Icons.repeat;
-    else
-      repeatIcon = Icons.repeat_one;
+    // AnsiPen pen = AnsiPen()..rgb(r: 1.0, g: 0, b: 0);
+    // print(pen("rebuilt music player"));
     return SafeArea(
       child: Container(
         margin: EdgeInsets.only(
             // top: 10,
             ),
-        child: Consumer<Queue>(
-          builder: (con, queue, child) => Column(
+        child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              Row(
+              Selector<Queue,Song>(
+                builder: (con,song,child)=>Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
@@ -85,12 +73,17 @@ class _MusicPlayerState extends State<MusicPlayer> {
                   ),
                 ],
               ),
-              SizedBox(height: SizeConfig.blockSizeVertical * 3,),
-              Column(
+                selector: (con,queue)=>queue.currentSong,
+              ),
+              SizedBox(
+                height: SizeConfig.blockSizeVertical * 3,
+              ),
+              Selector<Queue,Song>(
+                builder: (con,song,child)=>Column(
                 children: <Widget>[
                   Container(
-                    height: SizeConfig.blockSizeVertical*40,
-                    width: SizeConfig.blockSizeVertical*40,
+                    height: SizeConfig.blockSizeVertical * 40,
+                    width: SizeConfig.blockSizeVertical * 40,
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
                         boxShadow: [
@@ -103,36 +96,46 @@ class _MusicPlayerState extends State<MusicPlayer> {
                       borderRadius: BorderRadius.circular(10),
                       child: Hero(
                         tag: "Music player",
-                        //TODO: change to network image when database is connected
-                        child: Image.asset(
-                          queue.currentSong.album.albumArtImageUrl,
-                          width: MediaQuery.of(context).size.width,
-                          height: MediaQuery.of(context).size.width,
-                          fit: BoxFit.cover,
+                        child: FutureBuilder<dynamic>(
+                          future: FirebaseStorage.instance
+                              .ref()
+                              .child(song.albumArtURL)
+                              .getDownloadURL(),
+                          builder: (context, url) {
+                            if (url.connectionState ==
+                                    ConnectionState.waiting ||
+                                url.hasError)
+                              return Image.asset(
+                                "assets/AlbumImages/noart.png",
+                                width: MediaQuery.of(context).size.width,
+                                height: MediaQuery.of(context).size.width,
+                                fit: BoxFit.cover,
+                              );
+                            return Image.network(
+                              url.data,
+                              width: MediaQuery.of(context).size.width,
+                              height: MediaQuery.of(context).size.width,
+                              fit: BoxFit.cover,
+                            );
+                          },
                         ),
-                        // child: Image(
-                        //   width: MediaQuery.of(context).size.width,
-                        //   height: MediaQuery.of(context).size.width,
-                        //   image: NetworkImage(
-                        //     "https://images-na.ssl-images-amazon.com/images/I/91zZQ3p3HEL._SL1500_.jpg",
-                        //   ),
-                        //   fit: BoxFit.cover,
-                        // ),
                       ),
                     ),
                   ),
-                  SizedBox(height: SizeConfig.blockSizeVertical*1.24),
+                  SizedBox(height: SizeConfig.blockSizeVertical * 1.24),
                   Text(
-                    queue.currentSong.name,
+                   (song.name.length <= 15)
+                              ? song.name
+                              : '${song.name.substring(0, 15)}...',
                     style: TextStyle(
                         height: 1,
                         color: Color(0XFF1D3557),
-                        fontSize: 35,
+                        fontSize: 30,
                         fontWeight: FontWeight.w600,
                         letterSpacing: 0.6),
                   ),
                   Text(
-                    queue.currentSong.album.albumName,
+                    song.albumTitle,
                     style: TextStyle(
                         color: Color(0XFF1D3557),
                         fontSize: 20,
@@ -141,33 +144,51 @@ class _MusicPlayerState extends State<MusicPlayer> {
                   ),
                 ],
               ),
-              Container(
-                margin: EdgeInsets.symmetric(vertical: SizeConfig.blockSizeVertical*3.5, horizontal: 10),
+                selector: (con,queue)=>queue.currentSong,
+              ),
+              Consumer<Queue>(
+                builder: (con,queue,child)=>Container(
+                margin: EdgeInsets.symmetric(
+                    vertical: SizeConfig.blockSizeVertical * 3.5,
+                    horizontal: 10),
                 child: Column(
                   children: <Widget>[
-                    Slider(
-                      value: (queue.position.inMilliseconds<queue.duration.inMilliseconds)?queue.position.inMilliseconds.toDouble():0,
-                      onChanged: (double value) {
-                        print("value is $value");
-                        // setState(() {
-                        //   timestamp=value;
-                        // });
-                        setState(() {
-                          queue.player
-                              .seek(Duration(milliseconds: value.round()));
-                        });
-                      },
-                      min: 0.0,
-                      max: queue.duration?.inMilliseconds?.toDouble() ?? 100,
-                      inactiveColor: Color(0x5F1D3557),
-                      activeColor: Color(0XFFE63946),
-                    ),
+                    StreamBuilder<Duration>(
+                        initialData: Duration(milliseconds: 0),
+                        stream: queue.positionStream,
+                        builder: (con, p) {
+                          if (p.hasError) {
+                            AnsiPen pen = AnsiPen()..rgb(r: 1.0, g: 0, b: 1.0);
+                            print(
+                                pen("position stream has an error ${p.error}"));
+                          }
+                          return Slider(
+
+                            value: (p.data != null &&
+                                    p.data.inMilliseconds <
+                                        queue.duration.inMilliseconds)
+                                ? p.data.inMilliseconds.toDouble()
+                                : 0,
+                            onChanged: (double value) {
+                              queue.player
+                                  .seek(Duration(milliseconds: value.round()));
+                            },
+                            min: 0.0,
+                            max: queue.duration?.inMilliseconds?.toDouble() ??
+                                100,
+                            inactiveColor: Color(0x5F1D3557),
+                            activeColor: Color(0XFFE63946),
+                          );
+                        }),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 15),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
-                          Text(timestampFormat(queue.position)),
+                          StreamBuilder(
+                              stream: queue.positionStream,
+                              builder: (con, p) => Text(timestampFormat(
+                                  (p.data!=null && queue.state != PlayerState.LOADING) ?p.data :Duration(milliseconds: 0)))),
                           Text(timestampFormat(queue.duration)),
                         ],
                       ),
@@ -180,13 +201,11 @@ class _MusicPlayerState extends State<MusicPlayer> {
                             Icons.shuffle,
                           ),
                           onPressed: () {
-                            setState(() {
-                              if (queue.shuffle == true) {
-                                queue.shuffle = false;
-                              } else {
-                                queue.shuffle = true;
-                              }
-                            });
+                            if (queue.shuffle == true) {
+                              queue.shuffle = false;
+                            } else {
+                              queue.shuffle = true;
+                            }
                           },
                           color: queue.shuffle
                               ? const Color(0XFFE63946)
@@ -228,7 +247,7 @@ class _MusicPlayerState extends State<MusicPlayer> {
                                 elevation: 0,
                                 onPressed: () {
                                   if (queue.state == PlayerState.PAUSED)
-                                    queue.playCurrentSong();
+                                    queue.resumeCurrentSong();
                                   else if (queue.state == PlayerState.PLAYING)
                                     queue.pauseCurrentSong();
                                 },
@@ -249,22 +268,20 @@ class _MusicPlayerState extends State<MusicPlayer> {
                         ),
                         IconButton(
                           icon: Icon(
-                            repeatIcon,
+                            (queue.repeat == RepeatState.LOOP || queue.repeat == RepeatState.NONE)?Icons.repeat:Icons.repeat_one
                           ),
                           onPressed: () {
-                            setState(() {
-                              if (repeatState == RepeatState.NONE) {
-                                queue.repeat = RepeatState.ONCE;
-                                queue.repeatOnce(true);
-                              } else if (repeatState == RepeatState.ONCE) {
-                                queue.repeat = RepeatState.LOOP;
-                                queue.repeatOnce(false);
-                              } else
-                                queue.repeat = RepeatState.NONE;
-                            });
+                            if (queue.repeat == RepeatState.NONE) {
+                              queue.repeat = RepeatState.ONCE;
+                              queue.repeatOnce(true);
+                            } else if (queue.repeat== RepeatState.ONCE) {
+                              queue.repeat = RepeatState.LOOP;
+                              queue.repeatOnce(false);
+                            } else
+                              queue.repeat = RepeatState.NONE;
                           },
-                          color: (repeatState == RepeatState.ONCE ||
-                                  repeatState == RepeatState.LOOP)
+                          color: (queue.repeat == RepeatState.ONCE ||
+                                  queue.repeat == RepeatState.LOOP)
                               ? const Color(0XFFE63946)
                               : const Color(0XCC1D3557),
                         ),
@@ -273,10 +290,12 @@ class _MusicPlayerState extends State<MusicPlayer> {
                   ],
                 ),
               ),
+              ),
             ],
           ),
-        ),
+        
       ),
     );
   }
 }
+

@@ -1,15 +1,23 @@
+import 'package:ansicolor/ansicolor.dart';
 import 'package:cadenza/AppPages/MusicPlayer/MusicPlayer.dart';
 import 'package:cadenza/AppPages/Home/homepage.dart';
 import 'package:cadenza/AppPages/LibrariesPage/library.dart';
+import 'package:cadenza/AppPages/MusicPlayer/miniplayer.dart';
+import 'package:cadenza/AppPages/Playlist/playlist.dart';
 import 'package:cadenza/modules/Album.dart';
 import 'package:cadenza/modules/artist.dart';
+import 'package:cadenza/modules/charts.dart';
+import 'package:cadenza/modules/playlist.dart';
 import 'package:cadenza/modules/queue.dart';
 import 'package:cadenza/modules/song.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'Charts/chart.dart';
 import 'Profile/Profile.dart';
 import 'Search/Search.dart';
 import 'justfortest.dart';
+import 'package:cadenza/AppPages/Album/Album.dart';
 
 final List<Album> exampleAlbums = [
   Album(
@@ -28,6 +36,28 @@ final List<Album> exampleAlbums = [
     artist: Artist(username: "Donna"),
   ),
 ];
+final List<Song> songExamples = [
+  OnlineSong(
+    album: exampleAlbums[1],
+    artist: exampleAlbums[1].artist,
+    name: "Piano Man",
+    url:
+        "https://file-examples.com/wp-content/uploads/2017/11/file_example_MP3_5MG.mp3",
+  ),
+  OnlineSong(
+      album: exampleAlbums[2],
+      artist: exampleAlbums[2].artist,
+      name: "Mala Fama",
+      url:
+          "https://file-examples.com/wp-content/uploads/2017/11/file_example_MP3_5MG.mp3"),
+  OnlineSong(
+    album: exampleAlbums[0],
+    artist: exampleAlbums[0].artist,
+    name: "Super Trooper",
+    url:
+        "https://file-examples.com/wp-content/uploads/2017/11/file_example_MP3_5MG.mp3",
+  ),
+];
 
 class HomePage extends StatefulWidget {
   HomePage({Key key}) : super(key: key);
@@ -38,21 +68,89 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int _selectedIndex = 0;
+  List<Widget> _widgetOptions;
+  HomePageWidget homePageWidget;
+  bool showingAlbum = false;
+  Album albumShowing;
+  bool showingCharts = false;
+  Charts chartsShowing;
+  bool showingPlaylist = false;
+  Playlist playlistShowing;
+
+  showAlbumCallback(Album album) {
+    setState(() {
+      showingAlbum = true;
+      albumShowing = album;
+    });
+  }
+
+  hideAlbumCallback() {
+    setState(() {
+      showingAlbum = false;
+    });
+  }
+
+  showChartsCallback(Charts charts) {
+    setState(() {
+      chartsShowing = charts;
+      showingCharts = true;
+    });
+  }
+
+  hideChartsCallback() {
+    setState(() {
+      showingCharts = false;
+    });
+  }
+
+  showPlaylistCallback(Playlist playlist) {
+    setState(() {
+      showingPlaylist = true;
+      playlistShowing = playlist;
+    });
+  }
+
+  hidePlaylistCallback() {
+    setState(() {
+      showingPlaylist = false;
+    });
+  }
+  @override
+  void initState() {
+    super.initState();
+    _widgetOptions = [
+      HomePageWidget(
+        showAlbum: showAlbumCallback,
+        showCharts: showChartsCallback,
+      ),
+      Search(),
+      Library(
+        showAlbum: showAlbumCallback,
+        showPlaylist: showPlaylistCallback,
+      ),
+      ProfilePage(),
+      // JustForTest(),
+      PlaylistWidget(hidePlaylist: hidePlaylistCallback,)
+    ];
+  }
+
   static const TextStyle optionStyle = TextStyle(
     fontSize: 30,
     fontWeight: FontWeight.bold,
   );
-  final List<Widget> _widgetOptions = <Widget>[
-    HomePageWidget(),
-    Search(),
-    Library(),
-    ProfilePage(),
-    JustForTest(),
-  ];
+  // final List<Widget> _widgetOptions = <Widget>[
+  //   homePageWidget,
+  //   Search(),
+  //   Library(),
+  //   ProfilePage(),
+  //   JustForTest(),
+  // ];
 
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
+      showingAlbum = false;
+      showingCharts = false;
     });
   }
 
@@ -60,14 +158,25 @@ class _HomePageState extends State<HomePage> {
   bool queueEmpty;
 
   @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    
-    queueEmpty = Provider.of<Queue>(context, listen: false).queue.isEmpty;
+    Widget widgetShowing;
+    if (showingAlbum)
+      widgetShowing = AlbumWidget(
+        album: albumShowing,
+        hideAlbum: hideAlbumCallback,
+      );
+    else if (showingCharts)
+      widgetShowing = ChartsWidget(
+        hideCharts: hideChartsCallback,
+        charts: chartsShowing,
+      );
+    else if (showingPlaylist)
+      widgetShowing = PlaylistWidget(
+        hidePlaylist:hidePlaylistCallback,
+        playlist: playlistShowing,
+      );
+    else
+      widgetShowing = _widgetOptions.elementAt(_selectedIndex);
     return Scaffold(
       body: Stack(
         alignment: AlignmentDirectional.bottomCenter,
@@ -75,111 +184,12 @@ class _HomePageState extends State<HomePage> {
           Container(
             height: MediaQuery.of(context).size.height,
             child: SafeArea(
-              child: _widgetOptions.elementAt(_selectedIndex),
+              child: widgetShowing,
             ),
           ),
-          queueEmpty
-              ? Center()
-              : GestureDetector(
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: Color(0XFF1D3557),
-                      borderRadius: BorderRadius.all(Radius.circular(10)),
-                    ),
-                    height: 65,
-                    width: MediaQuery.of(context).size.width,
-                    margin: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-                    padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                    child: Consumer<Queue>(
-                      builder: (context, queue, child) => Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: <Widget>[
-                          Row(
-                            children: <Widget>[
-                              ClipOval(
-                                child: InkWell(
-                                  onTap: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (_) => Scaffold(
-                                          body: MusicPlayer(),
-                                        ),
-                                      ),
-                                    );
-                                  },
-                                  child: Hero(
-                                    tag: "Music player",
-                                    transitionOnUserGestures: true,
-                                    child: Image.asset(
-                                      queue.currentSong.album.albumArtImageUrl,
-                                      fit: BoxFit.cover,
-                                      height: 50,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              SizedBox(width: 10),
-                              Column(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: <Widget>[
-                                  Expanded(
-                                    child: Text(
-                                      queue.currentSong.name,
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w600,
-                                        letterSpacing: 0.6,
-                                      ),
-                                    ),
-                                  ),
-                                  Expanded(
-                                    child: Text(
-                                      queue.currentSong.album.albumName,
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w400,
-                                        letterSpacing: 0.4,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ],
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          ),
-                          ClipOval(
-                            child: Material(
-                              color: Colors.transparent,
-                              child: InkWell(
-                                child: Icon(
-                                  queue.state == PlayerState.PAUSED
-                                      ? Icons.play_arrow
-                                      : Icons.pause,
-                                  color: Colors.white,
-                                  size: 30,
-                                ),
-                                onTap: () {
-                                  print(queue.state);
-                                  if (queue.state == PlayerState.PLAYING)
-                                    queue.pauseCurrentSong();
-                                  else if (queue.state == PlayerState.PAUSED)
-                                    queue.playCurrentSong();
-                                },
-                              ),
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
+          MiniPlayer(),
         ],
+              
       ),
       bottomNavigationBar: Builder(
         builder: (context2) => BottomNavigationBar(
