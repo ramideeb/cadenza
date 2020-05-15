@@ -12,7 +12,7 @@ class FullWidthViewSong extends StatelessWidget {
         Row(children: <Widget>[ Padding(
             padding: const EdgeInsets.fromLTRB(8, 0, 8.0, 0),
             child: Text(
-              "1",
+              " ",
               style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 25,
