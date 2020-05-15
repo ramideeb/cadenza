@@ -207,11 +207,7 @@ class _HomePageState extends State<HomePage> {
             BottomNavigationBarItem(
               icon: Icon(Icons.account_circle),
               title: Text('PROFILE'),
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.delete),
-              title: Text('testing'),
-            ),
+            )
           ],
           currentIndex: _selectedIndex,
           selectedItemColor: Color.fromRGBO(230, 57, 70, 1),
