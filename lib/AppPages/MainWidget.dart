@@ -130,7 +130,7 @@ class _HomePageState extends State<HomePage> {
       ),
       ProfilePage(),
       // JustForTest(),
-      PlaylistWidget(hidePlaylist: hidePlaylistCallback,)
+      // PlaylistWidget(hidePlaylist: hidePlaylistCallback,)
     ];
   }
 
@@ -208,10 +208,10 @@ class _HomePageState extends State<HomePage> {
               icon: Icon(Icons.account_circle),
               title: Text('PROFILE'),
             ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.delete),
-              title: Text('testing'),
-            ),
+            // BottomNavigationBarItem(
+            //   icon: Icon(Icons.delete),
+            //   title: Text('testing'),
+            // ),
           ],
           currentIndex: _selectedIndex,
           selectedItemColor: Color.fromRGBO(230, 57, 70, 1),
