@@ -51,7 +51,7 @@ class AlbumArtWidget extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             SizedBox(
-              height: SizeConfig.blockSizeVertical * 20,
+              height: SizeConfig.blockSizeVertical * 19,
               width: SizeConfig.blockSizeVertical * 20,
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(14),
