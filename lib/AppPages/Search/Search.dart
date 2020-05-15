@@ -1,5 +1,12 @@
+import 'package:cadenza/AppPages/Home/albumartwidget.dart';
+import 'package:cadenza/AppPages/LibrariesPage/SongsList/songitem.dart';
 import 'package:cadenza/AppPages/PublicWidgets/FullWidthViewSong.dart';
+import 'package:cadenza/modules/Album.dart';
+import 'package:cadenza/modules/library.dart';
+import 'package:cadenza/modules/song.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'DiscoveryWidget.dart';
 
 class Search extends StatefulWidget {
@@ -43,7 +50,10 @@ class _SearchState extends State<Search> {
     "Heaven",
     "Saturda y Nights",
   ];
-
+  List<Song> foundSongs = [];
+  bool foundSongsFlag = false;
+  List<Album> foundAlbums = [];
+  bool foundAlbumsFlag = false;
   void initState() {
     super.initState();
     widget.controllerSearchBar = TextEditingController();
@@ -67,47 +77,15 @@ class _SearchState extends State<Search> {
     });
   }
 
-  //TODO: no need for it can delete it
-  TextField searchBar = TextField(
-    enabled: false,
-//    controller: _controller,
-    textInputAction: TextInputAction.next,
-    onSubmitted: (String value) async {},
-
-    decoration: InputDecoration(
-      hintText: "Search for songs, ..",
-      filled: true,
-      fillColor: Colors.grey[200],
-      disabledBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.all(Radius.circular(100.0)),
-        borderSide: BorderSide(color: Color(00000000)),
-      ),
-      enabledBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.all(Radius.circular(100.0)),
-        borderSide: BorderSide(color: Color(00000000)),
-      ),
-      focusedBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.all(Radius.circular(100.0)),
-        borderSide: BorderSide(color: Color(00000000)),
-      ),
-      prefixIcon: Icon(Icons.search),
-      enabled: true,
-    ),
-    onChanged: (String value) {
-//      setState(() {
-      if (value.length == 0)
-        _searching = false;
-      else {
-        _searching = true;
-        //TODO: should search based on the album, song name, ect
-      }
-//      });
-//      print(_searching);
-    },
-  );
-
   @override
   Widget build(BuildContext context) {
+    List<Song> librarySongs =
+        Provider.of<Library>(context, listen: false).songs;
+    bool fetchedAlbums =
+        Provider.of<Library>(context, listen: false).albumsReady;
+    List<Album> libraryAlbums = [];
+    if (fetchedAlbums)
+      libraryAlbums = Provider.of<Library>(context, listen: false).albums;
     return Container(
       child: SingleChildScrollView(
         child: Column(
@@ -154,11 +132,25 @@ class _SearchState extends State<Search> {
             Padding(
               padding: EdgeInsets.symmetric(
                   horizontal: MediaQuery.of(context).size.width * 0.025),
-              child:
-              TextField(
+              child: TextField(
                 controller: widget.controller,
                 textInputAction: TextInputAction.next,
-                onSubmitted: (String value) async {},
+                onSubmitted: (String value) {
+                  setState(() {
+                    foundAlbumsFlag = false;
+                    foundSongsFlag = false;
+                  });
+                  foundSongs = librarySongs
+                      .where((song) => song.name.contains(value))
+                      .toList();
+                  foundAlbums = libraryAlbums
+                      .where((album) => album.albumName.contains(value))
+                      .toList();
+                  setState(() {
+                    foundAlbumsFlag = true;
+                    foundSongsFlag = true;
+                  });
+                },
                 decoration: InputDecoration(
                   hintText: "Search for songs, ..",
                   filled: true,
@@ -187,15 +179,36 @@ class _SearchState extends State<Search> {
               crossFadeState: _searching
                   ? CrossFadeState.showFirst
                   : CrossFadeState.showSecond,
-              firstChild: Padding(
-                padding: const EdgeInsets.fromLTRB(8, 10, 8, 0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: litems.asMap().entries.map((MapEntry map) {
-                    return Column(children: [FullWidthViewSong(), Divider()]);
-                  }).toList(),
-                ),
-              ),
+              firstChild: foundSongsFlag && foundAlbumsFlag
+                  ? Padding(
+                      padding: const EdgeInsets.fromLTRB(8, 10, 8, 0),
+                      child: Column(
+                        children: <Widget>[
+                          ListView.builder(
+                            shrinkWrap: true,
+                            itemCount: foundSongs.length,
+                            itemBuilder: (con, i) {
+                              return SongItem(
+                                song: foundSongs[i],
+                                play: null,
+                              );
+                            },
+                          ),
+                          GridView.builder(
+                            shrinkWrap: true,
+                            gridDelegate:
+                                SliverGridDelegateWithFixedCrossAxisCount(
+                                    crossAxisCount: 2),
+                            itemBuilder: (con, i) {
+                              return AlbumArtWidget(
+                                album: foundAlbums[i],
+                              );
+                            },
+                            itemCount: foundAlbums.length,
+                          )
+                        ],
+                      ))
+                  : Center(child: CircularProgressIndicator()),
               secondChild: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
@@ -226,23 +239,6 @@ class _SearchState extends State<Search> {
                   Padding(
                     padding: const EdgeInsets.all(10.0),
                     child: Text(
-                      "Trending",
-                      style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 19),
-                    ),
-                  ),
-                  SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        //TODO: from HomePageForRealz branch
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: Text(
                       "Genres and moods",
                       style:
                           TextStyle(fontWeight: FontWeight.bold, fontSize: 19),
@@ -251,6 +247,23 @@ class _SearchState extends State<Search> {
                   Container(
                     alignment: Alignment(0, 0),
                     width: MediaQuery.of(context).size.width,
+                    // child: FutureBuilder(
+                    //   future: Firestore.instance
+                    //       .collection("genres")
+                    //       .getDocuments(),
+                    //   builder: (con, snapshot) {
+                    //     if (snapshot.connectionState ==
+                    //             ConnectionState.waiting ||
+                    //         snapshot.hasError) return Center();
+                    //     return ListView.builder(
+                    //       shrinkWrap: true,
+                    //       itemBuilder: (con, i) => Discovery(
+                    //         title: snapshot.data.documents[i].data["name"],
+                    //       ),
+                    //       itemCount: snapshot.data.documents.length,
+                    //     );
+                    //   },
+                    // ),
                     child: Wrap(
                       spacing: 10.0, // gap between adjacent chips
                       runSpacing: 10.0, // gap between lines
