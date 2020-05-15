@@ -139,15 +139,29 @@ class Library extends ChangeNotifier {
             " Enjoy the best music done by artists who are beyond amazing",
       ),
     ];
-    for(int i = 0;i<50;i++){
-      this.playlists[i%4].playlistSongs.add(this.songs[i]);
+    for (int i = 0; i < 50; i++) {
+      if (this.songs.length == i) break;
+      this.playlists[i % 4].playlistSongs.add(this.songs[i]);
     }
     this.playlistsReady = true;
     return Future.delayed(Duration(microseconds: 400));
   }
 
-  void addPlaylist(Playlist newPlaylist){
+  void addPlaylist(Playlist newPlaylist) {
     this.playlists.add(newPlaylist);
     notifyListeners();
+  }
+
+  void disposeLibrary() {
+    songs = [];
+    songsReady = false;
+    genres = [];
+    genresReady = false;
+    albums = [];
+    albumsReady = false;
+    artists = [];
+    artistsReady = false;
+    playlists = [];
+    playlistsReady = false;
   }
 }
