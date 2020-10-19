@@ -1,16 +1,11 @@
 ![UI](/i.PNG)
-Format: ![Alt Text](url)
-# music_streaming_app
 
-A new Flutter project.
+# Under Development Music Streamin App 
+UI Design of the proeject atached above .
 
-# music_streaming_app
-
-The UI/UX Design of our proeject is in repository files
 ## Getting Started
 
 This project is a starting point for a Flutter application.
-
 A few resources to get you started if this is your first Flutter project:
 
 - [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
