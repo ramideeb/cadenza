@@ -1,6 +1,6 @@
 ![UI](/i.PNG)
 
-# Under Development Music Streamin App 
+# Under Development Music Streaming App 
 UI Design of the proeject atached above .
 
 ## Getting Started
