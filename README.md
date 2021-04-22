@@ -24,8 +24,8 @@ Password: cadenza123
 
 Explore page shows the user music to explore
 
-<img src="/Cadenza_screenshots/explore1.png">
-<img src="/Cadenza_screenshots/explore2.png">
+<img src="/Cadenza_screenshots/explore1.PNG">
+<img src="/Cadenza_screenshots/explore2.PNG">
 
 
 
