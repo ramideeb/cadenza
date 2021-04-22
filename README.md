@@ -24,8 +24,23 @@ Password: cadenza123
 
 Explore page shows the user music to explore
 
-<img src="/Cadenza_screenshots/explore1.PNG">
-<img src="/Cadenza_screenshots/explore2.PNG">
+<img src="/Cadenza_screenshots/explore1.PNG" width = "200">
+<img src="/Cadenza_screenshots/explore2.PNG" width = "200">
+
+---
 
 
+# Library
+
+Library page is where the user has their stored music
+
+<img src="/Cadenza_screenshots/library1.PNG" width = "200">
+<img src="/Cadenza_screenshots/library2.PNG" width = "200">
+
+---
+
+
+# Music Player
+
+<img src="/Cadenza_screenshots/player.PNG" width = "200">
 
