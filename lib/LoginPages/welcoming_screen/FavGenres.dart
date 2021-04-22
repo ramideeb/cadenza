@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-
 import 'grid.dart';
 
 class Item {
@@ -16,9 +15,16 @@ class FavGenres extends StatefulWidget {
 }
 
 class _FavGenresState extends State<FavGenres> {
-  List<Item> itemList=List();
-  List<Item> selectedList= List();
-  List<Item> itemList2=List();
+  List<Item> itemList = List();
+  List<Item> selectedList = List();
+  List<Item> itemList2 = List();
+  bool disposed = false;
+
+  @override
+  void dispose() {
+    disposed = true;
+    super.dispose();
+  }
 
   void initState() {
     loadList();
@@ -26,58 +32,47 @@ class _FavGenresState extends State<FavGenres> {
   }
 
   Future<void> loadList() async {
-
     await Firestore.instance
         .collection("genres")
         .getDocuments()
         .then((snapshot) {
-          itemList2.removeRange(0, itemList.length);
+      itemList2.removeRange(0, itemList.length);
 
       snapshot.documents.forEach((genre) async {
         itemList2.add(Item(genre.data['name']));
       });
     });
-
-    setState(() {
-      itemList=itemList2;
-    });
-
+    if (!disposed) {
+      setState(() {
+        itemList = itemList2;
+      });
+    }
   }
-
 
   @override
   Widget build(BuildContext context) {
     loadList();
     return SafeArea(
-      
       child: Scaffold(
-
-       floatingActionButton: FloatingActionButton(
-            onPressed: () async {
-
-
+        floatingActionButton: FloatingActionButton(
+          onPressed: () async {
             Map<String, bool> map = {};
-            selectedList.forEach((f){ map[f.name]=true; });
-          
+            selectedList.forEach((f) {
+              map[f.name] = true;
+            });
+
             final FirebaseAuth _auth = FirebaseAuth.instance;
-              FirebaseUser user = await _auth.currentUser();
+            FirebaseUser user = await _auth.currentUser();
 
-  
-
-                  await Firestore.instance
-        .collection("users")
-        .document(user.uid.toString())
-        .updateData({
-          'favoriteGenres':map
-
-    });
-    Navigator.of(context).popUntil((route) => route.isFirst);
-
-
-            },
-            child: Icon(Icons.done),
-            backgroundColor: Color.fromRGBO(230, 57, 70, 1),
-          ),
+            await Firestore.instance
+                .collection("users")
+                .document(user.uid.toString())
+                .updateData({'favoriteGenres': map});
+            Navigator.of(context).popUntil((route) => route.isFirst);
+          },
+          child: Icon(Icons.done),
+          backgroundColor: Color.fromRGBO(230, 57, 70, 1),
+        ),
         body: Padding(
           padding: const EdgeInsets.all(20.0),
           child: GridView.builder(

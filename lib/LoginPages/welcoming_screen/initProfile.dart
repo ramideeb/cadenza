@@ -18,7 +18,7 @@ class _initProfileState extends State<initProfile> {
   String username;
   String firstname;
   String lastname;
-
+  bool disposed = false;
   bool loadedFirst = false;
   File image_file;
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -32,6 +32,12 @@ class _initProfileState extends State<initProfile> {
   String inputref = "";
   FirebaseUser user;
 
+  @override
+  void dispose() {
+    disposed = true;
+    super.dispose();
+  }
+
   Future<void> inputData() async {
     this.user = await _auth.currentUser();
 
@@ -40,9 +46,10 @@ class _initProfileState extends State<initProfile> {
         .document(user.uid.toString())
         .get()
         .then((onValue) {
-      setState(() {
-        inputref = onValue.data['profilePictureURL'];
-      });
+      if (!disposed)
+        setState(() {
+          inputref = onValue.data['profilePictureURL'];
+        });
     });
 
     // here you write the codes to input the data into firestore
@@ -61,11 +68,10 @@ class _initProfileState extends State<initProfile> {
         .updateData({
       'profilePictureURL': '/profile_pictures/${x}.png',
     });
-
-setState(() async{
-    await inputData();
-});
-  
+    if (!disposed)
+      setState(() async {
+        await inputData();
+      });
   }
 
   @override
@@ -92,155 +98,150 @@ setState(() async{
       });
     }
 
-   return SafeArea(
-        child: Scaffold(
-          floatingActionButton: FloatingActionButton(
-            onPressed: () async {
-              if (_formKey.currentState.validate()) {
-                     await Firestore.instance
-        .collection("users")
-        .document(this.user.uid.toString())
-        .updateData({
-      'firstName':firstname,
-      'lastName':lastname,
-      'username':username
-    });
-
-                
+    return SafeArea(
+      child: Scaffold(
+        floatingActionButton: FloatingActionButton(
+          onPressed: () async {
+            if (_formKey.currentState.validate()) {
+              await Firestore.instance
+                  .collection("users")
+                  .document(this.user.uid.toString())
+                  .updateData({
+                'firstName': firstname,
+                'lastName': lastname,
+                'username': username
+              });
 
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => FavGenres()),
               );
-              }
-            },
-            child: Icon(Icons.keyboard_arrow_right),
-            backgroundColor: Color.fromRGBO(230, 57, 70, 1),
-          ),
-          body: SingleChildScrollView(
-                      child: Form(
-              key:_formKey,
-                      child: Center(
-                child: Column(
-                  children: <Widget>[
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: <Widget>[
-                        Align(
-                          alignment: Alignment.topRight,
-                          child: Image.asset(
-                            'assets/qshape.png',
-                            fit: BoxFit.contain,
-                            width: MediaQuery.of(context).size.width * 0.5,
-                          ),
-                        )
-                      ],
-                    ),
-                    SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.01,
-                    ),
-                    InkWell(
-                      onTap: () {
-                        _pickImage();
+            }
+          },
+          child: Icon(Icons.keyboard_arrow_right),
+          backgroundColor: Color.fromRGBO(230, 57, 70, 1),
+        ),
+        body: SingleChildScrollView(
+          child: Form(
+            key: _formKey,
+            child: Center(
+              child: Column(
+                children: <Widget>[
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: <Widget>[
+                      Align(
+                        alignment: Alignment.topRight,
+                        child: Image.asset(
+                          'assets/qshape.png',
+                          fit: BoxFit.contain,
+                          width: MediaQuery.of(context).size.width * 0.5,
+                        ),
+                      )
+                    ],
+                  ),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.01,
+                  ),
+                  InkWell(
+                    onTap: () {
+                      _pickImage();
+                    },
+                    child: CircleAvatar(
+                        radius: 75, backgroundImage: firstImage.image),
+                  ),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.05,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(18.0),
+                    child: TextFormField(
+//                controller: _usernameController,
+                      textInputAction: TextInputAction.next,
+                      validator: (val) {
+                        if (val.length > 4) {
+                          return null;
+                        } else {
+                          return "too short username";
+                        }
                       },
-                      child:
-                          CircleAvatar(radius: 75, backgroundImage: firstImage.image),
-                    ),
-                    SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.05,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(18.0),
-                      child: TextFormField(
-//                controller: _usernameController,
-                        textInputAction: TextInputAction.next,
-                          validator: (val){
-                                
-                                if (val.length >4){
-                                  return null;
-                                }
-                                else{
-                                  return "too short username";
-                                }
-                              },
-                                   onChanged: (val){
-                          setState(() {username=val;});
-                        },
-                        decoration: InputDecoration(
-                          hintText: "Username",
-                          
-                          labelText: "Username",
-                          border: OutlineInputBorder(),
-                          prefixIcon: Icon(Icons.account_circle),
-                          enabled: true,
-                        ),
+                      onChanged: (val) {
+                        setState(() {
+                          username = val;
+                        });
+                      },
+                      decoration: InputDecoration(
+                        hintText: "Username",
+                        labelText: "Username",
+                        border: OutlineInputBorder(),
+                        prefixIcon: Icon(Icons.account_circle),
+                        enabled: true,
                       ),
                     ),
-                    SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.01,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(18, 0, 18, 18),
-                      child: TextFormField(
-                          validator: (val){
-                                
-                                if (val.length >2){
-                                  return null;
-                                }
-                                else{
-                                  return "too short name";
-                                }
-                              },
+                  ),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.01,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(18, 0, 18, 18),
+                    child: TextFormField(
+                      validator: (val) {
+                        if (val.length > 2) {
+                          return null;
+                        } else {
+                          return "too short name";
+                        }
+                      },
 //                controller: _usernameController,
-                        textInputAction: TextInputAction.next,
-                                     onChanged: (val){
-                          setState(() {firstname=val;});
-                        },
-                        decoration: InputDecoration(
-                          hintText: "First Name",
-                          labelText: "First Name",
-                          border: OutlineInputBorder(),
-                          prefixIcon: Icon(Icons.account_circle),
-                          enabled: true,
-                        ),
+                      textInputAction: TextInputAction.next,
+                      onChanged: (val) {
+                        setState(() {
+                          firstname = val;
+                        });
+                      },
+                      decoration: InputDecoration(
+                        hintText: "First Name",
+                        labelText: "First Name",
+                        border: OutlineInputBorder(),
+                        prefixIcon: Icon(Icons.account_circle),
+                        enabled: true,
                       ),
                     ),
-                     Padding(
-                      padding: const EdgeInsets.fromLTRB(18, 0, 18, 18),
-                      child: TextFormField(
-                        validator: (val){
-                                
-                                if (val.length >2){
-                                  return null;
-                                }
-                                else{
-                                  return "too short name";
-                                }
-                              },
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(18, 0, 18, 18),
+                    child: TextFormField(
+                      validator: (val) {
+                        if (val.length > 2) {
+                          return null;
+                        } else {
+                          return "too short name";
+                        }
+                      },
 //                controller: _usernameController,
-                        textInputAction: TextInputAction.next,
-                                   onChanged: (val){
-                          setState(() {lastname=val;});
-                        },
-                        decoration: InputDecoration(
-                          hintText: "Last Name",
-                          labelText: "Last Name",
-                          border: OutlineInputBorder(),
-                          prefixIcon: Icon(Icons.account_circle),
-                          enabled: true,
-                        ),
+                      textInputAction: TextInputAction.next,
+                      onChanged: (val) {
+                        setState(() {
+                          lastname = val;
+                        });
+                      },
+                      decoration: InputDecoration(
+                        hintText: "Last Name",
+                        labelText: "Last Name",
+                        border: OutlineInputBorder(),
+                        prefixIcon: Icon(Icons.account_circle),
+                        enabled: true,
                       ),
                     ),
-
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
           ),
-        
+        ),
       ),
-   );
+    );
   }
 
   Future<void> _pickImage() async {
@@ -260,7 +261,7 @@ setState(() async{
 
     setState(() {
       image_file = cropped ?? image_file;
-      firstImage=new Image.file(image_file);
+      firstImage = new Image.file(image_file);
     });
 
     await _startUpload();
