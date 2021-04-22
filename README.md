@@ -34,9 +34,10 @@ Explore page shows the user music to explore
 Library page is where the user has their stored music
 
 
-Library Page               |  Songs Page
-:-------------------------:|:-------------------------:
-<img src="/Cadenza_screenshots/library1.PNG" width = "200" style="margin:20px">  |  <img src="/Cadenza_screenshots/library2.PNG" width = "200">
+<img src="/Cadenza_screenshots/library1.PNG" width = "200" style="margin:20px">
+
+
+<img src="/Cadenza_screenshots/library2.PNG" width = "200">
 
 
 
