@@ -5,13 +5,27 @@
 
 
 Cadenza is a music streaming app implemented using Flutter and Firebase. It offers users the ability to stream music and download it to their devices.
+Some pages (eg. search) are static and still under development
 
+
+---
+
+# Sign up/ Sign in Pages
+
+Testing Account :-
+
+Username: ibraheem@test.com
+Password: cadenza123
 
 ![UI](/i.PNG)
 
-# Under Development Music Streaming App 
-UI Design of the proeject atached above .
+# Explore
 
+
+Explore page shows the user music to explore
+
+<img src="/Cadenza_screenshots/explore1.png">
+<img src="/Cadenza_screenshots/explore2.png">
 
 
 
