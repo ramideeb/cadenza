@@ -1,4 +1,4 @@
-![Cadenza_logo](/assets/logo.png =250x250)
+![Cadenza_logo](/assets/logo.png | width=100)
 ![UI](/i.PNG)
 
 # Under Development Music Streaming App 
