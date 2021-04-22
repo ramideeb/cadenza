@@ -1,5 +1,4 @@
-![Cadenza_logo](/assets/logo.png | width=100)
-<img src="/assets/logo.png">
+<img src="/assets/logo.png" width = "100">
 ![UI](/i.PNG)
 
 # Under Development Music Streaming App 
